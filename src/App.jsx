@@ -7,8 +7,8 @@ import About from './pages/about';
 import Contacts from './pages/contacts';
 import axios from 'axios';
 import { retrieveLaunchParams } from '@telegram-apps/sdk';
+import { isTMA } from '@telegram-apps/bridge';
 
-const { initDataRaw} = retrieveLaunchParams();
 
 const api = axios.create({
   baseURL: `http://85.208.87.10:80/api/`
@@ -24,11 +24,13 @@ async function tg_auth(userId) {
   }
 }
 function App() {
-  useEffect(() => {
 
-    tg_auth(userId);
-        
-  }, []);
+  useEffect(() => {
+    const urlSP = new URLSearchParams(initData);
+    console.log(urlSP);
+    tg_auth(urlSP);
+    
+   }, []);
 
   return (
     <BrowserRouter>
