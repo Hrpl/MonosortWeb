@@ -8,8 +8,6 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
 
   const handleRegistration = async () => {
-    console.log("Имя пользователя:", username);
-    console.log("Пароль:", password);
     await reg(username, password);
   };
 

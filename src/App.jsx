@@ -8,6 +8,23 @@ import RegisterPage from './pages/req'
 import LoginPage from './pages/signin'
 
 function App() {
+  const telegram = window.Telegram.WebApp;
+
+  // Получаем параметры темы один раз
+  const themeParams = { ...telegram.themeParams };
+
+  // Игнорируем изменения темы
+  console.log('Текущая тема:', themeParams);
+
+  // Ваш CSS: используйте themeParams для фиксации цвета, или ничего не меняйте.
+  const frozenTheme = {
+    bg_color: '#FFFFFF', // Используйте свои значения, если хотите фиксированный дизайн
+    text_color: '#000000'
+  };
+
+  // Пример применения темы
+  document.body.style.backgroundColor = frozenTheme.bg_color;
+  document.body.style.color = frozenTheme.text_color;
   return (
     <BrowserRouter>
       <Routes>
