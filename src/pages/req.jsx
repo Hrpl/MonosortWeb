@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, Link } from "@mui/material";
 import Grid from '@mui/material/Grid2';
+import {reg} from '../service/request';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegistration = () => {
+  const handleRegistration = async () => {
     console.log("Имя пользователя:", username);
     console.log("Пароль:", password);
-
-    
+    await reg(username, password);
   };
 
   return (
