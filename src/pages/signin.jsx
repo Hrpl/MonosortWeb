@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, Link } from "@mui/material";
 import Grid from '@mui/material/Grid2';
-//import {authorize} from '../service/request';
+import {authorize} from '../service/request';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    console.log("Логин:", login);
-    console.log("Пароль:", password);
 
-    //await authorize(login, password);
+    var token = await authorize(login, password);
+    if(token != null) {
+      navigate("/")
+    }
   };
 
   return (

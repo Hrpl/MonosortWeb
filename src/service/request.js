@@ -24,8 +24,10 @@ export async function authorize(login, password) {
             password: password
         }
         const { data } = await api.post(`auth/login/`, body);
-
+        
         localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('expires', data.expires);
+        return data.accessToken
         
     } catch (error) {
         console.log(error);
@@ -33,3 +35,32 @@ export async function authorize(login, password) {
     }
 };
 
+export async function reg(login, password) {
+    try {
+        var body = {
+            login: login,
+            password: password
+        }
+        const response = await api.post('user/create/', body);
+
+        // Проверяем статус ответа
+        if (response.status === 200) {
+            console.log('Регистрация прошла успешно:', response.data);
+        } else {
+            console.log('Неожиданный статус:', response.status);
+        }
+        
+    } catch (error) {
+        if (error.response) {
+            console.log('Ошибка от сервера:', error.response.status, error.response.data);
+        } else if (error.request) {
+            // Ошибка на уровне запроса (сервер не ответил)
+            console.log('Сервер не отвечает:', error.request);
+        } else {
+            // Другая ошибка
+            console.log('Произошла ошибка:', error.message);
+        }
+
+        return null;
+    }
+};
