@@ -12,27 +12,16 @@ const RegisterPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        px: 2,
-      }}
-    >
+    <Box>
       <Box
         sx={{
-          width: { xs: "100%", sm: "400px" },
+          width: { xs: "100wv", sm: "400px" },
           p: 3,
           boxShadow: { xs: "none", sm: 3 },
           borderRadius: 2,
           backgroundColor: { xs: "none", sm: "#fff" },
         }}
       >
-        <Typography variant="h5" component="h1" align="center" sx={{ mb: 3 }}>
-          Регистрация
-        </Typography>
 
         <Grid container spacing={2}>
           <Grid item size={{xs: 12}}>
@@ -65,12 +54,6 @@ const RegisterPage = () => {
             </Button>
           </Grid>
         </Grid>
-
-        <Typography size={{xs: 12}} align="center" marginTop={"1rem"}>
-          <Link href="/" underline="hover">
-            Уже зарегистрированы? Войти
-          </Link>
-        </Typography>
       </Box>
     </Box>
   );

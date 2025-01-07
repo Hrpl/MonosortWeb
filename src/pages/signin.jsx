@@ -19,26 +19,16 @@ const LoginPage = () => {
 
   return (
     <Box
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        px: 2,
-      }}
     >
       <Box
         sx={{
-          width: { xs: "100%", sm: "400px" },
+          width: { xs: "100wv", sm: "400px" },
           p: 3,
           boxShadow: { xs: "none", sm: 3 },
           borderRadius: 2,
           backgroundColor: { xs: "none", sm: "#fff" },
         }}
       >
-        <Typography variant="h5" component="h1" align="center" sx={{ mb: 3 }}>
-          Войти
-        </Typography>
 
         <Grid container spacing={2}>
           <Grid item size={{xs: 12}}>
@@ -71,12 +61,6 @@ const LoginPage = () => {
             </Button>
           </Grid>
         </Grid>
-
-        <Typography sx={{ mt: 2 }} align="center">
-          <Link href="reg" underline="hover">
-            Зарегистрироваться
-          </Link>
-        </Typography>
       </Box>
     </Box>
   );

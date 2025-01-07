@@ -6,6 +6,7 @@ import About from './pages/about';
 import Contacts from './pages/contacts';
 import RegisterPage from './pages/req'
 import LoginPage from './pages/signin'
+import AuthPage from './pages/auth'
 
 function App() {
   const telegram = window.Telegram.WebApp;
@@ -31,8 +32,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/about" element={<About />} />
 				<Route path="/contacts" element={<Contacts />} />
-        <Route path="/reg" element={<RegisterPage />} />
-        <Route path="/sign" element={<LoginPage />} />
+        <Route path="/sign" element={<AuthPage />} />
 			</Routes>
     </BrowserRouter>
   )
