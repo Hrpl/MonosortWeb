@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, Link } from "@mui/material";
 import Grid from '@mui/material/Grid2';
+//import {authorize} from '../service/request';
 
 const LoginPage = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Логин:", login);
     console.log("Пароль:", password);
+
+    //await authorize(login, password);
   };
 
   return (

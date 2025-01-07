@@ -9,6 +9,8 @@ const RegisterPage = () => {
   const handleRegistration = () => {
     console.log("Имя пользователя:", username);
     console.log("Пароль:", password);
+
+    
   };
 
   return (
