@@ -37,10 +37,11 @@ const Categories = () => {
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="auto"
+          indicatorColor="none"
           aria-label="scrollable auto tabs example"
         >
           {categories.map((category, index) => (
-            <Tab label={category.name} {...allyProps(index)} key={category.id} />
+            <Tab sx={{fontSize: "1rem", textTransform: 'lowercase'}} label={category.name} {...allyProps(index)} key={category.id} />
           ))}
         </Tabs>
       </AppBar>
@@ -66,7 +67,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography >{children}</Typography>
         </Box>
       )}
     </div>

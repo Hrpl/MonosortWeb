@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import About from './pages/about';
 import Contacts from './pages/contacts';
-import RegisterPage from './pages/req'
-import LoginPage from './pages/signin'
 import AuthPage from './pages/auth'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
   const telegram = window.Telegram.WebApp;
@@ -19,13 +19,20 @@ function App() {
 
   // Ваш CSS: используйте themeParams для фиксации цвета, или ничего не меняйте.
   const frozenTheme = {
-    bg_color: '#FFFFFF', // Используйте свои значения, если хотите фиксированный дизайн
+    bg_color: '#222', // Используйте свои значения, если хотите фиксированный дизайн
     text_color: '#000000'
   };
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
 
   // Пример применения темы
   document.body.style.backgroundColor = frozenTheme.bg_color;
   document.body.style.color = frozenTheme.text_color;
+  
   return (
     <BrowserRouter>
       <Routes>
