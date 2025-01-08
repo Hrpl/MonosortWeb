@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Categories from "./category"
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,10 +18,7 @@ const Home = () => {
 
   return (
     <>
-      <Link to="/">Home</Link>
-      <Link to="/contacts">Contacts</Link>
-      <Link to="/about">About</Link>
-      <h1>Home</h1>
+      <Categories></Categories>
     </>
   );
 };

@@ -3,7 +3,7 @@ import axios from 'axios';
 const JWTToken = localStorage.getItem('jwt');
 
 const api = axios.create({
-    baseURL: `http://85.208.87.10:80/api/`
+    baseURL: `https://monosortcoffee.ru/api/`
 });
 
 
@@ -46,6 +46,31 @@ export async function reg(login, password) {
         // Проверяем статус ответа
         if (response.status === 200) {
             console.log('Регистрация прошла успешно:', response.data);
+        } else {
+            console.log('Неожиданный статус:', response.status);
+        }
+        
+    } catch (error) {
+        if (error.response) {
+            console.log('Ошибка от сервера:', error.response.status, error.response.data);
+        } else if (error.request) {
+            // Ошибка на уровне запроса (сервер не ответил)
+            console.log('Сервер не отвечает:', error.request);
+        } else {
+            // Другая ошибка
+            console.log('Произошла ошибка:', error.message);
+        }
+
+        return null;
+    }
+};
+
+export async function getCategory() {
+    try {
+        const response = await api.get(`drink/category/`);
+        if (response.status === 200) {
+            console.log(response.data)
+            return response.data;
         } else {
             console.log('Неожиданный статус:', response.status);
         }

@@ -27,7 +27,7 @@ const RegisterPage = () => {
           <Grid item size={{xs: 12}}>
             <TextField
               fullWidth
-              label="Имя пользователя"
+              label="Email"
               variant="outlined"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
