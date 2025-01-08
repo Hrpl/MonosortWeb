@@ -3,7 +3,7 @@ import { AppBar, Tabs, Tab, Typography, Box } from '@mui/material';
 import {getCategory} from '../service/request';
 import DrinkGrid from './drinks';
 
-function a11yProps(index) {
+function allyProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
     'aria-controls': `scrollable-auto-tabpanel-${index}`,
@@ -11,7 +11,7 @@ function a11yProps(index) {
 }
 
 const Categories = () => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const Categories = () => {
           aria-label="scrollable auto tabs example"
         >
           {categories.map((category, index) => (
-            <Tab label={category.name} {...a11yProps(index)} key={category.id} />
+            <Tab label={category.name} {...allyProps(index)} key={category.id} />
           ))}
         </Tabs>
       </AppBar>

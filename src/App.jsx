@@ -10,7 +10,7 @@ import AuthPage from './pages/auth'
 
 function App() {
   const telegram = window.Telegram.WebApp;
-
+  window.Telegram.WebApp.expand();
   // Получаем параметры темы один раз
   const themeParams = { ...telegram.themeParams };
 
