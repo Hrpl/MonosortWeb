@@ -1,80 +1,76 @@
 import React, { useEffect, useState } from 'react';
-import { Drawer, Box, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu'; // Иконка бургер-меню
-import CloseIcon from '@mui/icons-material/Close'; // Иконка закрытия
+import { AppBar, Tabs, Tab, Typography, Box } from '@mui/material';
 import {getCategory} from '../service/request';
+import DrinkGrid from './drinks';
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+  };
+}
 
 const Categories = () => {
-    const [categories, setCategories] = useState([]);
-    const [menuOpen, setMenuOpen] = useState(false); // Состояние для управления видимостью меню
-    const [selectedCategory, setSelectedCategory] = useState(null);
+  const [value, setValue] = useState(1);
+  const [categories, setCategories] = useState([]);
 
-  useEffect (()  => {
-    const fetchCategories = async () => {
-        let data = await getCategory();
-        setCategories(data);
+  useEffect(() => {
+    const fetchedCategories = async () =>{
+        var categories = await getCategory();
+        setCategories(categories);
     }
-    fetchCategories();
+
+    fetchedCategories();
   }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const selectCategory = (category) => {
-    setSelectedCategory(category);
-    console.log(selectedCategory.id);
-    setMenuOpen(false); // Закрываем меню после выбора категории
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    const selectedCategoryId = categories[newValue].id;
+    console.log("Выбранная категория ID:", selectedCategoryId);
   };
 
   return (
-    <div>
-      {/* Кнопка открытия бургер-меню */}
-      <IconButton 
-        color="primary" 
-        onClick={toggleMenu} 
-        aria-label="menu"
-        sx={{ top: 1, left: 20 }}
-      >
-        <MenuIcon />
-      </IconButton>
-
-      {/* Выдвижное меню с категориями */}
-      <Drawer anchor="left" open={menuOpen} onClose={toggleMenu}>
-        <Box
-          sx={{
-            width: 250, // Ширина бокового меню
-            display: 'flex',
-            flexDirection: 'column',
-            padding: 2,
-          }}
-          role="presentation"
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{backgroundColor: "#fff"}}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
         >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h6">Категории</Typography>
+          {categories.map((category, index) => (
+            <Tab label={category.name} {...a11yProps(index)} key={category.id} />
+          ))}
+        </Tabs>
+      </AppBar>
+      {categories.map((category, index) => (
+        <TabPanel value={value} index={index} key={category.id}>
+            <DrinkGrid id={category.id}/>
+        </TabPanel>
+      ))}
+    </Box>
+  );
+}
 
-            {/* Кнопка закрытия меню */}
-            <IconButton aria-label="close" onClick={toggleMenu}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-          <List>
-            {categories.map((category) => (
-              <ListItem 
-                key={category.id} 
-                button 
-                onClick={() => selectCategory(category)}
-                selected={selectedCategory?.id === category.id} // Выделение выбранной категории
-              >
-                <ListItemText primary={category.name} />
-              </ListItem>
-            ))}
-          </List>
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
         </Box>
-      </Drawer>
+      )}
     </div>
   );
-};
+}
 
 export default Categories;
