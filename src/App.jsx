@@ -20,7 +20,7 @@ function App() {
   // Ваш CSS: используйте themeParams для фиксации цвета, или ничего не меняйте.
   const frozenTheme = {
     bg_color: '#222', // Используйте свои значения, если хотите фиксированный дизайн
-    text_color: '#000000'
+    text_color: '#fff'
   };
 
   const darkTheme = createTheme({
