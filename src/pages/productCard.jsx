@@ -37,7 +37,6 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
     <Dialog open={open} onClose={onClose} 
       fullScreen={fullScreen} 
       TransitionComponent={Transition} 
-      keepMounted 
       transitionDuration={{ enter: 400, exit: 300 }}>
 
       <DialogContent
