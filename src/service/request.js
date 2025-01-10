@@ -89,11 +89,10 @@ export async function getCategory() {
     }
 };
 
-export async function getDrinks(id) {
+export async function getProducts(id) {
     try {
         const response = await api.get(`menu/many/`+ id);
         if (response.status === 200) {
-            console.log(response.data)
             return response.data;
         } else {
             console.log('Неожиданный статус:', response.status);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AppBar, Tabs, Tab, Typography, Box } from '@mui/material';
 import {getCategory} from '../service/request';
-import DrinkGrid from './drinks';
+import ProductGrid from './products';
 
 function allyProps(index) {
   return {
@@ -31,13 +31,14 @@ const Categories = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{backgroundColor: "#fff"}}>
+      <AppBar position="static" sx={{backgroundColor: "#222"}}>
         <Tabs
           value={value}
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="auto"
-          indicatorColor="none"
+          indicatorColor='#eb8f20'
+          textColor="inherit"
           aria-label="scrollable auto tabs example"
         >
           {categories.map((category, index) => (
@@ -47,7 +48,7 @@ const Categories = () => {
       </AppBar>
       {categories.map((category, index) => (
         <TabPanel value={value} index={index} key={category.id}>
-            <DrinkGrid id={category.id}/>
+            <ProductGrid id={category.id}/>
         </TabPanel>
       ))}
     </Box>
