@@ -68,6 +68,12 @@ const SizeSelector = ({ id }) => {
             key={option.name}
             onClick={() => handleSizeChange(option, index)} // Передаём индекс для расчёта позиции ползунка
             sx={{
+              "&:focus": {
+                border: "none", // Убираем стандартный outline
+              },
+              "&:active": {
+                border: "none", // Убираем стандартный outline
+              },
               zIndex: 2, // Располагаем поверх скользящего элемента
               position: "relative",
               bgcolor: selectedSize?.name === option.name ? "transparent" : "transparent",
