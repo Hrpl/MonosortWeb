@@ -67,7 +67,7 @@ export async function reg(login, password) {
 
 export async function getCategory() {
     try {
-        const response = await api.get(`drink/category/`);
+        const response = await api.get(`menu/category/`);
         if (response.status === 200) {
             return response.data;
         } else {
@@ -91,7 +91,7 @@ export async function getCategory() {
 
 export async function getDrinks(id) {
     try {
-        const response = await api.get(`drink/many/`+ id);
+        const response = await api.get(`menu/many/`+ id);
         if (response.status === 200) {
             console.log(response.data)
             return response.data;
