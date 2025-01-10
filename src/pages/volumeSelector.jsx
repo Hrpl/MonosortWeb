@@ -1,67 +1,89 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, ButtonGroup } from '@mui/material';
-import { getVolumes } from '../service/request';
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Button } from "@mui/material";
+import { getVolumes } from "../service/request";
 
 const SizeSelector = ({ id }) => {
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [volumes, setVolumes] = useState([]);
+  const [selectedSize, setSelectedSize] = useState(null); // Выбранный размер
+  const [volumes, setVolumes] = useState([]); // Массив данных размеров
+  const [sliderPosition, setSliderPosition] = useState(0); // Позиция скользящей подсветки
 
-  const handleSizeChange = (size) => {
-    setSelectedSize(size);
+  const handleSizeChange = (size, index) => {
+    setSelectedSize(size); // Устанавливаем выбранный размер
+    setSliderPosition(index); // Обновляем позицию "ползунка" (индекс кнопки)
   };
 
+  // Эффект для загрузки данных с сервера
   useEffect(() => {
-    const fetchedCategories = async () => {
+    const fetchCategories = async () => {
       const volumes = await getVolumes(id);
-      const sorted = volumes.sort((a, b) => a.price - b.price)
+      const sorted = volumes.sort((a, b) => a.price - b.price); // Сортируем по цене
       setVolumes(sorted);
-      setSelectedSize(sorted[0])
+      setSelectedSize(sorted[0]); // Устанавливаем размер по умолчанию
     };
 
-    fetchedCategories();
+    fetchCategories();
   }, [id]);
-
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        bgcolor: '#444',
+        display: "flex",
+        alignItems: "center",
+        bgcolor: "#444",
         borderRadius: 10,
-        p: 1,
-        mx: 1
+        py: 1,
+        mx: 2,
+        mb: 2,
       }}
     >
-      {/* Кнопки размеров */}
-      <Box variant="contained" sx={{ bgcolor: '#333', borderRadius: 8, display: 'flex'}}>
-        {volumes.map(option => (
+      {/* Блок с кнопками */}
+      <Box
+        sx={{
+          bgcolor: "#333",
+          borderRadius: 8,
+          position: "relative", // Нужен для абсолютного позиционирования скользящего элемента
+          display: "flex",
+          flexGrow: 1,
+          mx: 1,
+        }}
+      >
+        {/* Скользящий элемент */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: `${sliderPosition * (100 / volumes.length)}%`, // Расчёт позиции на основе индекса
+            width: `${100 / volumes.length}%`, // Ширина подсветки равна ширине одной кнопки
+            height: "100%",
+            bgcolor: "#000",
+            borderRadius: 9,
+            transition: "all 0.3s ease", // Плавная анимация перемещения
+            zIndex: 1, // Располагаем под кнопками
+          }}
+        ></Box>
+
+        {/* Кнопки размеров */}
+        {volumes.map((option, index) => (
           <Button
             key={option.name}
-            onClick={() => handleSizeChange(option)}
+            onClick={() => handleSizeChange(option, index)} // Передаём индекс для расчёта позиции ползунка
             sx={{
-              bgcolor: selectedSize.name === option.name ? '#000' : 'transparent',
-              color: selectedSize.name === option.name ? '#fff' : '#ccc',
-              borderRadius: selectedSize.name === option.name ? '90%' : '0',
-              minWidth: '40px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              px: "3vw",
-              py: 1
+              zIndex: 2, // Располагаем поверх скользящего элемента
+              position: "relative",
+              bgcolor: selectedSize?.name === option.name ? "transparent" : "transparent",
+              color: selectedSize?.name === option.name ? "#fff" : "#ccc",
+              width: "100%",
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              py: 1,
             }}
           >
-            <Box 
-              sx={{
-                display: 'flex', 
-                flexDirection: 'column'
-              }}>
-              <Typography variant="subtitle1">
-                {option.name}
-              </Typography>
-              {selectedSize.name == option.name && (
-                <Typography variant="caption" sx={{ fontSize: '0.5rem' }}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography variant="h6">{option.name}</Typography>
+              {selectedSize?.name === option.name && (
+                <Typography variant="caption" sx={{ fontSize: "0.5rem" }}>
                   {option.size}
                 </Typography>
               )}
@@ -70,21 +92,25 @@ const SizeSelector = ({ id }) => {
         ))}
       </Box>
 
-      {/* Цена */}
+      {/* Цена кнопки */}
       <Button
         sx={{
-          bgcolor: '#024e07',
+          flexGrow: 1,
+          bgcolor: "#024e07",
           borderRadius: 8,
-          color: '#fff',
-          minWidth: '80px'
+          color: "#fff",
+          minWidth: "80px",
+          mx: 1,
         }}
       >
-        <Typography variant="subtitle1"
-        sx={{
-          py: 1,
-          px: 2
-        }}>
-           + {selectedSize != null ? selectedSize.price : ""} ₽
+        <Typography
+          variant="h6"
+          sx={{
+            py: 1,
+            px: 2,
+          }}
+        >
+          + {selectedSize != null ? selectedSize.price : ""} ₽
         </Typography>
       </Button>
     </Box>
