@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme, createTheme } from '@mui/material/styles';
 import { forwardRef } from 'react';
+import SizeSelector from './volumeSelector';
 
 // Transition (анимация снизу вверх)
 const Transition = forwardRef(function Transition(props, ref) {
@@ -38,7 +39,7 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
       TransitionComponent={Transition} 
       keepMounted 
       transitionDuration={{ enter: 400, exit: 300 }}>
-        
+
       <DialogContent
         sx={{
           p: 0,
@@ -75,17 +76,19 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
           <Typography variant="body2">настрой как любишь</Typography>
         </Box>
 
-        {/* Опции настройки */}
-        <Box
-          sx={{
-            p: 2,
-            background: 'rgba(0, 0, 0, 0.85)',
-            borderRadius: '24px 24px 0 0',
-          }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-            <Chip label="Сырная пенка и мусс" onClick={() => {}} />
-          </Box>
+        
+
+        <Box>
+          <div
+            style={{
+              position: 'fixed', // Фиксируем элемент
+              bottom: '1rem', // Прижимаем к низу экрана
+              width: '100%', // Растягиваем на всю ширину экрана
+              zIndex: 1000, // Помещаем выше основного контента
+            }}
+          >
+            <SizeSelector id={product.id}/>
+          </div>
         </Box>
       </DialogContent>
     </Dialog>

@@ -47,37 +47,43 @@ const ProductGrid = ({ id }) => {
               image={product.photo}
               alt={product.name}
             />
-            <CardContent style={{ flexGrow: 1}}>
+            <CardContent style={{ flexGrow: 1}}
+            sx={{
+              py:1,
+            }}>
               <Typography
-                variant="body"
-                component="div"
+                variant="subtitle1"
                 style={{
-                    overflow: 'hidden',
-                    textWrap: 'balance',
-                    color: '#fff',
-                    textOverflow: 'ellipsis',
-                    display: '-webkit-box',
-                    overflow: 'hidden',
-                    WebkitLineClamp: 2, // Указывает на количество строк
-                    WebkitBoxOrient: 'vertical'
+                  overflow: 'hidden',
+                  textWrap: 'balance',
+                  color: '#fff',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  overflow: 'hidden',
+                  WebkitLineClamp: 2, // Указывает на количество строк
+                  WebkitBoxOrient: 'vertical'
                   }}
               >
                 {product.name}
               </Typography>
             </CardContent>
-            <CardActions style={{display: 'flex', justifyContent: 'end', color: '#fff'}}>
-              <Typography size="middle" disabled={!product.isExistence}>
-                <KeyboardArrowRightIcon onClick={() => {
-                  handleOpen(product);
-                }}
-                  variant="contained"
-                  sx={{ color: '#fff', py: 1 }}/>
-        
-                <CoffeeCustomizer 
-                open={dialogOpen} 
-                onClose={handleClose} 
-                product={selectedProduct} />
+            <CardActions style={{display: 'flex', justifyContent: 'space-between', color: '#fff'}}
+            sx={{py: 0, px: 1}}>
+              <Typography variant="subtitle1" sx={{
+                px: 1
+              }}>
+                {product.price} ₽
+              </Typography>
 
+              <Typography size="middle" disabled={!product.isExistence}>
+                <KeyboardArrowRightIcon onClick={() => { handleOpen(product) }}
+                  variant="contained"
+                  sx={{ color: '#aaa', pt: 1 }}/>
+                
+                <CoffeeCustomizer 
+                  open={dialogOpen} 
+                  onClose={handleClose} 
+                  product={selectedProduct} />
               </Typography>
             </CardActions>
           </StyledCard>
