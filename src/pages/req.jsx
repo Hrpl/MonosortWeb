@@ -47,8 +47,10 @@ const RegisterPage = () => {
             <Button
               fullWidth
               variant="contained"
-              color="primary"
               onClick={handleRegistration}
+              sx= {{
+                bgcolor: "#024e07",
+              }}
             >
               Зарегистрироваться
             </Button>

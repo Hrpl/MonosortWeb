@@ -23,7 +23,7 @@ const AuthPage = () => {
           width: '300px',
           margin: '0 auto',
           padding: '4px',
-          backgroundColor: '#F0F0F0',
+          backgroundColor: '#333',
           borderRadius: '20px',
           position: 'relative',
         }}
@@ -35,7 +35,7 @@ const AuthPage = () => {
             height: '100%',
             width: '50%',
             left: activeTab === 'login' ? '50%' : '0',
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#000',
             borderRadius: '20px',
             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
             transition: 'all 0.7s ease',
@@ -52,7 +52,7 @@ const AuthPage = () => {
             padding: '10px 0',
             cursor: 'pointer',
             fontWeight: activeTab === 'register' ? 'bold' : 'normal',
-            color: activeTab === 'register' ? '#000' : '#666',
+            color: activeTab === 'register' ? '#fff' : '#666',
           }}
         >
           Регистрация
@@ -66,7 +66,7 @@ const AuthPage = () => {
             padding: '10px 0',
             cursor: 'pointer',
             fontWeight: activeTab === 'login' ? 'bold' : 'normal',
-            color: activeTab === 'login' ? '#000' : '#666',
+            color: activeTab === 'login' ? '#fff' : '#666',
           }}
         >
           Вход
@@ -82,7 +82,6 @@ const LoginForm = () => {
   return (
     <Box sx={{ textAlign: 'left', marginTop: '20px' }}>
       <LoginPage/>
-      {/* Поля ввода */}
     </Box>
   );
 };
@@ -91,7 +90,6 @@ const RegisterForm = () => {
   return (
     <Box sx={{ textAlign: 'left', marginTop: '20px' }}>
       <RegisterPage/>
-      {/* Поля ввода */}
     </Box>
   );
 };

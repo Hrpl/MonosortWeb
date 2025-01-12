@@ -40,7 +40,7 @@ const ProductGrid = ({ id }) => {
     <Grid container spacing={2}>
       {products.map((product) => (
         <Grid item size={{xs: 6, sm: 3}} key={product.id}>
-          <StyledCard sx={{backgroundColor:"#111", borderRadius: "0.8rem"}}>
+          <StyledCard sx={{backgroundColor:"#111", borderRadius: "0.8rem"}} onClick={() => { handleOpen(product) }}>
             <CardMedia
               component="img"
               height="180"
@@ -76,7 +76,7 @@ const ProductGrid = ({ id }) => {
               </Typography>
 
               <Typography size="middle" disabled={!product.isExistence}>
-                <KeyboardArrowRightIcon onClick={() => { handleOpen(product) }}
+                <KeyboardArrowRightIcon 
                   variant="contained"
                   sx={{ color: '#aaa', pt: 1 }}/>
                 
