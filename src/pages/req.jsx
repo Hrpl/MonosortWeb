@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Typography, Box, Link } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import {reg} from '../service/request';
+import "../styles/auth.css";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
@@ -16,44 +17,39 @@ const RegisterPage = () => {
       <Box
         sx={{
           width: { xs: "100wv", sm: "400px" },
-          p: 3,
-          boxShadow: { xs: "none", sm: 3 },
-          borderRadius: 2,
-          backgroundColor: { xs: "none", sm: "#fff" },
         }}
       >
-
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item size={{xs: 12}}>
-            <TextField
+            <input
               fullWidth
-              label="Email"
+              placeholder="Email"
               variant="outlined"
               value={username}
+							className="auth__input"
               onChange={(e) => setUsername(e.target.value)}
             />
           </Grid>
           <Grid item size={{xs: 12}}>
-            <TextField
+            <input
               fullWidth
-              label="Пароль"
+              placeholder="Пароль"
               type="password"
-              variant="outlined"
               value={password}
+							className="auth__input"
               onChange={(e) => setPassword(e.target.value)}
             />
           </Grid>
           <Grid item size={{xs: 12}}>
-            <Button
+            <button
               fullWidth
               variant="contained"
+              color="primary"
               onClick={handleRegistration}
-              sx= {{
-                bgcolor: "#024e07",
-              }}
+							className="auth__button"
             >
               Зарегистрироваться
-            </Button>
+            </button>
           </Grid>
         </Grid>
       </Box>

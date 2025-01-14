@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, Link } from "@mui/material";
-import Grid from '@mui/material/Grid2';
-import {authorize} from '../service/request';
-import { useNavigate } from 'react-router-dom';
+import Grid from "@mui/material/Grid2";
+import { authorize } from "../service/request";
+import { useNavigate } from "react-router-dom";
+import "../styles/auth.css";
 
 const LoginPage = () => {
   const [login, setLogin] = useState("");
@@ -10,55 +11,51 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-
     var token = await authorize(login, password);
-    if(token != null) {
-      navigate("/")
+    if (token != null) {
+      navigate("/");
     }
   };
 
   return (
-    <Box
-    >
+    <Box>
       <Box
         sx={{
           width: { xs: "100wv", sm: "400px" },
-          p: 3,
-          boxShadow: { xs: "none", sm: 3 },
-          borderRadius: 2,
-          backgroundColor: { xs: "none", sm: "#fff" },
         }}
       >
-
-        <Grid container spacing={2}>
-          <Grid item size={{xs: 12}}>
-            <TextField
+        <Grid container spacing={3}>
+          <Grid item size={{ xs: 12 }}>
+            <input
               fullWidth
-              label="Логин"
-              variant="outlined"
+              placeholder="Email"
               value={login}
+              className="auth__input"
+              autoComplete="off"
               onChange={(e) => setLogin(e.target.value)}
             />
           </Grid>
-          <Grid item size={{xs: 12}}>
-            <TextField
+          <Grid item size={{ xs: 12 }}>
+            <input
               fullWidth
-              label="Пароль"
+              placeholder="Пароль"
               type="password"
-              variant="outlined"
+              autoComplete="off"
               value={password}
+              className="auth__input"
               onChange={(e) => setPassword(e.target.value)}
             />
           </Grid>
-          <Grid item size={{xs: 12}} >
-            <Button
+          <Grid item size={{ xs: 12 }}>
+            <button
               fullWidth
               variant="contained"
               color="primary"
               onClick={handleSubmit}
+              className="auth__button"
             >
               Войти
-            </Button>
+            </button>
           </Grid>
         </Grid>
       </Box>
