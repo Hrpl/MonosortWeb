@@ -1,0 +1,32 @@
+.menu-item {
+    width: 120px;
+    padding: 10px;
+    margin: 5px;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .menu-item-image {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .menu-item-title {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .menu-item-price {
+    margin-top: 5px;
+    color: #00ffcc;
+  }

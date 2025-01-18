@@ -40,7 +40,7 @@ const ProductGrid = ({ id }) => {
     <Grid container spacing={2}>
       {products.map((product) => (
         <Grid item size={{xs: 6, sm: 3}} key={product.id}>
-          <StyledCard sx={{backgroundColor:"#111", borderRadius: "0.8rem"}} >
+          <StyledCard sx={{backgroundColor:"#060300", borderRadius: "0.8rem"}} >
             <CardMedia
               component="img"
               height="180"
