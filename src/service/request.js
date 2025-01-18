@@ -136,3 +136,27 @@ export async function getVolumes(id) {
         return null;
     }
 };
+
+export async function getAdditives(){
+    try {
+        const response = await api.get(`additive/type`);
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            console.log('Неожиданный статус:', response.status);
+        }
+        
+    } catch (error) {
+        if (error.response) {
+            console.log('Ошибка от сервера:', error.response.status, error.response.data);
+        } else if (error.request) {
+            // Ошибка на уровне запроса (сервер не ответил)
+            console.log('Сервер не отвечает:', error.request);
+        } else {
+            // Другая ошибка
+            console.log('Произошла ошибка:', error.message);
+        }
+
+        return null;
+    }
+}

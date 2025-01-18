@@ -14,6 +14,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme, createTheme } from '@mui/material/styles';
 import { forwardRef } from 'react';
 import SizeSelector from './volumeSelector';
+import Additives from './additives';
 
 // Transition (анимация снизу вверх)
 const Transition = forwardRef(function Transition(props, ref) {
@@ -74,7 +75,7 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
           </Typography>
           <Typography variant="body2">настрой как любишь</Typography>
         </Box>
-
+        <Additives></Additives>
         
 
         <Box>
