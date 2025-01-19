@@ -14,13 +14,14 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme, createTheme } from '@mui/material/styles';
 import { forwardRef } from 'react';
 import SizeSelector from './volumeSelector';
+import "../styles/card.css";
 
 // Transition (анимация снизу вверх)
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CoffeeCustomizer = ({ open, handleClose, product }) => {
+const CoffeeCustomizer = ({ open, onClose, product }) => {
   if(product == null) return null;
   const [volume, setVolume] = useState('M');
   const [price, setPrice] = useState(250);
@@ -34,7 +35,7 @@ const CoffeeCustomizer = ({ open, handleClose, product }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} 
+    <Dialog open={open} onClose={onClose} 
       fullScreen={fullScreen} 
 			style={{borderRadius: 0}}
       TransitionComponent={Transition} 
@@ -51,7 +52,7 @@ const CoffeeCustomizer = ({ open, handleClose, product }) => {
       >
         {/* Кнопка закрытия окна */}
         <IconButton
-          onClick={handleClose}
+          onClick={onClose}
 					disableRipple={true}
           sx={{
             position: 'absolute',
@@ -75,10 +76,7 @@ const CoffeeCustomizer = ({ open, handleClose, product }) => {
             {product.name}
           </Typography>
           <Typography variant="body2">настрой как любишь</Typography>
-
-
-        
-
+        </div>
         <Box>
           <div
             style={{
