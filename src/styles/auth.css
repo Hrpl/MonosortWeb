@@ -21,6 +21,12 @@
 	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
+.auth__button-text {
+	font-size: 18px !important;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	line-height: 100%;
+}
+
 .auth__input {
 	box-sizing: border-box;
 	font-size: 18px;

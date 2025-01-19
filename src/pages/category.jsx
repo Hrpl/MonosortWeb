@@ -1,78 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import { AppBar, Tabs, Tab, Typography, Box } from '@mui/material';
-import {getCategory} from '../service/request';
-import ProductGrid from './products';
-
-function allyProps(index) {
-  return {
-    id: `scrollable-auto-tab-${index}`,
-    'aria-controls': `scrollable-auto-tabpanel-${index}`,
-  };
-}
+import React, { useEffect, useState } from "react";
+import { Typography, Box } from "@mui/material";
+import { getCategory } from "../service/request";
+import ProductGrid from "./products";
+import "../styles/category.css";
 
 const Categories = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchedCategories = async () =>{
-        var categories = await getCategory();
-        setCategories(categories);
-    }
+    const fetchedCategories = async () => {
+      var categories = await getCategory();
+      setCategories(categories);
+    };
 
     fetchedCategories();
   }, []);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    const selectedCategoryId = categories[newValue].id;
-    console.log("Выбранная категория ID:", selectedCategoryId);
-  };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{backgroundColor: "#222"}}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          indicatorColor='#eb8f20'
-          textColor="inherit"
-          aria-label="scrollable auto tabs example"
+      <div className="tabs">
+        {categories?.map((category) => (
+          <button
+            onClick={() => setValue(category.id)}
+            className={
+              value === category.id ? "tabs__item active" : "tabs__item"
+            }
+            key={category.id}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+      {categories?.map((category, index) => (
+        <div
+					key={category.id}
+          role="tabpanel"
+          hidden={value !== index}
+          id={`scrollable-auto-tabpanel-${index}`}
+          aria-labelledby={`scrollable-auto-tab-${index}`}
         >
-          {categories.map((category, index) => (
-            <Tab sx={{fontSize: "1rem", textTransform: 'lowercase'}} label={category.name} {...allyProps(index)} key={category.id} />
-          ))}
-        </Tabs>
-      </AppBar>
-      {categories.map((category, index) => (
-        <TabPanel value={value} index={index} key={category.id}>
-            <ProductGrid id={category.id}/>
-        </TabPanel>
+          {value === index && (
+            <Box sx={{ p: 3 }}>
+              <Typography>
+                <ProductGrid id={category.id} />
+              </Typography>
+            </Box>
+          )}
+        </div>
       ))}
     </Box>
   );
-}
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-auto-tabpanel-${index}`}
-      aria-labelledby={`scrollable-auto-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography >{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+};
 
 export default Categories;

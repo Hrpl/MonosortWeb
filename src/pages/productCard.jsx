@@ -14,13 +14,14 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme, createTheme } from '@mui/material/styles';
 import { forwardRef } from 'react';
 import SizeSelector from './volumeSelector';
+import "../styles/card.css";
 
 // Transition (анимация снизу вверх)
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CoffeeCustomizer = ({ open, onClose, product }) => {
+const CoffeeCustomizer = ({ open, handleClose, product }) => {
   if(product == null) return null;
   const [volume, setVolume] = useState('M');
   const [price, setPrice] = useState(250);
@@ -34,23 +35,25 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} 
+    <Dialog open={open} onClose={handleClose} 
       fullScreen={fullScreen} 
+			style={{borderRadius: 0}}
       TransitionComponent={Transition} 
-      transitionDuration={{ enter: 400, exit: 300 }}>
-
+      transitionDuration={{ enter: 400, exit: 300 }}
+		>
       <DialogContent
         sx={{
           p: 0,
           bgcolor: '#222',
           color: '#fff',
           overflow: 'hidden',
-          borderRadius: 2,
+          borderRadius: 0,
         }}
       >
         {/* Кнопка закрытия окна */}
         <IconButton
-          onClick={onClose}
+          onClick={handleClose}
+					disableRipple={true}
           sx={{
             position: 'absolute',
             top: 8,
@@ -64,19 +67,16 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
         </IconButton>
 
         {/* Изображение и заголовок */}
-        <Box sx={{ textAlign: 'center' }}>
+        <div className='card-wrapper'>
           <img
             src={product.photo}
-            style={{ width: '100%', height: '60vh' }}
+						className='card__img'
           />
           <Typography variant="h5" sx={{ mt: 2 }}>
             {product.name}
           </Typography>
           <Typography variant="body2">настрой как любишь</Typography>
-        </Box>
-
-        
-
+        </div>
         <Box>
           <div
             style={{

@@ -25,16 +25,7 @@ const SizeSelector = ({ id }) => {
   }, [id]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        bgcolor: "#444",
-        borderRadius: 10,
-        py: 1,
-        mx: 2,
-        mb: 2,
-      }}
+    <div className="card__selector"
     >
       {/* Блок с кнопками */}
       <Box
@@ -65,6 +56,7 @@ const SizeSelector = ({ id }) => {
         {/* Кнопки размеров */}
         {volumes.map((option, index) => (
           <Button
+            disableRipple={true}
             key={option.name}
             onClick={() => handleSizeChange(option, index)} // Передаём индекс для расчёта позиции ползунка
             sx={{
@@ -76,7 +68,10 @@ const SizeSelector = ({ id }) => {
               },
               zIndex: 2, // Располагаем поверх скользящего элемента
               position: "relative",
-              bgcolor: selectedSize?.name === option.name ? "transparent" : "transparent",
+              bgcolor:
+                selectedSize?.name === option.name
+                  ? "transparent"
+                  : "transparent",
               color: selectedSize?.name === option.name ? "#fff" : "#ccc",
               width: "100%",
               flexGrow: 1,
@@ -100,6 +95,8 @@ const SizeSelector = ({ id }) => {
 
       {/* Цена кнопки */}
       <Button
+        disableRipple={true}
+				className="card__button"
         sx={{
           flexGrow: 1,
           bgcolor: "#024e07",
@@ -119,7 +116,7 @@ const SizeSelector = ({ id }) => {
           + {selectedSize != null ? selectedSize.price : ""} ₽
         </Typography>
       </Button>
-    </Box>
+    </div>
   );
 };
 

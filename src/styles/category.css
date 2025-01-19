@@ -1,0 +1,35 @@
+.tabs {
+	position: sticky;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	white-space: nowrap;
+	padding: 0 24px;
+	padding-top: 20px;
+	height: 40px;
+	background-color: rgba(129, 129, 129, 0.233);
+	backdrop-filter: blur(30px);
+}
+
+.tabs::-webkit-scrollbar {
+	display: none;
+}
+
+.tabs__item {
+	font-size: 18px;
+	font-family: "Roboto", "Arial", sans-serif;
+	color: #d6d6d6;
+	padding-right: 20px;
+	padding-left: 0;
+}
+
+.tabs__item.active {
+	color: #fff;
+}
+
+.tabs__item:last-child {
+	padding-right: 0;
+}

@@ -25,6 +25,7 @@ const ProductGrid = ({ id }) => {
 
   const handleClose = () => {
     setDialogOpen(false);
+    setSelectedProduct(null)
   };
 
   useEffect(() => {

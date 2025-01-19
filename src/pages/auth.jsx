@@ -24,6 +24,7 @@ const AuthPage = () => {
 	          alignItems: 'center',
 	          width: '300px',
 	          margin: '0 auto',
+						height: 50,
 	          padding: '4px',
 	          backgroundColor: '#bbb',
 	          borderRadius: '20px',
@@ -59,7 +60,7 @@ const AuthPage = () => {
 							transition: ".2s"
 	          }}
 	        >
-	          Регистрация
+	          <Typography className='auth__button-text'>Регистрация</Typography>
 	        </Box>
 	        <Box
 	          onClick={() => handleTabChange('login')}
@@ -74,7 +75,7 @@ const AuthPage = () => {
 							transition: ".2s"
 	          }}
 	        >
-	          Вход
+	          <Typography className='auth__button-text'>Вход</Typography>
 	        </Box>
 	      </Box>
 	
