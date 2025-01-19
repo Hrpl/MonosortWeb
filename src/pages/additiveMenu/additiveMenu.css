@@ -1,0 +1,74 @@
+
+/* Контейнер для меню */
+.menu-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  visibility: hidden; /* По умолчанию невидим */
+  opacity: 0; /* Делает невидимым */
+  transition: visibility 0.3s, opacity 0.3s;
+}
+
+/* Когда меню становится видимым */
+.menu-container.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Скрытие меню */
+.menu-container.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Само меню */
+.menu {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  color: white;
+}
+
+.menu-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Сетка элементов */
+.menu-grid {
+  display: flex; /* Flexbox для горизонтального выравнивания */
+  flex-direction: row; /* Элементы располагаются в ряд */
+  gap: 20px; /* Расстояние между элементами */
+  overflow-x: auto; /* Добавляем скроллинг по горизонтали, если элементов больше */
+  padding: 10px;
+}
+
+/* Задаем минимальные стили для элементов (если нужно) */
+.menu-grid > * {
+  flex-shrink: 0; /* Элементы не сжимаются при недостатке места */
+}
+
+/* Кнопка закрытия */
+.close-button {
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-weight: bold;
+}
+
+.close-button:hover {
+  color: red;
+}

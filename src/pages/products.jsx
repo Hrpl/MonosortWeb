@@ -23,7 +23,7 @@ const ProductGrid = ({ id }) => {
     setDialogOpen(true);
   };
 
-  const handleClose = () => {
+  function handleClose(){
     setDialogOpen(false);
     setSelectedProduct(null)
   };
@@ -41,7 +41,7 @@ const ProductGrid = ({ id }) => {
     <Grid container spacing={2}>
       {products.map((product) => (
         <Grid item size={{xs: 6, sm: 3}} key={product.id}>
-          <StyledCard sx={{backgroundColor:"#111", borderRadius: "0.8rem"}} onClick={() => { handleOpen(product) }}>
+          <StyledCard sx={{backgroundColor:"#060300", borderRadius: "0.8rem"}} >
             <CardMedia
               component="img"
               height="180"
@@ -76,17 +76,17 @@ const ProductGrid = ({ id }) => {
                 {product.price} ₽
               </Typography>
 
-              <Typography size="middle" disabled={!product.isExistence}>
+              <Typography size="middle" disabled={!product.isExistence} >
                 <KeyboardArrowRightIcon 
                   variant="contained"
-                  sx={{ color: '#aaa', pt: 1 }}/>
-                
-                <CoffeeCustomizer 
+                  sx={{ color: '#aaa', pt: 1 }}
+                  onClick={() => { handleOpen(product) }}/>
+              </Typography>
+            </CardActions>
+            <CoffeeCustomizer 
                   open={dialogOpen} 
                   onClose={handleClose} 
                   product={selectedProduct} />
-              </Typography>
-            </CardActions>
           </StyledCard>
         </Grid>
       ))}
