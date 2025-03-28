@@ -13,7 +13,23 @@ function App() {
 		if (!window.Telegram?.WebApp) return;
 	
 		const tgWebApp = window.Telegram.WebApp;
+		const isOldVersion = parseFloat(tgWebApp.version) < 6.0;
+	
 		tgWebApp.ready();
+		tgWebApp.expand();
+	
+		if (isOldVersion) {
+			// Старый метод (до 6.0)
+			tgWebApp.enableClosingConfirmation?.();
+		} else {
+			// Новый метод (6.0+)
+			tgWebApp.onEvent('backButtonClicked', () => {
+				if (confirm('Вы уверены, что хотите выйти?')) {
+					tgWebApp.close();
+				}
+			});
+			tgWebApp.BackButton.show();
+		}
 	}, []);
   
   return (
