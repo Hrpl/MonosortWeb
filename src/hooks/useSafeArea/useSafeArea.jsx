@@ -17,7 +17,7 @@ export const useSafeArea = () => {
 
       // Полноэкранный режим
       if (tgApp.isExpanded) {
-        const top = isIOS ? 120 : 0;
+        const top = isIOS ? 44 : 0;
         const bottom = isIOS ? 34 : 0;
         setPadding({ top, bottom });
       }
