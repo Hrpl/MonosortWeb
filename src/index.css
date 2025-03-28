@@ -45,6 +45,10 @@ h1 {
   line-height: 1.1;
 }
 
+h6 {
+	line-height: 1.2 !important;
+}
+
 input {
 	outline: none !important;
 }

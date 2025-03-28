@@ -11,27 +11,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 function App() {
   const telegram = window.Telegram.WebApp;
   window.Telegram.WebApp.expand();
-  // Получаем параметры темы один раз
-  const themeParams = { ...telegram.themeParams };
-
-  // Игнорируем изменения темы
-  console.log('Текущая тема:', themeParams);
-
-  // Ваш CSS: используйте themeParams для фиксации цвета, или ничего не меняйте.
-  const frozenTheme = {
-    bg_color: '#222', // Используйте свои значения, если хотите фиксированный дизайн
-    text_color: '#fff'
-  };
-
-  const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
-
-  // Пример применения темы
-  document.body.style.backgroundColor = frozenTheme.bg_color;
-  document.body.style.color = frozenTheme.text_color;
+	telegram.requestFullscreen();
   
   return (
     <BrowserRouter>

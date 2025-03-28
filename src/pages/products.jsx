@@ -91,7 +91,7 @@ const ProductGrid = ({ id }) => {
                   justifyContent: "space-between",
                   alignItems: "center",
                   color: "#fff",
-                  marginBottom: 3,
+                  marginBottom: 5,
                   paddingLeft: 8, 
                   paddingRight: 8,
                 }}

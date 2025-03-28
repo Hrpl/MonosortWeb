@@ -40,10 +40,20 @@
 }
 
 .card-wrapper {
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+	height: 100%;
+}
+
+.modal__panel {
+	flex-grow: 1;
+	width: 100%;
+	padding: 0 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	margin-top: 2rem;
 }
 
 .card__selector {
@@ -53,9 +63,8 @@
   border-radius: 40px;
   padding-top: 8px;
   padding-bottom: 8px;
-  margin-left: 16px;
-  margin-right: 16px;
   margin-bottom: 16px;
+	width: 100%;
 }
 
 @media screen and (max-width: 372px) {

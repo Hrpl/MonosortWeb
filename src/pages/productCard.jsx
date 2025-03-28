@@ -52,7 +52,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
           borderRadius: 0,
         }}
       >
-        {/* Кнопка закрытия окна */}
         <IconButton
           onClick={() => setDialogOpen(false)}
 					disableRipple={true}
@@ -68,7 +67,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
           <CloseIcon />
         </IconButton>
 
-        {/* Изображение и заголовок */}
         <div className='card-wrapper'>
           <img
             src={product.photo}
@@ -78,19 +76,12 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
             {product.name}
           </Typography>
           <Typography variant="body2">настрой как любишь</Typography>
+						<div
+							className='modal__panel'
+						>
+							<SizeSelector id={product.id}/>
+						</div>
         </div>
-        <Box>
-          <div
-            style={{
-              position: 'fixed',
-              bottom: '1rem',
-              width: '100%',
-              zIndex: 1000,
-            }}
-          >
-            <SizeSelector id={product.id}/>
-          </div>
-        </Box>
       </DialogContent>
     </Dialog>
   );
