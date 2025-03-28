@@ -80,6 +80,11 @@ button {
 
 /* Фикс для полноэкранного режима на iOS */
 .ios-expanded {
-  padding-top: 44px !important;
+  padding-top: 60px !important;
   padding-bottom: 34px !important;
+}
+
+.modal__panel {
+	padding-top: var(--safe-area-top) !important;
+  padding-bottom: var(--safe-area-bottom) !important;
 }
