@@ -6,6 +6,11 @@
 	margin: 0;
 }
 
+:root {
+  --safe-area-top: 0px;
+  --safe-area-bottom: 0px;
+}
+
 html:has(.auth__wrapper),
 body:has(.auth__wrapper),
 #root:has(.auth__wrapper) {
@@ -63,4 +68,17 @@ button {
 
 * {
 	-webkit-tap-highlight-color: transparent;
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  :root {
+    --safe-area-top: env(safe-area-inset-top);
+    --safe-area-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Фикс для полноэкранного режима на iOS */
+.ios-expanded {
+  padding-top: 44px !important;
+  padding-bottom: 34px !important;
 }

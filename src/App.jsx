@@ -9,6 +9,18 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
+
+	React.useEffect(() => {
+		const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+		const tgApp = window.Telegram?.WebApp;
+		
+		if (isIOS && tgApp?.isExpanded) {
+			document.body.classList.add('ios-expanded');
+		} else {
+			document.body.classList.remove('ios-expanded');
+		}
+	}, []);
+
   React.useEffect(() => {
 		if (!window.Telegram?.WebApp) return;
 	
