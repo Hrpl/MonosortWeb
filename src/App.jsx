@@ -12,9 +12,8 @@ function App() {
 	
 	function setSafeArea() {
 		const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-		const isFullscreen = window.Telegram?.WebApp?.isExpanded;
 		
-		if (isIOS && isFullscreen) {
+		if (isIOS) {
 			document.body.style.paddingTop = '44px';
 			document.body.style.paddingBottom = '34px';
 			document.body.style.minHeight = 'calc(100vh - 78px)'; // 44 + 34
