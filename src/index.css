@@ -13,7 +13,7 @@ body:has(.auth__wrapper),
 }
 
 body {
-	padding-top: 44px;
+	padding-top: 64px;
   margin: 0;
   place-items: center;
 	background-color: #242424;
@@ -23,7 +23,7 @@ body {
 }
 
 body:has(.tabs) {
-	padding-top: 44px;
+	padding-top: 64px;
 }
 
 html, body, #root {
