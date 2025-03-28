@@ -13,7 +13,7 @@ body:has(.auth__wrapper),
 }
 
 body {
-	padding-top: 20px;
+	padding-top: 44px;
   margin: 0;
   place-items: center;
 	background-color: #242424;
@@ -23,7 +23,7 @@ body {
 }
 
 body:has(.tabs) {
-	padding-top: 0;
+	padding-top: 44px;
 }
 
 html, body, #root {
@@ -63,11 +63,4 @@ button {
 
 * {
 	-webkit-tap-highlight-color: transparent;
-}
-
-@supports (padding-top: env(safe-area-inset-top)) {
-  body {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
 }

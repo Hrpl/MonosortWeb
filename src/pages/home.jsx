@@ -22,11 +22,7 @@ const Home = () => {
   }, [navigate]);
 
   return (
-    <div style={{
-      paddingTop: 'env(safe-area-inset-top, 0px)',
-      paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-      minHeight: 'calc(100vh - (env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px)))'
-    }}>
+    <>
       <Categories></Categories>
 			<button 
 				className="cart__button"
@@ -91,7 +87,7 @@ const Home = () => {
 					</div>
 				</div>
 			</div>
-    </div>
+    </>
   );
 };
 
