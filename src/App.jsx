@@ -10,15 +10,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
   React.useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      const tg = Telegram.WebApp;
-      tg.ready();
-      tg.expand(); // Пытаемся развернуть
-      tg.setHeaderColor('#2b2d3a'); // Маскируем шапку
-      tg.setBackgroundColor('#2b2d3a'); // Убираем белые границы
-      tg.BackButton.hide(); // Скрываем кнопку "Назад"
-    }
-  }, []);
+		if (!window.Telegram?.WebApp) return;
+	
+		const tgWebApp = window.Telegram.WebApp;
+		tgWebApp.ready();
+	}, []);
   
   return (
     <BrowserRouter>
