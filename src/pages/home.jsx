@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useTelegramSafeArea from '../hooks/useTelegramSafeArea';
 import cartIcon from "../assets/cart.svg";
 import trashIcon from "../assets/trash.svg";
 import closeIcon from "../assets/close.svg";
@@ -10,6 +11,7 @@ const Home = () => {
   const navigate = useNavigate();
 	const [quality, setQuality] = React.useState(0);
 	const [isShowCart, setIsShowCart] = React.useState(false);
+	const { top, bottom } = useTelegramSafeArea();
 
   useEffect(() => {
     const currentDate = new Date();
@@ -22,7 +24,12 @@ const Home = () => {
   }, [navigate]);
 
   return (
-    <>
+    <div style={{
+      paddingTop: `${top}px`,
+      paddingBottom: `${bottom}px`,
+      minHeight: `calc(100vh - ${top + bottom}px)`,
+      boxSizing: 'border-box'
+    }}>
       <Categories></Categories>
 			<button 
 				className="cart__button"
@@ -87,7 +94,7 @@ const Home = () => {
 					</div>
 				</div>
 			</div>
-    </>
+    </div>
   );
 };
 
