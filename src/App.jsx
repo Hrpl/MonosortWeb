@@ -10,27 +10,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
   React.useEffect(() => {
-		if (!window.Telegram?.WebApp) return;
-	
-		const tgWebApp = window.Telegram.WebApp;
-		const isOldVersion = parseFloat(tgWebApp.version) < 6.0;
-	
-		tgWebApp.ready();
-		tgWebApp.expand();
-	
-		if (isOldVersion) {
-			// Старый метод (до 6.0)
-			tgWebApp.enableClosingConfirmation?.();
-		} else {
-			// Новый метод (6.0+)
-			tgWebApp.onEvent('backButtonClicked', () => {
-				if (confirm('Вы уверены, что хотите выйти?')) {
-					tgWebApp.close();
-				}
-			});
-			tgWebApp.BackButton.show();
-		}
-	}, []);
+    if (window.Telegram?.WebApp) {
+      const tg = Telegram.WebApp;
+      tg.ready();
+      tg.expand(); // Пытаемся развернуть
+      tg.setHeaderColor('#2b2d3a'); // Маскируем шапку
+      tg.setBackgroundColor('#2b2d3a'); // Убираем белые границы
+      tg.BackButton.hide(); // Скрываем кнопку "Назад"
+    }
+  }, []);
   
   return (
     <BrowserRouter>
