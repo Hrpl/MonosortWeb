@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
 html:has(.auth__wrapper),
 body:has(.auth__wrapper),
 #root:has(.auth__wrapper) {
 	height: 100%;
-}
-
-html {
-	background-color: #383838 !important;
 }
 
 body {
@@ -14,14 +18,26 @@ body {
   place-items: center;
 	background-color: #242424;
 	box-sizing: border-box;
+	font-family: "Open Sans", sans-serif;
+	font-weight: 400;
 }
 
 body:has(.tabs) {
 	padding-top: 0;
 }
 
+html, body, #root {
+	min-height: 100vh;
+}
+
 #root{
   width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+ul {
+	list-style-type: none;
 }
 
 h1 {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import RegisterPage from './req';
 import LoginPage from './signin';
+import logo from "../assets/logo.svg";
 import "../styles/auth.css";
 
 const AuthPage = () => {
@@ -12,9 +13,7 @@ const AuthPage = () => {
   return (
     <div className='auth__wrapper'>
     	<Box sx={{ textAlign: 'center', padding: '20px' }}>
-	      <Typography variant="h4" gutterBottom className='auth__logo'>
-	        MonoSort
-	      </Typography>
+	      <img className='auth__logo' src={logo} alt="МоноСорт" />
 	
 	      {/* Элемент переключения */}
 	      <Box
@@ -26,7 +25,7 @@ const AuthPage = () => {
 	          margin: '0 auto',
 						height: 50,
 	          padding: '4px',
-	          backgroundColor: '#bbb',
+	          backgroundColor: '#1b1d1c',
 	          borderRadius: '20px',
 	          position: 'relative',
 						marginBottom: '32px',
@@ -39,7 +38,7 @@ const AuthPage = () => {
 	            height: '100%',
 	            width: '50%',
 	            left: activeTab === 'login' ? '50%' : '0',
-	            backgroundColor: '#dfdfdf',
+	            backgroundColor: '#2c5c4f',
 	            borderRadius: '20px',
 	            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
 	            transition: 'all 0.2s ease',
@@ -56,7 +55,7 @@ const AuthPage = () => {
 	            padding: '10px 0',
 	            cursor: 'pointer',
 	            fontWeight: activeTab === 'register' ? 'bold' : 'normal',
-	            color: activeTab === 'register' ? '#000' : '#444',
+	            color: activeTab === 'register' ? '#fff' : '#fff',
 							transition: ".2s"
 	          }}
 	        >
@@ -71,7 +70,7 @@ const AuthPage = () => {
 	            padding: '10px 0',
 	            cursor: 'pointer',
 	            fontWeight: activeTab === 'login' ? 'bold' : 'normal',
-	            color: activeTab === 'login' ? '#000' : '#444',
+	            color: activeTab === 'login' ? '#fff' : '#fff',
 							transition: ".2s"
 	          }}
 	        >

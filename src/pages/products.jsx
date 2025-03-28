@@ -9,13 +9,14 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { getProducts } from "../service/request";
-import { styled } from "@mui/material/styles"; // Импортируем styled
+import { styled } from "@mui/material/styles";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CoffeeCustomizer from "./productCard";
+import arrowRightIcon from "../assets/arrow-right.svg";
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  width: "100%", // Устанавливаем ширину карточки
-  height: "300px", // Устанавливаем фиксированную высоту карточки
+  width: "100%",
+  height: 290,
   display: "flex",
   flexDirection: "column",
 }));
@@ -30,9 +31,9 @@ const ProductGrid = ({ id }) => {
     setDialogOpen(true);
   };
 
-  function handleClose() {
+  const handleClose = () => {
     setDialogOpen(false);
-  }
+  };
 
   useEffect(() => {
     const fetchedCategories = async () => {
@@ -44,76 +45,90 @@ const ProductGrid = ({ id }) => {
   }, [id]);
 
   return (
-    <Grid container spacing={2}>
-      {products.map((product) => (
-        <Grid size={{ xs: 6, sm: 3 }} key={product.id}>
-          <StyledCard
-            sx={{ backgroundColor: "#060300", borderRadius: "0.8rem" }}
-          >
-            <CardMedia
-              component="img"
-              height="180"
-              image={product.photo}
-              alt={product.name}
-            />
-            <CardContent
-              style={{ flexGrow: 1 }}
-              sx={{
-                py: 1,
+    <>
+      <Grid container spacing={2}>
+        {products.map((product) => (
+          <Grid size={{ xs: 6, sm: 3 }} key={product.id}>
+            <StyledCard
+              className="card"
+              onClick={() => {
+                handleOpen(product);
               }}
+              sx={{ borderRadius: "0.8rem" }}
             >
-              <Typography
-                variant="subtitle1"
-                style={{
-                  overflow: "hidden",
-                  textWrap: "balance",
-                  color: "#fff",
-                  textOverflow: "ellipsis",
-                  display: "-webkit-box",
-                  overflow: "hidden",
-                  WebkitLineClamp: 2, // Указывает на количество строк
-                  WebkitBoxOrient: "vertical",
-                }}
-              >
-                {product.name}
-              </Typography>
-            </CardContent>
-            <CardActions
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                color: "#fff",
-              }}
-              sx={{ py: 0, px: 1 }}
-            >
-              <Typography
-                variant="subtitle1"
+              <CardMedia
+                component="img"
+                height="180"
+                image={product?.photo}
+                alt={product?.name}
+              />
+              <CardContent
+                style={{ flexGrow: 1 }}
                 sx={{
-                  px: 1,
+                  py: 1,
                 }}
               >
-                {product.price} ₽
-              </Typography>
+                <Typography
+                  variant="subtitle1"
+                  style={{
+                    overflow: "hidden",
+                    textWrap: "balance",
+                    color: "#000",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    overflow: "hidden",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+										fontWeight: 500
+                  }}
+                >
+                  {product?.name}
+                </Typography>
+              </CardContent>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  color: "#fff",
+                  marginBottom: 3,
+                  paddingLeft: 8, 
+                  paddingRight: 8,
+                }}
+              >
+                <Typography
+                  variant="subtitle1"
+                  fontWeight={400}
+                  fontSize={20}
+                  sx={{
+                    px: 1,
+                  }}
+                >
+                  {product?.price} ₽
+                </Typography>
 
-              <Typography size="middle" disabled={!product.isExistence}>
-                <KeyboardArrowRightIcon
+                <img
+                  src={arrowRightIcon}
+                  className="card__arrow"
                   variant="contained"
-                  sx={{ color: "#aaa", pt: 1 }}
-                  onClick={() => {
+                  sx={{ pt: 1 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
                     handleOpen(product);
                   }}
                 />
-              </Typography>
-            </CardActions>
-            <CoffeeCustomizer
-              open={dialogOpen}
-              onClose={handleClose}
-              product={selectedProduct}
-            />
-          </StyledCard>
-        </Grid>
-      ))}
-    </Grid>
+              </div>
+            </StyledCard>
+          </Grid>
+        ))}
+      </Grid>
+      
+      <CoffeeCustomizer
+        open={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        product={selectedProduct}
+      />
+    </>
   );
 };
 

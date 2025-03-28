@@ -18,7 +18,7 @@ const Categories = () => {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%", flexGrow: 1 }}>
       <div className="tabs">
         {categories?.map((category) => (
           <button
@@ -35,16 +35,15 @@ const Categories = () => {
       {categories?.map((category, index) => (
         <div
 					key={category.id}
+					className="tabpanel"
           role="tabpanel"
-          hidden={value !== index}
+          hidden={value !== category.id}
           id={`scrollable-auto-tabpanel-${index}`}
           aria-labelledby={`scrollable-auto-tab-${index}`}
         >
-          {value === index && (
+          {value === category.id && (
             <Box sx={{ p: 3 }}>
-              <Typography>
-                <ProductGrid id={category.id} />
-              </Typography>
+              <ProductGrid id={category.id} />
             </Box>
           )}
         </div>

@@ -47,8 +47,9 @@ const Additives = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AdditiveMenu open={dialogOpen} 
-                  onClose={handleClose} 
-                  type={selectedType} />
+        onClose={handleClose} 
+        type={selectedType} 
+			/>
       <AppBar position="static" sx={{backgroundColor: "#222"}}>
         <Tabs
           value={value}

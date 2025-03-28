@@ -21,7 +21,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CoffeeCustomizer = ({ open, onClose, product }) => {
+const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   if(product == null) return null;
   const [volume, setVolume] = useState('M');
   const [price, setPrice] = useState(250);
@@ -35,7 +35,9 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} 
+    <Dialog 
+			open={open} 
+			onClose={() => setDialogOpen(false)}
       fullScreen={fullScreen} 
 			style={{borderRadius: 0}}
       TransitionComponent={Transition} 
@@ -52,7 +54,7 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
       >
         {/* Кнопка закрытия окна */}
         <IconButton
-          onClick={onClose}
+          onClick={() => setDialogOpen(false)}
 					disableRipple={true}
           sx={{
             position: 'absolute',
@@ -80,10 +82,10 @@ const CoffeeCustomizer = ({ open, onClose, product }) => {
         <Box>
           <div
             style={{
-              position: 'fixed', // Фиксируем элемент
-              bottom: '1rem', // Прижимаем к низу экрана
-              width: '100%', // Растягиваем на всю ширину экрана
-              zIndex: 1000, // Помещаем выше основного контента
+              position: 'fixed',
+              bottom: '1rem',
+              width: '100%',
+              zIndex: 1000,
             }}
           >
             <SizeSelector id={product.id}/>
