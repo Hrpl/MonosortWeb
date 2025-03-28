@@ -15,7 +15,6 @@ import { useTheme, createTheme } from '@mui/material/styles';
 import { forwardRef } from 'react';
 import SizeSelector from './volumeSelector';
 import "../styles/card.css";
-import { SafeArea } from '../components/safeArea/SafeArea';
 
 // Transition (анимация снизу вверх)
 const Transition = forwardRef(function Transition(props, ref) {
@@ -36,58 +35,62 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   };
 
   return (
-    	<Dialog 
-				open={open} 
-				onClose={() => setDialogOpen(false)}
-	      fullScreen={fullScreen} 
-				style={{borderRadius: 0}}
-	      TransitionComponent={Transition} 
-	      transitionDuration={{ enter: 400, exit: 300 }}
-			>
-	      <DialogContent
-	        sx={{
-	          p: 0,
-	          bgcolor: '#222',
-	          color: '#fff',
-	          overflow: 'hidden',
-	          borderRadius: 0,
-						
-	        }}
-	      >
-					<SafeArea>
-						<IconButton
-							onClick={() => setDialogOpen(false)}
-							disableRipple={true}
-							sx={{
-								position: 'absolute',
-								top: 8,
-								right: 8,
-								color: '#fff',
-								backgroundColor: '#888',
-								borderRadius: '90%'
-							}}
+    <Dialog 
+			open={open} 
+			onClose={() => setDialogOpen(false)}
+      fullScreen={fullScreen} 
+			style={{borderRadius: 0}}
+      TransitionComponent={Transition} 
+      transitionDuration={{ enter: 400, exit: 300 }}
+		>
+      <DialogContent
+			className='fasfasfas'
+        sx={{
+          p: 0,
+          bgcolor: '#222',
+          color: '#fff',
+          overflow: 'hidden',
+          borderRadius: 0,
+        }}
+				style={{
+					paddingTop: 'var(--safe-area-top, 0px)',
+					paddingBottom: 'var(--safe-area-bottom, 0px)',
+					minHeight: 'calc(100vh - var(--safe-area-top, 0px) - var(--safe-area-bottom, 0px))',
+					boxSizing: 'border-box'
+				}}
+      >
+        <IconButton
+          onClick={() => setDialogOpen(false)}
+					disableRipple={true}
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            color: '#fff',
+            backgroundColor: '#888',
+            borderRadius: '90%'
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+
+        <div className='card-wrapper'>
+          <img
+            src={product.photo}
+						className='card__img'
+          />
+          <Typography variant="h5" sx={{ mt: 2 }}>
+            {product.name}
+          </Typography>
+          <Typography variant="body2">настрой как любишь</Typography>
+						<div
+							className='modal__panel'
 						>
-							<CloseIcon />
-						</IconButton>
-		
-						<div className='card-wrapper'>
-							<img
-								src={product.photo}
-								className='card__img'
-							/>
-							<Typography variant="h5" sx={{ mt: 2 }}>
-								{product.name}
-							</Typography>
-							<Typography variant="body2">настрой как любишь</Typography>
-								<div
-									className='modal__panel'
-								>
-									<SizeSelector id={product.id}/>
-								</div>
+							<SizeSelector id={product.id}/>
 						</div>
-					</SafeArea>
-	      </DialogContent>
-	    </Dialog>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
