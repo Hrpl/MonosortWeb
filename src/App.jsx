@@ -9,17 +9,32 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
-
-	React.useEffect(() => {
+	
+	function setSafeArea() {
 		const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-		const tgApp = window.Telegram?.WebApp;
+		const isFullscreen = window.Telegram?.WebApp?.isExpanded;
 		
-		if (isIOS && tgApp?.isExpanded) {
-			document.body.classList.add('ios-expanded');
+		if (isIOS && isFullscreen) {
+			document.body.style.paddingTop = '44px';
+			document.body.style.paddingBottom = '34px';
+			document.body.style.minHeight = 'calc(100vh - 78px)'; // 44 + 34
 		} else {
-			document.body.classList.remove('ios-expanded');
+			document.body.style.paddingTop = '0';
+			document.body.style.paddingBottom = '0';
+			document.body.style.minHeight = '100vh';
 		}
-	}, []);
+	}
+	
+	// Вызываем при загрузке
+	setSafeArea();
+	
+	// Обновляем при изменении размера
+	window.addEventListener('resize', setSafeArea);
+	
+	// Для Telegram WebApp - обновляем при изменении режима
+	if (window.Telegram?.WebApp) {
+		Telegram.WebApp.onEvent('viewportChanged', setSafeArea);
+	}
 
   React.useEffect(() => {
 		if (!window.Telegram?.WebApp) return;

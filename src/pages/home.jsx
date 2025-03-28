@@ -5,7 +5,6 @@ import cartIcon from "../assets/cart.svg";
 import trashIcon from "../assets/trash.svg";
 import closeIcon from "../assets/close.svg";
 import Categories from "./category";
-import { SafeArea } from "../components/safeArea/SafeArea";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,7 +22,11 @@ const Home = () => {
   }, [navigate]);
 
   return (
-    <SafeArea>
+    <div style={{
+      paddingTop: 'env(safe-area-inset-top, 0px)',
+      paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+      minHeight: 'calc(100vh - (env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px)))'
+    }}>
       <Categories></Categories>
 			<button 
 				className="cart__button"
@@ -88,7 +91,7 @@ const Home = () => {
 					</div>
 				</div>
 			</div>
-    </SafeArea>
+    </div>
   );
 };
 
