@@ -13,11 +13,18 @@ function App() {
   React.useEffect(() => {
 		if (!window.Telegram?.WebApp) return;
 	
+		const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 		const tgWebApp = window.Telegram.WebApp;
 		const isOldVersion = parseFloat(tgWebApp.version) < 6.0;
 	
 		tgWebApp.ready();
 		tgWebApp.expand();
+
+		if (isIOS && tgWebApp?.isExpanded) {
+			document.body.classList.add('ios-expanded');
+		} else {
+			document.body.classList.remove('ios-expanded');
+		}
 	
 		if (isOldVersion) {
 			// Старый метод (до 6.0)
