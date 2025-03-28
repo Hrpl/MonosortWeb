@@ -36,7 +36,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   };
 
   return (
-    <SafeArea>
     	<Dialog 
 				open={open} 
 				onClose={() => setDialogOpen(false)}
@@ -55,39 +54,40 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
 						
 	        }}
 	      >
-	        <IconButton
-	          onClick={() => setDialogOpen(false)}
-						disableRipple={true}
-	          sx={{
-	            position: 'absolute',
-	            top: 8,
-	            right: 8,
-	            color: '#fff',
-	            backgroundColor: '#888',
-	            borderRadius: '90%'
-	          }}
-	        >
-	          <CloseIcon />
-	        </IconButton>
-	
-	        <div className='card-wrapper'>
-	          <img
-	            src={product.photo}
-							className='card__img'
-	          />
-	          <Typography variant="h5" sx={{ mt: 2 }}>
-	            {product.name}
-	          </Typography>
-	          <Typography variant="body2">настрой как любишь</Typography>
-							<div
-								className='modal__panel'
-							>
-								<SizeSelector id={product.id}/>
-							</div>
-	        </div>
+					<SafeArea>
+						<IconButton
+							onClick={() => setDialogOpen(false)}
+							disableRipple={true}
+							sx={{
+								position: 'absolute',
+								top: 8,
+								right: 8,
+								color: '#fff',
+								backgroundColor: '#888',
+								borderRadius: '90%'
+							}}
+						>
+							<CloseIcon />
+						</IconButton>
+		
+						<div className='card-wrapper'>
+							<img
+								src={product.photo}
+								className='card__img'
+							/>
+							<Typography variant="h5" sx={{ mt: 2 }}>
+								{product.name}
+							</Typography>
+							<Typography variant="body2">настрой как любишь</Typography>
+								<div
+									className='modal__panel'
+								>
+									<SizeSelector id={product.id}/>
+								</div>
+						</div>
+					</SafeArea>
 	      </DialogContent>
 	    </Dialog>
-    </SafeArea>
   );
 };
 
