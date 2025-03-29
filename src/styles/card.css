@@ -123,16 +123,8 @@
 	margin-top: 1rem;
 }
 
-.modal__grid::-webkit-scrollbar, .modal__categories-list::-webkit-scrollbar { 
-	width: 0; 
-}
-
 .modal__grid, .modal__categories-list { 
-	-ms-overflow-style: none; 
-}
-
-.modal__grid, .modal__categories-list { 
-	overflow: -moz-scrollbars-none; 
+	padding-bottom: 1rem;
 }
 
 .modal__grid-item {
