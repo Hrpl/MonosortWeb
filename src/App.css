@@ -143,7 +143,7 @@
 .cart__panel {
 	border-top: 1px solid #383838;
 	background-color: #1e1e1e;
-	padding: 1rem 2rem;
+	padding: 1rem 2rem 2rem 2rem;
 }
 
 .cart__panel-button {

@@ -20,6 +20,7 @@ body {
 	box-sizing: border-box;
 	font-family: "Open Sans", sans-serif;
 	font-weight: 400;
+	color: #fff;
 }
 
 body:has(.tabs) {
