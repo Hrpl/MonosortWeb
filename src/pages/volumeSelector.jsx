@@ -29,27 +29,28 @@ const SizeSelector = ({ id }) => {
     >
       {/* Блок с кнопками */}
       <Box
+				className="card__size"
         sx={{
-          bgcolor: "#222",
+          bgcolor: "#161616",
           borderRadius: 8,
           position: "relative", // Нужен для абсолютного позиционирования скользящего элемента
           display: "flex",
           flexGrow: 1,
-          mx: 1,
+					height: 70
         }}
       >
-        {/* Скользящий элемент */}
+        {/* Активный элемент */}
         <Box
           sx={{
             position: "absolute",
             top: 0,
-            left: `${sliderPosition * (100 / volumes.length)}%`, // Расчёт позиции на основе индекса
-            width: `${100 / volumes.length}%`, // Ширина подсветки равна ширине одной кнопки
+            left: `${sliderPosition * (100 / volumes.length)}%`, 
+            width: `${100 / volumes.length}%`,
             height: "100%",
             bgcolor: "#fff",
             borderRadius: 9,
-            transition: "all 0.3s ease", // Плавная анимация перемещения
-            zIndex: 1, // Располагаем под кнопками
+            transition: "all 0.3s ease", 
+            zIndex: 1, 
           }}
         ></Box>
 
@@ -58,15 +59,15 @@ const SizeSelector = ({ id }) => {
           <Button
             disableRipple={true}
             key={option.name}
-            onClick={() => handleSizeChange(option, index)} // Передаём индекс для расчёта позиции ползунка
+            onClick={() => handleSizeChange(option, index)}
             sx={{
               "&:focus": {
-                border: "none", // Убираем стандартный outline
+                border: "none",
               },
               "&:active": {
-                border: "none", // Убираем стандартный outline
+                border: "none",
               },
-              zIndex: 2, // Располагаем поверх скользящего элемента
+              zIndex: 2,
               position: "relative",
               bgcolor:
                 selectedSize?.name === option.name
@@ -84,7 +85,7 @@ const SizeSelector = ({ id }) => {
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography variant="h6">{option.name}</Typography>
               {selectedSize?.name === option.name && (
-                <Typography variant="caption" sx={{ fontSize: "0.5rem" }}>
+                <Typography variant="caption" sx={{ fontSize: "10px" }}>
                   {option.size}
                 </Typography>
               )}
@@ -95,6 +96,9 @@ const SizeSelector = ({ id }) => {
 
       {/* Цена кнопки */}
       <Button
+				style={{
+					marginRight: 6
+				}}
         disableRipple={true}
 				className="card__button"
         sx={{
@@ -103,7 +107,7 @@ const SizeSelector = ({ id }) => {
           borderRadius: 8,
           color: "#fff",
           minWidth: "80px",
-          mx: 1,
+					height: 70,
         }}
       >
         <Typography
@@ -113,7 +117,7 @@ const SizeSelector = ({ id }) => {
             px: 2,
           }}
         >
-          {selectedSize != null ? selectedSize.price : ""} ₽
+          + {selectedSize != null ? selectedSize.price : ""} ₽
         </Typography>
       </Button>
     </div>

@@ -37,11 +37,11 @@
 	padding: 0 15px;
 	height: 60px;
 	width: 100%;
-	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-family: "Open Sans", sans-serif;
 }
 
 .auth__input::placeholder {
 	font-size: 18px;
 	color: #fff;
-	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-family: "Open Sans", sans-serif;
 }

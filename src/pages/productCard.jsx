@@ -119,7 +119,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
 								)
 							)}
 						</div>
-						<div className="modal__grid" style={{display: "grid", gridTemplateColumns: `repeat(${Math.ceil(additives.length / 2) > 3 ? Math.ceil(additives.length / 2) : 4}, 100px)`, gap: "1rem"}}>
+						<div className="modal__grid" style={{display: "grid", gridTemplateColumns: `repeat(${Math.ceil(additives.length / 2) > 3 ? Math.ceil(additives.length / 2) : 4}, 140px)`, gap: "1rem"}}>
 							{additives.map((additive) => (
 								<button 
 									key={additive.id} 

@@ -61,11 +61,16 @@
 .card__selector {
   display: flex;
   align-items: center;
-  background-color: #444;
+  background-color: #242525;
   border-radius: 40px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
 	width: 100%;
+}
+
+.card__size {
+	margin-left: 6px;
+	margin-right: 6px;
 }
 
 @media screen and (max-width: 372px) {
@@ -76,12 +81,16 @@
 	.card__selector {
 		flex-direction: column;
 		background-color: transparent;
-		gap: 10px;
+		gap: 1rem;
 		margin-bottom: 0;
 		padding-bottom: 0;
 	}
 
 	.card__button {
+		width: 100%;
+	}
+
+	.card__size {
 		width: 100%;
 	}
 }
@@ -97,7 +106,7 @@
 
 .card__wave {
 	width: 100%;
-	height: auto;
+	height: 40px;
 }
 
 .modal__categories-list {
