@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { TextField, Button, Typography, Box, Link } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { authorize } from "../service/request";
@@ -9,6 +9,26 @@ const LoginPage = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    const handleTapOutside = (e) => {
+      if (formRef.current && !formRef.current.contains(e.target)) {
+        const activeElement = document.activeElement;
+        if (activeElement && ['INPUT', 'TEXTAREA'].includes(activeElement.tagName)) {
+          activeElement.blur();
+        }
+      }
+    };
+
+    document.addEventListener('touchstart', handleTapOutside);
+    document.addEventListener('click', handleTapOutside);
+
+    return () => {
+      document.removeEventListener('touchstart', handleTapOutside);
+      document.removeEventListener('click', handleTapOutside);
+    };
+  }, []);
 
   const handleSubmit = async () => {
     var token = await authorize(login, password);
@@ -18,7 +38,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Box>
+    <Box ref={formRef}>
       <Box
         sx={{
           width: { xs: "100wv", sm: "400px" },

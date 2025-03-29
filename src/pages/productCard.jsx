@@ -30,18 +30,20 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   };
 
 	const getAdditives = () => {
-		axios.get("https://monosortcoffee.ru/api/additive/type")
-		.then((res) => {
-			setAdditivesCategories(res.data);
-		})
-		.catch((err) => {
-			console.log(err);
-		})
+		if(product.id) {
+			axios.get(`https://monosortcoffee.ru/api/additive/type?drinkId=${product.id}`)
+			.then((res) => {
+				setAdditivesCategories(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+		}
 	}
 	
 	useEffect(() => {
 		getAdditives();
-	}, []);
+	}, [product.id]);
 
 	useEffect(() => {
 		axios.get(`https://monosortcoffee.ru/api/additive/many/${selectedAditives}`)
