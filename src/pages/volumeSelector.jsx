@@ -30,7 +30,7 @@ const SizeSelector = ({ id }) => {
       {/* Блок с кнопками */}
       <Box
         sx={{
-          bgcolor: "#333",
+          bgcolor: "#222",
           borderRadius: 8,
           position: "relative", // Нужен для абсолютного позиционирования скользящего элемента
           display: "flex",
@@ -46,7 +46,7 @@ const SizeSelector = ({ id }) => {
             left: `${sliderPosition * (100 / volumes.length)}%`, // Расчёт позиции на основе индекса
             width: `${100 / volumes.length}%`, // Ширина подсветки равна ширине одной кнопки
             height: "100%",
-            bgcolor: "#000",
+            bgcolor: "#fff",
             borderRadius: 9,
             transition: "all 0.3s ease", // Плавная анимация перемещения
             zIndex: 1, // Располагаем под кнопками
@@ -72,7 +72,7 @@ const SizeSelector = ({ id }) => {
                 selectedSize?.name === option.name
                   ? "transparent"
                   : "transparent",
-              color: selectedSize?.name === option.name ? "#fff" : "#ccc",
+              color: selectedSize?.name === option.name ? "#2c5c4f" : "#ccc",
               width: "100%",
               flexGrow: 1,
               display: "flex",
@@ -99,7 +99,7 @@ const SizeSelector = ({ id }) => {
 				className="card__button"
         sx={{
           flexGrow: 1,
-          bgcolor: "#024e07",
+          bgcolor: "#2c5c4f",
           borderRadius: 8,
           color: "#fff",
           minWidth: "80px",
@@ -113,7 +113,7 @@ const SizeSelector = ({ id }) => {
             px: 2,
           }}
         >
-          + {selectedSize != null ? selectedSize.price : ""} ₽
+          {selectedSize != null ? selectedSize.price : ""} ₽
         </Typography>
       </Button>
     </div>
