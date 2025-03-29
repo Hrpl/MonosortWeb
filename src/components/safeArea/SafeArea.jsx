@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useSafeArea } from '../../hooks/useSafeArea/useSafeArea';
 
 export const SafeArea = ({ children }) => {
-  const { top, bottom } = useSafeArea();
+  const { top, bottom, iconTop } = useSafeArea();
 
   useEffect(() => {
     document.documentElement.style.setProperty('--safe-area-top', `${top}px`);
     document.documentElement.style.setProperty('--safe-area-bottom', `${bottom}px`);
-  }, [top, bottom]);
+    document.documentElement.style.setProperty('--safe-area-icon', `${iconTop}px`);
+  }, [top, bottom, iconTop]);
 
   return (
     <div style={{

@@ -62,6 +62,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
         <IconButton
           onClick={() => setDialogOpen(false)}
 					disableRipple={true}
+					className='card__close'
           sx={{
             position: 'absolute',
             top: 8,
@@ -70,11 +71,19 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
             backgroundColor: '#888',
             borderRadius: '90%'
           }}
+					style={{
+						top: 'var(--safe-area-icon, 0px)',
+					}}
         >
           <CloseIcon />
         </IconButton>
 
-        <div className='card-wrapper'>
+        <div 
+					className='card-wrapper'
+					style={{
+						paddingTop: 'var(--safe-area-top, 0px)',
+					}}
+				>
           <img
             src={product.photo}
 						className='card__img'
