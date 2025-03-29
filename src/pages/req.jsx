@@ -5,11 +5,12 @@ import {reg} from '../service/request';
 import "../styles/auth.css";
 
 const RegisterPage = () => {
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegistration = async () => {
-    await reg(username, password);
+    await reg(name, username, password);
   };
 
   return (
@@ -20,6 +21,16 @@ const RegisterPage = () => {
         }}
       >
         <Grid container spacing={3}>
+					<Grid item size={{xs: 12}}>
+            <input
+              fullWidth
+              placeholder="Имя"
+              variant="outlined"
+              value={name}
+							className="auth__input"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Grid>
           <Grid item size={{xs: 12}}>
             <input
               fullWidth

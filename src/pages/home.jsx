@@ -43,7 +43,6 @@ const Home = () => {
 						onClick={() => setIsShowCart(false)}
 					>
 						<IconButton
-							onClick={() => setDialogOpen(false)}
 							disableRipple={true}
 							className='card__close'
 							sx={{

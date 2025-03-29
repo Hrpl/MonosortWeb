@@ -18,6 +18,12 @@ const Categories = () => {
       setCategories(categories);
     };
     fetchedCategories();
+
+    // Очистка обработчиков при размонтировании
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
   }, []);
 
   const centerActiveTab = (clickedTab) => {
@@ -40,50 +46,46 @@ const Categories = () => {
     if (!tabsContainerRef.current) return;
     
     isDraggingRef.current = true;
-    startXRef.current = e.clientX;
+    startXRef.current = e.pageX - tabsContainerRef.current.offsetLeft;
     scrollLeftRef.current = tabsContainerRef.current.scrollLeft;
     
-    document.body.style.cursor = 'grabbing';
-    document.body.style.userSelect = 'none';
+    const container = tabsContainerRef.current;
+    container.style.cursor = 'grabbing';
+    container.style.userSelect = 'none';
+    
+    // Добавляем обработчики на document
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
   };
 
   const handleMouseUp = () => {
     isDraggingRef.current = false;
+    if (tabsContainerRef.current) {
+      tabsContainerRef.current.style.cursor = 'grab';
+    }
     
-    document.body.style.cursor = '';
-    document.body.style.userSelect = '';
+    // Удаляем обработчики с document
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
   };
 
   const handleMouseMove = (e) => {
     if (!isDraggingRef.current || !tabsContainerRef.current) return;
     
     e.preventDefault();
-    const x = e.clientX;
-    const walk = (x - startXRef.current);
+    const x = e.pageX - tabsContainerRef.current.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
     tabsContainerRef.current.scrollLeft = scrollLeftRef.current - walk;
-    
-    startXRef.current = x;
-    scrollLeftRef.current = tabsContainerRef.current.scrollLeft;
   };
 
   const handleTabClick = (categoryId, e) => {
     if (isDraggingRef.current) {
-      e.preventDefault();
+      isDraggingRef.current = false;
       return;
     }
     setValue(categoryId);
     centerActiveTab(e.currentTarget);
   };
-
-  useEffect(() => {
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-    
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, []);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>

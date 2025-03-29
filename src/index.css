@@ -31,6 +31,10 @@ body:has(.tabs) {
 	padding-top: 0;
 }
 
+body:has(.cart.show) {
+	overflow-y: hidden;
+}
+
 body:has(.auth__wrapper) {
 	background-color: #1e1e1e;
 }
@@ -68,6 +72,12 @@ button {
 	outline: none;
 	border: none;
 	cursor: pointer;
+	user-select: none;
+}
+
+img {
+	user-select: none;
+	pointer-events: none;
 }
 
 * {

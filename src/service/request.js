@@ -35,9 +35,10 @@ export async function authorize(login, password) {
     }
 };
 
-export async function reg(login, password) {
+export async function reg(name, login, password) {
     try {
         var body = {
+						name: name,
             login: login,
             password: password
         }
