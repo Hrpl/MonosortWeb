@@ -104,7 +104,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
 	          </Typography>
           </div>
 					<img className='card__wave' src={waveImage} alt="Волна" />
-					<Typography mt={4} fontWeight={400} color="#fff" fontSize={18}>настрой как любишь</Typography>
+					<Typography mt={4} fontWeight={400} color="#fff" fontSize={20}>настрой как любишь</Typography>
 					<div className="modal__additives">
 						<div className="modal__categories-list">
 							{additivesCategories.map((category) => (

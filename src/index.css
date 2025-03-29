@@ -23,8 +23,8 @@ body {
 	color: #fff;
 }
 
-button, input, input::placeholder {
-	font-family: "Open Sans", sans-serif;
+button, input, input::placeholder, p {
+	font-family: "Open Sans", sans-serif !important;
 }
 
 body:has(.tabs) {
