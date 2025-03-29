@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, IconButton, Dialog, DialogContent, Slide } from '@mui/material';
+import waveImage from "../assets/modal-wave1.svg";
 import CloseIcon from '@mui/icons-material/Close';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -64,10 +65,9 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
       transitionDuration={{ enter: 400, exit: 300 }}
 		>
       <DialogContent
-			className='fasfasfas'
         sx={{
           p: 0,
-          bgcolor: '#222',
+          bgcolor: '#1b1d1c',
           color: '#fff',
           overflowY: 'auto',
           borderRadius: 0,
@@ -79,11 +79,13 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
 					className='card__close'
           sx={{
             position: 'absolute',
-            top: 8,
-            right: 8,
+            top: 16,
+            right: 16,
             color: '#2c5c4f',
             backgroundColor: '#fff',
-            borderRadius: '90%'
+            borderRadius: '90%',
+						zIndex: 3,
+						boxShadow: "0 0 2px 0 #b7b7b7",
           }}
         >
           <CloseIcon />
@@ -92,14 +94,17 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
         <div 
 					className='card-wrapper'
 				>
-          <img
-            src={product.photo}
-						className='card__img'
-          />
-          <Typography variant="h5" sx={{ mt: 2 }}>
-            {product.name}
-          </Typography>
-          <Typography variant="body2">настрой как любишь</Typography>
+          <div className='card__background'>
+          	<img
+	            src={product.photo}
+							className='card__img'
+	          />
+	          <Typography fontWeight={600} color='#2c5c4f' fontSize={28} sx={{ mt: 1 }}>
+	            {product.name}
+	          </Typography>
+          </div>
+					<img className='card__wave' src={waveImage} alt="Волна" />
+					<Typography mt={4} fontWeight={400} color="#fff" fontSize={18}>настрой как любишь</Typography>
 					<div className="modal__additives">
 						<div className="modal__categories-list">
 							{additivesCategories.map((category) => (

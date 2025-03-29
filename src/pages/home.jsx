@@ -49,7 +49,8 @@ const Home = () => {
 							sx={{
 								color: '#2c5c4f',
 								backgroundColor: '#fff',
-								borderRadius: '90%'
+								borderRadius: '90%',
+								boxShadow: "0 0 2px 0 #b7b7b7",
 							}}
 						>
 							<CloseIcon />

@@ -16,15 +16,23 @@ body {
 	padding-top: 20px;
   margin: 0;
   place-items: center;
-	background-color: #242424;
+	background-color: #1b1d1c;
 	box-sizing: border-box;
 	font-family: "Open Sans", sans-serif;
 	font-weight: 400;
 	color: #fff;
 }
 
+button, input, input::placeholder {
+	font-family: "Open Sans", sans-serif;
+}
+
 body:has(.tabs) {
 	padding-top: 0;
+}
+
+body:has(.auth__wrapper) {
+	background-color: #242424;
 }
 
 html, body, #root {
