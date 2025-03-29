@@ -69,16 +69,6 @@
 	padding: 0;
 }
 
-.cart__header-button.close {
-	background-color: #383838;
-	border-radius: 50%;
-}
-
-.cart__header-button.close > img {
-	width: 20px;
-	height: 20px;
-}
-
 .cart__header-button > img {
 	width: 100%;
 	height: 100%;

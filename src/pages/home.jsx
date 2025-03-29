@@ -5,6 +5,8 @@ import cartIcon from "../assets/cart.svg";
 import trashIcon from "../assets/trash.svg";
 import closeIcon from "../assets/close.svg";
 import Categories from "./category";
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from "@mui/material";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -40,7 +42,18 @@ const Home = () => {
 						className="cart__header-button close"
 						onClick={() => setIsShowCart(false)}
 					>
-						<img src={closeIcon} alt="Закрыть" />
+						<IconButton
+							onClick={() => setDialogOpen(false)}
+							disableRipple={true}
+							className='card__close'
+							sx={{
+								color: '#2c5c4f',
+								backgroundColor: '#fff',
+								borderRadius: '90%'
+							}}
+						>
+							<CloseIcon />
+						</IconButton>
 					</button>
 				</div>
 				<ul className="cart__list">

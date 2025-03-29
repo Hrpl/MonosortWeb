@@ -81,8 +81,8 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
             position: 'absolute',
             top: 8,
             right: 8,
-            color: '#fff',
-            backgroundColor: '#888',
+            color: '#2c5c4f',
+            backgroundColor: '#fff',
             borderRadius: '90%'
           }}
         >
