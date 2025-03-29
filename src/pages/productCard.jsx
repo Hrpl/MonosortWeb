@@ -52,12 +52,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
           overflow: 'hidden',
           borderRadius: 0,
         }}
-				style={{
-					paddingTop: 'var(--safe-area-top, 0px)',
-					paddingBottom: 'var(--safe-area-bottom, 0px)',
-					minHeight: 'calc(100vh - var(--safe-area-top, 0px) - var(--safe-area-bottom, 0px))',
-					boxSizing: 'border-box'
-				}}
       >
         <IconButton
           onClick={() => setDialogOpen(false)}
@@ -71,18 +65,12 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
             backgroundColor: '#888',
             borderRadius: '90%'
           }}
-					style={{
-						top: 'var(--safe-area-icon, 0px)',
-					}}
         >
           <CloseIcon />
         </IconButton>
 
         <div 
 					className='card-wrapper'
-					style={{
-						paddingTop: 'var(--safe-area-top, 0px)',
-					}}
 				>
           <img
             src={product.photo}

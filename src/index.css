@@ -64,27 +64,3 @@ button {
 * {
 	-webkit-tap-highlight-color: transparent;
 }
-
-:root {
-  --safe-area-top: 0px;
-  --safe-area-bottom: 0px;
-  --safe-area-icon: 0px;
-}
-
-/* Для iOS с поддержкой env() */
-@supports (padding-top: env(safe-area-inset-top)) {
-  :root {
-    --safe-area-top: env(safe-area-inset-top);
-    --safe-area-bottom: env(safe-area-inset-bottom);
-  }
-}
-
-/* Фикс для полноэкранного режима на iOS */
-.ios-expanded {
-  padding-top: 60px !important;
-  padding-bottom: 34px !important;
-}
-
-.card__close {
-	top: var(--safe-area-icon);
-}

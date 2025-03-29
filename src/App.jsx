@@ -5,26 +5,14 @@ import Home from './pages/home';
 import About from './pages/about';
 import Contacts from './pages/contacts';
 import AuthPage from './pages/auth'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
 
   React.useEffect(() => {
 		if (!window.Telegram?.WebApp) return;
 	
-		const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 		const tgWebApp = window.Telegram.WebApp;
 		const isOldVersion = parseFloat(tgWebApp.version) < 6.0;
-	
-		tgWebApp.ready();
-		tgWebApp.expand();
-
-		if (isIOS && tgWebApp?.isExpanded) {
-			document.body.classList.add('ios-expanded');
-		} else {
-			document.body.classList.remove('ios-expanded');
-		}
 	
 		if (isOldVersion) {
 			// Старый метод (до 6.0)
