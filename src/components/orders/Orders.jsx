@@ -11,7 +11,7 @@ const Orders = () => {
             <p className="description">Готовим с любовью...</p>
           </div>
           <div className="col">
-            <span className="code">425</span>
+            <span className="code">#425</span>
           </div>
         </div>
       </div>
