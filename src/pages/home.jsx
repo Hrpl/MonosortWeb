@@ -9,7 +9,6 @@ import Orders from "../components/orders/Orders";
 
 const Home = () => {
   const navigate = useNavigate();
-	const [quality, setQuality] = React.useState(0);
 	const [isShowCart, setIsShowCart] = React.useState(false);
 	const [cartData, setCartData] = React.useState([]);
 
@@ -28,6 +27,26 @@ const Home = () => {
 			})
 			.then(res => {
 				setCartData(res.data);
+				console.log(res.data);
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		}
+	}
+
+	const deleteCart = () => {
+		if(jwt) {
+			axios.delete("https://monosortcoffee.ru/api/cart/all", {
+				headers: {
+					Authorization: `Bearer ${jwt}`
+				}
+			})
+			.then(res => {
+				fetchCart();
+			})
+			.catch(err => {
+				console.log(err)
 			})
 		}
 	}
@@ -53,7 +72,12 @@ const Home = () => {
 				<span className="cart__button-quality">{cartData.length || 0}</span>
 				<img src={cartIcon} alt="Корзина" />
 			</button>
-			<Cart isShowCart={isShowCart} cartData={cartData} setIsShowCart={setIsShowCart} />
+			<Cart 
+				deleteCart={deleteCart} 
+				cartData={cartData} 
+				setIsShowCart={setIsShowCart} 
+				isShowCart={isShowCart} 
+			/>
     </>
   );
 };

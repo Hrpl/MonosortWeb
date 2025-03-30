@@ -2,8 +2,9 @@ import React from "react";
 import trashIcon from "../../assets/trash.svg";
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from "@mui/material";
+import axios from "axios";
 
-const Cart = ({ isShowCart, cartData, setIsShowCart }) => {
+const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
 	const [totalSum, setTotalSum] = React.useState(0);
 
 	React.useEffect(() => {
@@ -12,7 +13,12 @@ const Cart = ({ isShowCart, cartData, setIsShowCart }) => {
   return (
     <div className={isShowCart ? "cart show" : "cart"}>
       <div className="cart__header">
-        <button className="cart__header-button">
+        <button 
+					className="cart__header-button"
+					onClick={() => {
+						deleteCart();
+					}}
+				>
           <img src={trashIcon} alt="Очистить" />
         </button>
         <button
