@@ -21,16 +21,16 @@
 
 .cart__button-quality {
 	position: absolute;
-	top: 0;
-	right: 0;	
-	background-color: #2c5c4f;
-	color: #fff;
-	min-width: 18px;
-	height: 18px;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  top: 0;
+  right: 0;
+  background-color: #2c5c4f;
+  color: #fff;
+  padding: 5px;
+  height: 18px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cart {

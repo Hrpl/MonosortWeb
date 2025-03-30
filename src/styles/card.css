@@ -17,6 +17,10 @@
 	z-index: -1;
 }
 
+.card .title {
+	font-family: "Nunito Sans", sans-serif;
+}
+
 .card::after {
 	position: absolute;
 	width: 100%;

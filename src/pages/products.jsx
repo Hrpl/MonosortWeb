@@ -70,6 +70,7 @@ const ProductGrid = ({ id }) => {
               >
                 <Typography
                   variant="subtitle1"
+									className="title"
                   style={{
                     overflow: "hidden",
                     textWrap: "balance",
