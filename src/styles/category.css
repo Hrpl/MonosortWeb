@@ -1,12 +1,12 @@
 .tabs-container {
   position: sticky;
-  top: 50px;
+  top: 66px;
   left: 0;
   width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  z-index: 2;
+  z-index: 3;
   background-color: #fff;
   backdrop-filter: blur(30px);
 	box-shadow: 0 0 2px 0 #b7b7b7;
@@ -34,7 +34,7 @@
   border: none;
   cursor: pointer;
   flex-shrink: 0;
-  height: 50px;
+  height: 40px;
 }
 
 .tabs__item.active {

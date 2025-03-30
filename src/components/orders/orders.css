@@ -38,11 +38,10 @@
 	display: flex;
 	align-items: center;
 	gap: 5px;
-	padding: 0 1rem;
-	height: 50px;
-	background-color: #fff;
-	z-index: 3;
-	padding-top: .5rem;
+	padding: .5rem 1rem;
+	height: 66px;
+  background-color: #fff;
+  z-index: 3;
 }
 
 .line {
