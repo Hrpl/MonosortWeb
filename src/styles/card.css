@@ -112,7 +112,6 @@
 .modal__categories-list {
 	margin-top: 2rem;
 	display: flex;
-	gap: 2rem;
 	overflow-x: auto;
 	max-width: 100%;
 	padding: 0 1rem;
@@ -124,6 +123,7 @@
 	align-items: center;
 	text-align: center;
 	gap: 10px;
+	padding: 0 1.5rem;
 }
 
 .modal__categories-list__item .title {
@@ -144,6 +144,13 @@
 	overflow-x: auto;
 	padding: 0 1rem;
 	margin-top: 1rem;
+	white-space: nowrap;
+	scroll-snap-type: x mandatory;
+	padding-bottom: 1rem;
+}
+
+.modal__grid::-webkit-scrollbar {
+	display: none;
 }
 
 .modal__grid, .modal__categories-list { 
