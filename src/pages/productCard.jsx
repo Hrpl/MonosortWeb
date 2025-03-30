@@ -15,11 +15,19 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   if (product == null) return null;
-  const [volume, setVolume] = useState('M');
-  const [price, setPrice] = useState(250);
-  const [selectedAditives, setSelectedAdditives] = useState(1);
+	const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedAditivesCategories, setSelectedAdditivesCategories] = useState(1);
   const [additivesCategories, setAdditivesCategories] = useState([]);
   const [additives, setAdditives] = useState([]);
+	const [selectedAdditives, setSelectedAdditives] = useState({
+		"drinkId": null,
+		"volumeId": null,
+		"sugarCount": null,
+		"milkId": null,
+		"siropId": null,
+		"extraShot": false,
+		"price": null
+	});
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -42,11 +50,8 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   const lastColumnRef = useRef(0);
   const lastXGridRef = useRef(0);
   const columnWidthRef = useRef(140 + 16); // 140px + 1rem gap
-  
-  const handleVolumeChange = (newValue) => {
-    setVolume(newValue);
-    setPrice(newValue === 'S' ? 200 : newValue === 'M' ? 250 : 300);
-  };
+
+	useEffect(() => {console.log(selectedSize)}, [selectedSize])
 
   const getAdditives = () => {
     if (product.id) {
@@ -65,7 +70,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   }, [product.id]);
 
   useEffect(() => {
-    axios.get(`https://monosortcoffee.ru/api/additive/many/${selectedAditives}`)
+    axios.get(`https://monosortcoffee.ru/api/additive/many/${selectedAditivesCategories}`)
       .then((res) => {
         setAdditives(res.data);
         // Сбрасываем скролл при смене категории
@@ -80,11 +85,11 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [selectedAditives]);
+  }, [selectedAditivesCategories]);
 
   // Функция для центрирования выбранной кнопки категорий
   const handleCategoryClick = (categoryId, event) => {
-    setSelectedAdditives(categoryId);
+    setSelectedAdditivesCategories(categoryId);
     
     const button = event.currentTarget;
     const container = categoriesListRef.current;
@@ -330,25 +335,24 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
               onMouseMove={handleMouseMove}
               style={{
                 overflowX: 'auto',
-                whiteSpace: 'nowrap',
                 scrollBehavior: 'smooth',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
-                '&::-webkit-scrollbar': {
-                  display: 'none'
-                }
               }}
             >
-              {additivesCategories.map((category) => (
-                <button 
-                  key={category.id} 
-                  className="modal__categories-list__item"
-                  onClick={(e) => handleCategoryClick(category.id, e)}
-                >
-                  <img className="img" src={category.photo} alt="Иконка" />
-                  <p className="title">{category.name}</p>
-                </button>
-              ))}
+              {additivesCategories.map((category) => {
+								console.log(category);
+								return (
+									<button 
+										key={category.id} 
+										className="modal__categories-list__item"
+										onClick={(e) => handleCategoryClick(category.id, e)}
+									>
+										<img className="img" src={category.photo} alt="Иконка" />
+										<p className="title">{category.name}</p>
+									</button>
+								)
+							})}
             </div>
             <div 
               className="modal__grid"
@@ -362,26 +366,26 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
                 scrollBehavior: 'smooth',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
-                cursor: 'grab',
-                '&::-webkit-scrollbar': {
-                  display: 'none'
-                }
+                cursor: 'pointer',
               }}
             >
-              {additives.map((additive) => (
-                <button 
-                  key={additive.id} 
-                  className="modal__grid-item"
-                >
-                  <img className="img" src={additive.photo} alt="Картинка" />
-                  <p className="title">{additive.name}</p>
-                  <span className="price">+{additive.price} ₽</span>
-                </button>
-              ))}
+              {additives.map((additive) => {
+								return (
+									<button 
+										key={additive.id} 
+										className="modal__grid-item"
+										onClick={() => setSelectedAdditives(additive.id)}
+									>
+										<img className="img" src={additive.photo} alt="Картинка" />
+										<p className="title">{additive.name}</p>
+										<span className="price">+{additive.price} ₽</span>
+									</button>
+								)
+							})}
             </div>
           </div>
           <div className='modal__panel'>
-            <SizeSelector id={product.id}/>
+            <SizeSelector setSelectedSize={setSelectedSize} selectedSize={selectedSize} id={product.id}/>
           </div>
         </div>
       </DialogContent>

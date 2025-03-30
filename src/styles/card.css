@@ -144,7 +144,6 @@
 	overflow-x: auto;
 	padding: 0 1rem;
 	margin-top: 1rem;
-	white-space: nowrap;
 	scroll-snap-type: x mandatory;
 	padding-bottom: 1rem;
 }

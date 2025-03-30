@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { getVolumes } from "../service/request";
 
-const SizeSelector = ({ id }) => {
-  const [selectedSize, setSelectedSize] = useState(null); // Выбранный размер
+const SizeSelector = ({ setSelectedSize, selectedSize, id }) => {
   const [volumes, setVolumes] = useState([]); // Массив данных размеров
   const [sliderPosition, setSliderPosition] = useState(0); // Позиция скользящей подсветки
 
