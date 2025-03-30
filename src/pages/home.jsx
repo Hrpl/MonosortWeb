@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cartIcon from "../assets/cart.svg";
@@ -10,6 +11,26 @@ const Home = () => {
   const navigate = useNavigate();
 	const [quality, setQuality] = React.useState(0);
 	const [isShowCart, setIsShowCart] = React.useState(false);
+	const [cartData, setCartData] = React.useState([]);
+
+	const jwt = localStorage.getItem('accessToken');
+
+	React.useEffect(() => {
+		fetchCart();
+	}, [jwt])
+
+	const fetchCart = () => {
+		if(jwt) {
+			axios.get("https://monosortcoffee.ru/api/cart/all", {
+				headers: {
+					Authorization: `Bearer ${jwt}`
+				}
+			})
+			.then(res => {
+				setCartData(res.data);
+			})
+		}
+	}
 
   useEffect(() => {
     const currentDate = new Date();
@@ -29,10 +50,10 @@ const Home = () => {
 				className="cart__button"
 				onClick={() => setIsShowCart(true)}
 			>
-				<span className="cart__button-quality">{quality}</span>
+				<span className="cart__button-quality">{cartData.length || 0}</span>
 				<img src={cartIcon} alt="Корзина" />
 			</button>
-			<Cart isShowCart={isShowCart} setIsShowCart={setIsShowCart} />
+			<Cart isShowCart={isShowCart} cartData={cartData} setIsShowCart={setIsShowCart} />
     </>
   );
 };

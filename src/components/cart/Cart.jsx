@@ -2,28 +2,13 @@ import React from "react";
 import trashIcon from "../../assets/trash.svg";
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from "@mui/material";
-import axios from "axios";
 
-const Cart = ({ isShowCart, setIsShowCart }) => {
-	const [cartData, setCartData] = React.useState([]);
-	const jwt = localStorage.getItem('accessToken');
+const Cart = ({ isShowCart, cartData, setIsShowCart }) => {
+	const [totalSum, setTotalSum] = React.useState(0);
 
 	React.useEffect(() => {
-		fetchCart();
-	}, [jwt])
-
-	const fetchCart = () => {
-		if(jwt) {
-			axios.get("https://monosortcoffee.ru/api/cart/all", {
-				headers: {
-					Authorization: `Bearer ${jwt}`
-				}
-			})
-			.then(res => {
-				setCartData(res.data);
-			})
-		}
-	}
+		setTotalSum(cartData.reduce((sum, item) => sum + Number(item.price), 0));
+	}, [cartData]);
   return (
     <div className={isShowCart ? "cart show" : "cart"}>
       <div className="cart__header">
@@ -49,64 +34,30 @@ const Cart = ({ isShowCart, setIsShowCart }) => {
         </button>
       </div>
       <ul className="cart__list">
-        <li className="cart__list-item">
-          <img
-            className="cart__list-item__img"
-            src="https://cdn6.aptoide.com/imgs/c/4/c/c4c9e248ec72492f08cf950c2b7b0df8_icon.png"
-            alt="картинка"
-          />
-          <div className="row">
-            <div className="info">
-              <h3 className="cart__list-item__title">
-                Латте малина с сырной пенкой
-              </h3>
-              <h3 className="cart__list-item__description">350 мл</h3>
-            </div>
-            <div className="col">
-              <p className="cart__list-item__price">330 $</p>
-            </div>
-          </div>
-        </li>
-        <li className="cart__list-item">
-          <img
-            className="cart__list-item__img"
-            src="https://cdn6.aptoide.com/imgs/c/4/c/c4c9e248ec72492f08cf950c2b7b0df8_icon.png"
-            alt="картинка"
-          />
-          <div className="row">
-            <div className="info">
-              <h3 className="cart__list-item__title">
-                Латте малина с сырной пенкой
-              </h3>
-              <h3 className="cart__list-item__description">350 мл</h3>
-            </div>
-            <div className="col">
-              <p className="cart__list-item__price">330 $</p>
-            </div>
-          </div>
-        </li>
-        <li className="cart__list-item">
-          <img
-            className="cart__list-item__img"
-            src="https://cdn6.aptoide.com/imgs/c/4/c/c4c9e248ec72492f08cf950c2b7b0df8_icon.png"
-            alt="картинка"
-          />
-          <div className="row">
-            <div className="info">
-              <h3 className="cart__list-item__title">
-                Латте малина с сырной пенкой
-              </h3>
-              <h3 className="cart__list-item__description">350 мл</h3>
-            </div>
-            <div className="col">
-              <p className="cart__list-item__price">330 $</p>
-            </div>
-          </div>
-        </li>
-      </ul>
+        {cartData?.map((item) => (
+					<li key={item.id} className="cart__list-item">
+						<img
+							className="cart__list-item__img"
+							src={item?.photo}
+							alt={item?.name}
+						/>
+						<div className="row">
+							<div className="info">
+								<h3 className="cart__list-item__title">
+									{item?.name}
+								</h3>
+								<h3 className="cart__list-item__description">{item?.volume}</h3>
+							</div>
+							<div className="col">
+								<p className="cart__list-item__price">{item?.price} ₽</p>
+							</div>
+						</div>
+					</li>
+				))}
+			</ul>
       <div className="cart__panel-wrapper">
         <div className="cart__panel">
-          <button className="cart__panel-button">Оплатить 990 $</button>
+          <button className="cart__panel-button">Оплатить {totalSum} ₽</button>
         </div>
       </div>
     </div>

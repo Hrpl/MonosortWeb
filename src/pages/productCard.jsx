@@ -51,8 +51,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   const lastXGridRef = useRef(0);
   const columnWidthRef = useRef(140 + 16); // 140px + 1rem gap
 
-	useEffect(() => {console.log(selectedSize)}, [selectedSize])
-
   const getAdditives = () => {
     if (product.id) {
       axios.get(`https://monosortcoffee.ru/api/additive/type?drinkId=${product.id}`)

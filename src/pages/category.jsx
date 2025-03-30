@@ -114,7 +114,7 @@ const Categories = () => {
           hidden={value !== category.id}
         >
           {value === category.id && (
-            <Box sx={{ p: 3 }}>
+            <Box sx={{ px: 2, py: 4 }}>
               <ProductGrid id={category.id} />
             </Box>
           )}

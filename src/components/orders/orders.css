@@ -66,12 +66,12 @@
 	top: 0;
 	bottom: 0;
 	margin: auto;
-	background-image: url("../../assets/cup.png");
+	background-image: url("../../assets/cup1.png");
 	background-size: contain;
 	background-repeat: no-repeat;
 	z-index: 5;
 	height: 40px;
-	aspect-ratio: 245 / 433;
+	aspect-ratio: 251 / 403;
 }
 
 .line-finish {
