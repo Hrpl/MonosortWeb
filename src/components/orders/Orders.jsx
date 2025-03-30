@@ -7,8 +7,10 @@ const Orders = () => {
       <div className="order__active">	
         <div className="order__active-info">
           <div className="col">
-            <h3 className="status">5 мин и готово</h3>
-            <p className="description">Готовим с любовью...</p>
+            {/* <h3 className="status">Ещё 5 минуток</h3>
+            <p className="description">Готовим с любовью...</p> */}
+						<h3 className="status">Заказ готовится</h3>
+            <p className="description">Достаём стаканчики...</p>
           </div>
           <div className="col">
             <span className="code">#425</span>

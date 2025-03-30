@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { getVolumes } from "../service/request";
 
-const SizeSelector = ({ setSelectedSize, selectedSize, id }) => {
+const SizeSelector = ({ setSelectedSize, selectedSize, id, postToCart }) => {
   const [volumes, setVolumes] = useState([]); // Массив данных размеров
   const [sliderPosition, setSliderPosition] = useState(0); // Позиция скользящей подсветки
 
@@ -17,7 +17,7 @@ const SizeSelector = ({ setSelectedSize, selectedSize, id }) => {
       const volumes = await getVolumes(id);
       const sorted = volumes.sort((a, b) => a.price - b.price); // Сортируем по цене
       setVolumes(sorted);
-      setSelectedSize(sorted[0]); // Устанавливаем размер по умолчанию
+      setSelectedSize(sorted[0]);
     };
 
     fetchCategories();
@@ -95,6 +95,9 @@ const SizeSelector = ({ setSelectedSize, selectedSize, id }) => {
 
       {/* Цена кнопки */}
       <Button
+				onClick={() => {
+					postToCart();
+				}}
 				style={{
 					marginRight: 6
 				}}

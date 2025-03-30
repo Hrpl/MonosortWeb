@@ -15,18 +15,21 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   if (product == null) return null;
-	const [selectedSize, setSelectedSize] = useState(null);
+	const [selectedSize, setSelectedSize] = useState({});
   const [selectedAditivesCategories, setSelectedAdditivesCategories] = useState(1);
   const [additivesCategories, setAdditivesCategories] = useState([]);
   const [additives, setAdditives] = useState([]);
 	const [selectedAdditives, setSelectedAdditives] = useState({
-		"drinkId": null,
-		"volumeId": null,
-		"sugarCount": null,
-		"milkId": null,
-		"siropId": null,
-		"extraShot": false,
-		"price": null
+		"drinkId": product.id,
+		"volumeId": 1,
+		"price": 100,
+		"additives": {
+			"milkId": null,
+			"sugarCount": null,
+			"siropId": null,
+			"extraShot": false,
+			"sprinkling": null,
+		}
 	});
 
   const theme = useTheme();
@@ -51,6 +54,23 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   const lastXGridRef = useRef(0);
   const columnWidthRef = useRef(140 + 16); // 140px + 1rem gap
 
+	const postToCart = () => {
+		axios.post("https://monosortcoffee.ru/api/cart/create", 
+			selectedAdditives,
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`
+				}
+			}
+		)
+		.then(res => {
+			console.log(res)
+		})
+		.catch(err => {
+			console.log(err)
+		})
+	}
+
   const getAdditives = () => {
     if (product.id) {
       axios.get(`https://monosortcoffee.ru/api/additive/type?drinkId=${product.id}`)
@@ -62,6 +82,8 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
         });
     }
   };
+
+	useEffect(() => {console.log(selectedAdditives)}, [selectedAdditives])
 
   useEffect(() => {
     getAdditives();
@@ -339,7 +361,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
               }}
             >
               {additivesCategories.map((category) => {
-								console.log(category);
 								return (
 									<button 
 										key={category.id} 
@@ -371,8 +392,23 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
 								return (
 									<button 
 										key={additive.id} 
-										className="modal__grid-item"
-										onClick={() => setSelectedAdditives(additive.id)}
+										className={`modal__grid-item ${
+											selectedAdditives.additives[Object.keys(selectedAdditives.additives)[selectedAditivesCategories - 1]] === additive.id 
+												? 'active' 
+												: ''
+										}`}
+										onClick={() => {
+											setSelectedAdditives(prev => {
+												const currentKey = Object.keys(prev.additives)[selectedAditivesCategories - 1];
+												return {
+													...prev,
+													additives: {
+														...prev.additives,
+														[currentKey]: prev.additives[currentKey] === additive.id ? null : additive.id,
+													},
+												};
+											});
+										}}
 									>
 										<img className="img" src={additive.photo} alt="Картинка" />
 										<p className="title">{additive.name}</p>
@@ -384,6 +420,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
           </div>
           <div className='modal__panel'>
             <SizeSelector 
+							postToCart={postToCart}
 							setSelectedSize={setSelectedSize} 
 							selectedSize={selectedSize} 
 							id={product.id}

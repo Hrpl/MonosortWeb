@@ -169,8 +169,13 @@
 	gap: 10px;
 	padding: 10px;
 	background-color: #242525;
-	border: 1px solid #242525;
+	border: 3px solid #242525;
 	border-radius: 10px;
+	transition: .2s;
+}
+
+.modal__grid-item.active {
+	border: 3px solid #2c5c4f;
 }
 
 .modal__grid-item > .img {
