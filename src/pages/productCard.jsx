@@ -383,7 +383,11 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
             </div>
           </div>
           <div className='modal__panel'>
-            <SizeSelector setSelectedSize={setSelectedSize} selectedSize={selectedSize} id={product.id}/>
+            <SizeSelector 
+							setSelectedSize={setSelectedSize} 
+							selectedSize={selectedSize} 
+							id={product.id}
+						/>
           </div>
         </div>
       </DialogContent>
