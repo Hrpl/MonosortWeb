@@ -13,29 +13,117 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
+const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   if (product == null) return null;
-	const [selectedSize, setSelectedSize] = useState({});
+  
+  // Состояния компонента
+  const [selectedSize, setSelectedSize] = useState({});
   const [selectedAditivesCategories, setSelectedAdditivesCategories] = useState(1);
   const [additivesCategories, setAdditivesCategories] = useState([]);
   const [additives, setAdditives] = useState([]);
-	const [selectedAdditives, setSelectedAdditives] = useState({
-		"drinkId": product.id,
-		"volumeId": 1,
-		"price": 100,
-		"additives": {
-			"milkId": null,
-			"sugarCount": null,
-			"siropId": null,
-			"extraShot": false,
-			"sprinkling": null,
+	const [priceAdditive, setPriceAdditive] = useState(0);
+  const [selectedAdditives, setSelectedAdditives] = useState({
+    "drinkId": product.id,
+    "volumeId": selectedSize.volumeId,
+    "price": 100,
+    "additives": {
+      "milkId": 0,
+      "sugarCount": 0,
+      "siropId": 0,
+      "extraShot": false,
+      "sprinkling": 0,
+    }
+  });
+  const [intermediate, setIntermediate] = useState({
+    "milkId": 0,
+    "sugarCount": 0,
+    "siropId": 0,
+    "extraShot": 0,
+    "sprinkling": 0,
+  });
+
+  // Определение текущего ключа добавки на основе выбранной категории
+  const getCurrentAdditiveKey = () => {
+    const additiveKeys = Object.keys(selectedAdditives.additives);
+    if (selectedAditivesCategories >= 1 && selectedAditivesCategories <= additiveKeys.length) {
+      return additiveKeys[selectedAditivesCategories - 1];
+    }
+    return additiveKeys[0]; // Возвращаем первый ключ по умолчанию
+  };
+
+	React.useEffect(() => {
+		if(dialogOpen === false) {
+			setSelectedAdditives({
+				"drinkId": product.id,
+				"volumeId": selectedSize.volumeId,
+				"price": 100,
+				"additives": {
+					"milkId": 0,
+					"sugarCount": 0,
+					"siropId": 0,
+					"extraShot": false,
+					"sprinkling": 0,
+				}
+			})
 		}
-	});
+		setPriceAdditive(0);
+	}, [dialogOpen]);
+
+  // Обработчик выбора добавки
+  const handleAdditiveSelect = (additive) => {
+    const currentKey = getCurrentAdditiveKey();
+    const currentValue = selectedAdditives.additives[currentKey];
+    const isAlreadySelected = currentKey === "extraShot" 
+      ? currentValue === true 
+      : currentValue === additive.id;
+
+    // Обновление selectedAdditives
+    setSelectedAdditives(prev => {
+      const newValue = isAlreadySelected 
+        ? (currentKey === "extraShot" ? false : 0)
+        : (currentKey === "extraShot" ? true : additive.id);
+      
+      return {
+        ...prev,
+        additives: {
+          ...prev.additives,
+          [currentKey]: newValue
+        }
+      };
+    });
+
+    // Обновление intermediate
+    setIntermediate(prev => ({
+      ...prev,
+      [currentKey]: isAlreadySelected ? 0 : additive.price
+    }));
+  };
+
+  // Проверка, выбрана ли добавка
+  const isAdditiveSelected = (additive) => {
+    const currentKey = getCurrentAdditiveKey();
+    const currentValue = selectedAdditives.additives[currentKey];
+    
+    if (currentKey === "extraShot") {
+      return currentValue === true;
+    }
+    return currentValue === additive.id;
+  };
+
+  // Эффект при изменении selectedSize
+  useEffect(() => {
+    if (selectedSize) {
+      setSelectedAdditives(prevState => ({
+        ...prevState,
+        volumeId: selectedSize.volumeId,
+      })); 
+    }
+  }, [selectedSize]);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // Refs для категорий
+  // Refs для реализации перетаскивания
   const categoriesListRef = useRef(null);
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -45,32 +133,36 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
   const animationIdRef = useRef(null);
   const timestampRef = useRef(0);
 
-  // Refs для grid с добавками
   const gridListRef = useRef(null);
   const isGridDraggingRef = useRef(false);
   const startXGridRef = useRef(0);
   const scrollLeftGridRef = useRef(0);
   const lastColumnRef = useRef(0);
   const lastXGridRef = useRef(0);
-  const columnWidthRef = useRef(140 + 16); // 140px + 1rem gap
+  const columnWidthRef = useRef(140 + 16);
 
-	const postToCart = () => {
-		axios.post("https://monosortcoffee.ru/api/cart/create", 
-			selectedAdditives,
-			{
-				headers: {
-					Authorization: `Bearer ${jwt}`
-				}
-			}
-		)
-		.then(res => {
-			console.log(res)
-		})
-		.catch(err => {
-			console.log(err)
-		})
-	}
+  // Токен авторизации
+  const jwt = localStorage.getItem('accessToken');
 
+  // Отправка в корзину
+  const postToCart = () => {
+    axios.post("https://monosortcoffee.ru/api/cart/create", 
+      selectedAdditives,
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      }
+    )
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+
+  // Загрузка категорий добавок
   const getAdditives = () => {
     if (product.id) {
       axios.get(`https://monosortcoffee.ru/api/additive/type?drinkId=${product.id}`)
@@ -83,17 +175,21 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
     }
   };
 
-	useEffect(() => {console.log(selectedAdditives)}, [selectedAdditives])
+  // Логирование состояний
+  useEffect(() => {
+    setPriceAdditive(Object.values(intermediate).reduce((sum, price) => sum + price, 0));
+  }, [intermediate]);
 
+  // Загрузка данных при монтировании
   useEffect(() => {
     getAdditives();
   }, [product.id]);
 
+  // Загрузка добавок при изменении категории
   useEffect(() => {
     axios.get(`https://monosortcoffee.ru/api/additive/many/${selectedAditivesCategories}`)
       .then((res) => {
         setAdditives(res.data);
-        // Сбрасываем скролл при смене категории
         if (gridListRef.current) {
           gridListRef.current.scrollTo({
             left: 0,
@@ -107,7 +203,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
       });
   }, [selectedAditivesCategories]);
 
-  // Функция для центрирования выбранной кнопки категорий
+  // Обработчики событий для перетаскивания категорий
   const handleCategoryClick = (categoryId, event) => {
     setSelectedAdditivesCategories(categoryId);
     
@@ -128,7 +224,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
     }
   };
 
-  // Обработчики для перетаскивания категорий
   const handleMouseDown = (e) => {
     const container = categoriesListRef.current;
     if (!container) return;
@@ -183,7 +278,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
     e.preventDefault();
   };
 
-  // Анимация инерции для категорий
   const inertiaScroll = () => {
     const container = categoriesListRef.current;
     if (!container || isDraggingRef.current) return;
@@ -198,7 +292,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
     }
   };
 
-  // Обработчики для перетаскивания grid с добавками (глобальные)
+  // Обработчики событий для перетаскивания grid
   const handleGridMouseDown = (e) => {
     const container = gridListRef.current;
     if (!container) return;
@@ -223,21 +317,18 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
     if (!container) return;
     
     const deltaX = startXGridRef.current - lastXGridRef.current;
-    const threshold = 30; // Порог срабатывания
+    const threshold = 30;
     const columnWidth = columnWidthRef.current;
     const currentScroll = container.scrollLeft;
     const currentColumn = Math.round(currentScroll / columnWidth);
     
-    // Определяем направление и целевую колонку
     let targetColumn = currentColumn;
     if (Math.abs(deltaX) > threshold) {
       targetColumn = deltaX > 0 ? currentColumn + 1 : currentColumn - 1;
     }
     
-    // Ограничиваем целевую колонку
     targetColumn = Math.max(0, Math.min(targetColumn, Math.ceil(additives.length / 2) - 1));
     
-    // Плавный скролл к целевой колонке
     container.scrollTo({
       left: targetColumn * columnWidth,
       behavior: 'smooth'
@@ -258,14 +349,13 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
     lastXGridRef.current = e.clientX;
     const deltaX = startXGridRef.current - e.clientX;
     
-    // Плавное перемещение с эффектом резиновой ленты
     const resistance = 0.5;
     container.scrollLeft = scrollLeftGridRef.current + (deltaX * resistance);
     
     e.preventDefault();
   };
 
-  // Эффекты для добавления/удаления обработчиков событий категорий
+  // Эффекты для добавления/удаления обработчиков событий
   useEffect(() => {
     const container = categoriesListRef.current;
     if (!container) return;
@@ -289,7 +379,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
     };
   }, []);
 
-  // Очистка глобальных обработчиков при размонтировании
   useEffect(() => {
     return () => {
       document.removeEventListener('mousemove', handleGridMouseMove);
@@ -338,6 +427,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
             <img
               src={product.photo}
               className='card__img'
+              alt={product.name}
             />
             <Typography fontWeight={600} color='#2c5c4f' fontSize={28} sx={{ mt: 1 }}>
               {product.name}
@@ -360,18 +450,16 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
                 msOverflowStyle: 'none',
               }}
             >
-              {additivesCategories.map((category) => {
-								return (
-									<button 
-										key={category.id} 
-										className="modal__categories-list__item"
-										onClick={(e) => handleCategoryClick(category.id, e)}
-									>
-										<img className="img" src={category.photo} alt="Иконка" />
-										<p className="title">{category.name}</p>
-									</button>
-								)
-							})}
+              {additivesCategories.map((category) => (
+                <button 
+                  key={category.id} 
+                  className="modal__categories-list__item"
+                  onClick={(e) => handleCategoryClick(category.id, e)}
+                >
+                  <img className="img" src={category.photo} alt="Иконка" />
+                  <p className="title">{category.name}</p>
+                </button>
+              ))}
             </div>
             <div 
               className="modal__grid"
@@ -388,43 +476,27 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product }) => {
                 cursor: 'pointer',
               }}
             >
-              {additives.map((additive) => {
-								return (
-									<button 
-										key={additive.id} 
-										className={`modal__grid-item ${
-											selectedAdditives.additives[Object.keys(selectedAdditives.additives)[selectedAditivesCategories - 1]] === additive.id 
-												? 'active' 
-												: ''
-										}`}
-										onClick={() => {
-											setSelectedAdditives(prev => {
-												const currentKey = Object.keys(prev.additives)[selectedAditivesCategories - 1];
-												return {
-													...prev,
-													additives: {
-														...prev.additives,
-														[currentKey]: prev.additives[currentKey] === additive.id ? null : additive.id,
-													},
-												};
-											});
-										}}
-									>
-										<img className="img" src={additive.photo} alt="Картинка" />
-										<p className="title">{additive.name}</p>
-										<span className="price">+{additive.price} ₽</span>
-									</button>
-								)
-							})}
+              {additives.map((additive) => (
+                <button 
+                  key={additive.id} 
+                  className={`modal__grid-item ${isAdditiveSelected(additive) ? 'active' : ''}`}
+                  onClick={() => handleAdditiveSelect(additive)}
+                >
+                  <img className="img" src={additive.photo} alt="Картинка" />
+                  <p className="title">{additive.name}</p>
+                  <span className="price">+{additive.price} ₽</span>
+                </button>
+              ))}
             </div>
           </div>
           <div className='modal__panel'>
             <SizeSelector 
-							postToCart={postToCart}
-							setSelectedSize={setSelectedSize} 
-							selectedSize={selectedSize} 
-							id={product.id}
-						/>
+              postToCart={postToCart}
+              setSelectedSize={setSelectedSize} 
+              selectedSize={selectedSize} 
+							priceAdditive={priceAdditive}
+              id={product.id}
+            />
           </div>
         </div>
       </DialogContent>

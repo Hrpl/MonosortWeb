@@ -10,7 +10,6 @@ import {
 import Grid from "@mui/material/Grid2";
 import { getProducts } from "../service/request";
 import { styled } from "@mui/material/styles";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CoffeeCustomizer from "./productCard";
 import arrowRightIcon from "../assets/arrow-right.svg";
 
@@ -127,6 +126,7 @@ const ProductGrid = ({ id }) => {
       <CoffeeCustomizer
         open={dialogOpen}
         setDialogOpen={setDialogOpen}
+				dialogOpen={dialogOpen}
         product={selectedProduct}
       />
     </>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { getVolumes } from "../service/request";
 
-const SizeSelector = ({ setSelectedSize, selectedSize, id, postToCart }) => {
+const SizeSelector = ({ setSelectedSize, selectedSize, id, postToCart, priceAdditive }) => {
   const [volumes, setVolumes] = useState([]); // Массив данных размеров
   const [sliderPosition, setSliderPosition] = useState(0); // Позиция скользящей подсветки
 
@@ -119,7 +119,7 @@ const SizeSelector = ({ setSelectedSize, selectedSize, id, postToCart }) => {
             px: 2,
           }}
         >
-          + {selectedSize != null ? selectedSize.price : ""} ₽
+          + {selectedSize ? (selectedSize.price + priceAdditive) : ""} ₽
         </Typography>
       </Button>
     </div>
