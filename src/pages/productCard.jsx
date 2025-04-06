@@ -61,7 +61,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 					"milkId": 0,
 					"sugarCount": 0,
 					"siropId": 0,
-					"extraShot": false,
+					"extraShot": 0,
 					"sprinkling": 0,
 				}
 			})
@@ -405,7 +405,16 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
         }}
       >
         <IconButton
-          onClick={() => setDialogOpen(false)}
+          onClick={() => {
+						setDialogOpen(false);
+						setIntermediate({
+							"milkId": 0,
+							"sugarCount": 0,
+							"siropId": 0,
+							"extraShot": 0,
+							"sprinkling": 0,
+						});
+					}}
           disableRipple={true}
           className='card__close'
           sx={{
