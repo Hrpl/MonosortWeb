@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { getVolumes } from "../service/request";
+import { observer } from "mobx-react-lite";
 
-const SizeSelector = ({ setSelectedSize, selectedSize, id, postToCart, priceAdditive }) => {
+const SizeSelector = observer(({ setSelectedSize, selectedSize, id, postToCart, priceAdditive }) => {
   const [volumes, setVolumes] = useState([]); // Массив данных размеров
   const [sliderPosition, setSliderPosition] = useState(0); // Позиция скользящей подсветки
 
@@ -119,11 +120,11 @@ const SizeSelector = ({ setSelectedSize, selectedSize, id, postToCart, priceAddi
             px: 2,
           }}
         >
-          + {selectedSize ? (selectedSize.price + priceAdditive) : ""} ₽
+          + {selectedSize ? ((selectedSize.price || 0) + priceAdditive) : ""} ₽
         </Typography>
       </Button>
     </div>
   );
-};
+});
 
 export default SizeSelector;

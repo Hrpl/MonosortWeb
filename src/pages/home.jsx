@@ -6,6 +6,7 @@ import cartIcon from "../assets/cart.svg";
 import Categories from "./category";
 import Cart from "../components/cart/Cart";
 import Orders from "../components/orders/Orders";
+import { globalStore } from "../store/globalStore";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Home = () => {
 			})
 			.then(res => {
 				setCartData(res.data);
-				console.log(res.data);
+				globalStore.getFunc(fetchCart);
 			})
 			.catch(err => {
 				console.log(err)

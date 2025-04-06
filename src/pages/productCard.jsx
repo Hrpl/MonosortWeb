@@ -8,6 +8,7 @@ import { useTheme } from '@mui/material/styles';
 import { forwardRef } from 'react';
 import SizeSelector from './volumeSelector';
 import "../styles/card.css";
+import { globalStore } from '../store/globalStore';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -17,7 +18,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   if (product == null) return null;
   
   // Состояния компонента
-  const [selectedSize, setSelectedSize] = useState({});
+  const [selectedSize, setSelectedSize] = useState({price: 0});
   const [selectedAditivesCategories, setSelectedAdditivesCategories] = useState(1);
   const [additivesCategories, setAdditivesCategories] = useState([]);
   const [additives, setAdditives] = useState([]);
@@ -25,12 +26,12 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   const [selectedAdditives, setSelectedAdditives] = useState({
     "drinkId": product.id,
     "volumeId": selectedSize.volumeId,
-    "price": 100,
+    "price": (selectedSize.price + priceAdditive),
     "additives": {
       "milkId": 0,
       "sugarCount": 0,
       "siropId": 0,
-      "extraShot": false,
+      "extraShot": 0,
       "sprinkling": 0,
     }
   });
@@ -41,6 +42,13 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
     "extraShot": 0,
     "sprinkling": 0,
   });
+
+	React.useEffect(() => {
+		setSelectedAdditives(prevState => ({
+			...prevState,
+			price: (selectedSize.price + priceAdditive),
+		}));
+	}, [selectedSize.price, priceAdditive])
 
   // Определение текущего ключа добавки на основе выбранной категории
   const getCurrentAdditiveKey = () => {
@@ -56,7 +64,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 			setSelectedAdditives({
 				"drinkId": product.id,
 				"volumeId": selectedSize.volumeId,
-				"price": 100,
+				"price": (selectedSize.price + priceAdditive),
 				"additives": {
 					"milkId": 0,
 					"sugarCount": 0,
@@ -74,14 +82,14 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
     const currentKey = getCurrentAdditiveKey();
     const currentValue = selectedAdditives.additives[currentKey];
     const isAlreadySelected = currentKey === "extraShot" 
-      ? currentValue === true 
+      ? currentValue === 1 
       : currentValue === additive.id;
 
     // Обновление selectedAdditives
     setSelectedAdditives(prev => {
       const newValue = isAlreadySelected 
-        ? (currentKey === "extraShot" ? false : 0)
-        : (currentKey === "extraShot" ? true : additive.id);
+        ? (currentKey === "extraShot" ? 0 : 0)
+        : (currentKey === "extraShot" ? 1 : additive.id);
       
       return {
         ...prev,
@@ -105,7 +113,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
     const currentValue = selectedAdditives.additives[currentKey];
     
     if (currentKey === "extraShot") {
-      return currentValue === true;
+      return currentValue === 1;
     }
     return currentValue === additive.id;
   };
@@ -156,6 +164,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
     )
     .then(res => {
       console.log(res);
+			globalStore.getData();
     })
     .catch(err => {
       console.log(err);
