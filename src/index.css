@@ -84,3 +84,14 @@ img {
 * {
 	-webkit-tap-highlight-color: transparent;
 }
+
+textarea {
+	background-color: transparent;
+	border: 0;
+	outline: none;
+	resize: none;
+}
+
+.swal2-backdrop-show {
+	z-index: 9999 !important;
+}

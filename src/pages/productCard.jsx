@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import Swal from "sweetalert2";
 import { Typography, IconButton, Dialog, DialogContent, Slide } from '@mui/material';
 import waveImage from "../assets/modal-wave1.svg";
 import CloseIcon from '@mui/icons-material/Close';
@@ -165,6 +166,13 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
     .then(res => {
       console.log(res);
 			globalStore.getData();
+			Swal.fire({
+        position: "center-center",
+        icon: "success",
+        title: "Товар добавлен в корзину",
+        showConfirmButton: false,
+				timer: 1500,
+      });	
     })
     .catch(err => {
       console.log(err);
@@ -439,7 +447,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
         >
           <CloseIcon />
         </IconButton>
-
         <div className='card-wrapper'>
           <div className='card__background'>
             <img

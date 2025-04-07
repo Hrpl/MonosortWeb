@@ -1,15 +1,50 @@
 import React from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { globalStore } from "../../store/globalStore";
+import { IconButton } from "@mui/material";
 import trashIcon from "../../assets/trash.svg";
 import CloseIcon from '@mui/icons-material/Close';
-import { IconButton } from "@mui/material";
-import axios from "axios";
+import CartItem from "../cartItem/CartItem";
 
 const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
 	const [totalSum, setTotalSum] = React.useState(0);
+	const [commentary, setCommentary] = React.useState("");
 
 	React.useEffect(() => {
 		setTotalSum(cartData.reduce((sum, item) => sum + Number(item.price), 0));
 	}, [cartData]);
+
+	const jwt = localStorage.getItem('accessToken');
+
+	const confirmOrder = () => {
+    axios.post("https://monosortcoffee.ru/api/order", 
+      {
+				"summaryPrice": totalSum,
+				"comment": commentary,
+			},
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      }
+    )
+    .then(res => {
+      console.log(res);
+			globalStore.getData();
+			setCommentary("");
+			Swal.fire({
+				position: "center-center",
+				icon: "success",
+				title: "Заказ создан",
+				showConfirmButton: false,
+				timer: 1500,
+			});	
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
   return (
     <div className={isShowCart ? "cart show" : "cart"}>
       <div className="cart__header">
@@ -17,6 +52,7 @@ const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
 					className="cart__header-button"
 					onClick={() => {
 						deleteCart();
+						setCommentary("");
 					}}
 				>
           <img src={trashIcon} alt="Очистить" />
@@ -41,29 +77,29 @@ const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
       </div>
       <ul className="cart__list">
         {cartData?.map((item) => (
-					<li key={item.id} className="cart__list-item">
-						<img
-							className="cart__list-item__img"
-							src={item?.photo}
-							alt={item?.name}
-						/>
-						<div className="row">
-							<div className="info">
-								<h3 className="cart__list-item__title">
-									{item?.name}
-								</h3>
-								<h3 className="cart__list-item__description">{item?.volume}</h3>
-							</div>
-							<div className="col">
-								<p className="cart__list-item__price">{item?.price} ₽</p>
-							</div>
-						</div>
-					</li>
+					<CartItem key={item.id} item={item} />
 				))}
 			</ul>
       <div className="cart__panel-wrapper">
         <div className="cart__panel">
-          <button className="cart__panel-button">Оплатить {totalSum} ₽</button>
+					<label 
+						className="cart__panel-label" 
+						htmlFor="comment"
+					>
+						Комментарий к заказу
+					</label>
+					<textarea 
+						value={commentary}
+						onChange={(e) => setCommentary(e.target.value)}
+						className="cart__panel-textarea" 
+						name="comment" 
+						id="comment" 
+						placeholder="Хочу кофе погорячее :)"
+					/>
+          <button 
+						onClick={confirmOrder}
+						className="cart__panel-button"
+					>Оплатить {totalSum} ₽</button>
         </div>
       </div>
     </div>

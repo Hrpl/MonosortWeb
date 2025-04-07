@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const JWTToken = localStorage.getItem('jwt');
 
@@ -47,6 +48,13 @@ export async function reg(name, login, password) {
         // Проверяем статус ответа
         if (response.status === 200) {
             console.log('Регистрация прошла успешно:', response.data);
+						Swal.fire({
+							position: "center-center",
+							icon: "success",
+							title: "Ссылка с подтверждением отправлена на почту",
+							showConfirmButton: false,
+							timer: 1500,
+						});	
         } else {
             console.log('Неожиданный статус:', response.status);
         }

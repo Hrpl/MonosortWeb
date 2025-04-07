@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cartIcon from "../assets/cart.svg";
@@ -37,7 +38,7 @@ const Home = () => {
 	}
 
 	const deleteCart = () => {
-		if(jwt) {
+		if(jwt && cartData.length > 0) {
 			axios.delete("https://monosortcoffee.ru/api/cart/all", {
 				headers: {
 					Authorization: `Bearer ${jwt}`
@@ -45,6 +46,13 @@ const Home = () => {
 			})
 			.then(res => {
 				fetchCart();
+				Swal.fire({
+					position: "center-center",
+					icon: "success",
+					title: "Корзина очищена",
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			})
 			.catch(err => {
 				console.log(err)
