@@ -18,32 +18,34 @@ const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
 	const jwt = localStorage.getItem('accessToken');
 
 	const confirmOrder = () => {
-    axios.post("https://monosortcoffee.ru/api/order", 
-      {
-				"summaryPrice": totalSum,
-				"comment": commentary,
-			},
-      {
-        headers: {
-          Authorization: `Bearer ${jwt}`
-        }
-      }
-    )
-    .then(res => {
-      console.log(res);
-			globalStore.getData();
-			setCommentary("");
-			Swal.fire({
-				position: "center-center",
-				icon: "success",
-				title: "Заказ создан",
-				showConfirmButton: false,
-				timer: 1500,
-			});	
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    if(totalSum === 0) {
+			axios.post("https://monosortcoffee.ru/api/order", 
+				{
+					"summaryPrice": totalSum,
+					"comment": commentary,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${jwt}`
+					}
+				}
+			)
+			.then(res => {
+				console.log(res);
+				globalStore.getData();
+				setCommentary("");
+				Swal.fire({
+					position: "center-center",
+					icon: "success",
+					title: "Заказ создан",
+					showConfirmButton: false,
+					timer: 1500,
+				});	
+			})
+			.catch(err => {
+				console.log(err);
+			});
+		}
   };
   return (
     <div className={isShowCart ? "cart show" : "cart"}>
