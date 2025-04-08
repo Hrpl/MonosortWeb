@@ -18,7 +18,7 @@ const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
 	const jwt = localStorage.getItem('accessToken');
 
 	const confirmOrder = () => {
-    if(totalSum === 0) {
+    if(cartData.length > 0) {
 			axios.post("https://monosortcoffee.ru/api/order", 
 				{
 					"summaryPrice": totalSum,
@@ -101,7 +101,7 @@ const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
           <button 
 						onClick={confirmOrder}
 						className="cart__panel-button"
-					>Оплатить {totalSum} ₽</button>
+					>Создать заказ&nbsp;<span>|</span>&nbsp;{totalSum} ₽</button>
         </div>
       </div>
     </div>

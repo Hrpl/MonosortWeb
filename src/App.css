@@ -187,4 +187,11 @@
 	padding: 15px 0;
 	font-size: 20px;
 	border-radius: 999px;
+	display: flex;
+	justify-content: center;
+	font-weight: 400;
+}
+
+.cart__panel-button span {
+	font-weight: 300;
 }
