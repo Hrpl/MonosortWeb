@@ -13,6 +13,8 @@ body:has(.auth__wrapper),
 	height: 100%;
 }
 
+html, body, #root { scroll-behavior: smooth !important; }
+
 body {
 	padding-top: 20px;
   margin: 0;
@@ -94,4 +96,8 @@ textarea {
 
 .swal2-backdrop-show {
 	z-index: 9999 !important;
+}
+
+a {
+	text-decoration: none;
 }

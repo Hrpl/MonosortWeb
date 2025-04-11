@@ -27,24 +27,45 @@ const HistoryOrder = ({ item }) => {
 		}
   };
   return (
-    <li className="cart__list-item">
-      <img
-        className="cart__list-item__img"
-        src={photo}
-        alt={name}
-      />
-      <div className="row">
-        <div className="info">
-          <h3 className="cart__list-item__title">{name}</h3>
-          <h3 className="cart__list-item__description">{volume}</h3>
-        </div>
-        <div className="col">
-					<button onClick={deleteItem} className="cart__list-item__delete">
-						<img src={deleteIcon} alt="Удалить" />
-					</button>
-          <p className="cart__list-item__price">{price} ₽</p>
-        </div>
-      </div>
+    <li className="order">
+      <div className="order__header-wrapper	">
+				<div className="order__header-row">
+					<h3 className="status">Заказ готовится</h3>
+					<span className="number">#53</span>
+				</div>
+				<div className="order__header-row">
+					<h5 className="quality">2 товара</h5>
+					<h5 className="date">Примерно в <span>12:24</span></h5>
+				</div>
+			</div>
+			<ul className="order__list">
+				<li className="order__list-item">
+					<div className="order__list-item__info">
+						<img className="order__list-item__info-img" src={"photo"} alt="coffee" />
+						<div className="order__list-item__info-col">
+							<h4 className="order__list-item__info-title">{"Капучино"}</h4>
+							<h5 className="order__list-item__info-volume">{"200 мл"}</h5>
+						</div>
+					</div>
+					<div className="order__list-item__additives">
+						<div className="order__list-item__additive">- Шот эспрессо</div>
+						<div className="order__list-item__additive">- Шот эспрессо</div>
+					</div>
+				</li>
+				<li className="order__list-item">
+					<div className="order__list-item__info">
+						<img className="order__list-item__info-img" src={"photo"} alt="coffee" />
+						<div className="order__list-item__info-col">
+							<h4 className="order__list-item__info-title">{"Капучино"}</h4>
+							<h5 className="order__list-item__info-volume">{"200 мл"}</h5>
+						</div>
+					</div>
+					<div className="order__list-item__additives">
+						<div className="order__list-item__additive">- Шот эспрессо</div>
+						<div className="order__list-item__additive">- Шот эспрессо</div>
+					</div>
+				</li>
+			</ul>
     </li>
   );
 };

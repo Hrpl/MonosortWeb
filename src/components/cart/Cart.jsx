@@ -35,7 +35,7 @@ const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
 				globalStore.getData();
 				setCommentary("");
 				Swal.fire({
-					position: "center-center",
+					position: "center",
 					icon: "success",
 					title: "Заказ создан",
 					showConfirmButton: false,

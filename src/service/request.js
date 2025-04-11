@@ -49,7 +49,7 @@ export async function reg(name, login, password) {
         if (response.status === 200) {
             console.log('Регистрация прошла успешно:', response.data);
 						Swal.fire({
-							position: "center-center",
+							position: "center",
 							icon: "success",
 							title: "Ссылка с подтверждением отправлена на почту",
 							showConfirmButton: false,

@@ -2,14 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
 import { Typography, IconButton, Dialog, DialogContent, Slide } from '@mui/material';
-import waveImage from "../assets/modal-wave1.svg";
+import { forwardRef } from 'react';
+import { globalStore } from '../store/globalStore';
 import CloseIcon from '@mui/icons-material/Close';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { forwardRef } from 'react';
 import SizeSelector from './volumeSelector';
 import "../styles/card.css";
-import { globalStore } from '../store/globalStore';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -167,7 +166,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
       console.log(res);
 			globalStore.getData();
 			Swal.fire({
-        position: "center-center",
+        position: "center",
         icon: "success",
         title: "Товар добавлен в корзину",
         showConfirmButton: false,
@@ -458,7 +457,11 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
               {product.name}
             </Typography>
           </div>
-          <img className='card__wave' src={waveImage} alt="Волна" />
+          <div className='card__wave'>
+          	<svg preserveAspectRatio="none" viewBox="0 0 434 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M0 0H434V7.5C434 7.5 418.948 57.3208 358.5 36C233.5 -8.08915 85.5 88 0 7.5V0Z" fill="white"/>
+						</svg>
+          </div>
           <Typography mt={4} fontWeight={400} color="#fff" fontSize={20}>настрой как любишь</Typography>
           <div className="modal__additives">
             <div 

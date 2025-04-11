@@ -47,7 +47,7 @@ const Home = () => {
 			.then(res => {
 				fetchCart();
 				Swal.fire({
-					position: "center-center",
+					position: "center",
 					icon: "success",
 					title: "Корзина очищена",
 					showConfirmButton: false,

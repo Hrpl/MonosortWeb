@@ -35,7 +35,7 @@
 
 .cart {
 	position: fixed;
-	z-index: 3;
+	z-index: 4;
 	left: 0;
 	top: 100%;
 	width: 100%;
@@ -53,6 +53,7 @@
 	top: 0;
 	visibility: visible;
 	opacity: 1;
+	z-index: 4;
 }
 
 .cart__header {
@@ -65,6 +66,11 @@
 	left: 0;
 	top: 0;
 	background-color: #1e1e1e;
+}
+
+.cart:has(.order__profile) .cart__header {
+	background-color: #222;
+	padding: 1rem 1rem .5rem 1rem;
 }
 
 .cart__header-button {
@@ -194,4 +200,153 @@
 
 .cart__panel-button span {
 	font-weight: 300;
+}
+
+.history__list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+.history__list-title {
+	font-weight: 600;
+	margin-top: 1rem;
+	margin-bottom: .5rem;
+	font-size: 24px;
+}
+
+.order__main {
+	padding: 0 1rem;
+}
+
+.order__profile {
+	padding: 10px;
+	background-color: white;
+	color: #222;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 5rem;
+	padding: 1rem;
+	border-radius: 10px;
+}
+
+.order__profile-info {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	gap: 1rem;
+}
+
+.order__profile-icon {
+	width: 50px;
+	height: 50px;
+}
+
+.order__profile-icon svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.order__profile-name {
+	color: #2c5c4f;
+	font-size: 21px;
+}
+
+.order__profile-arrow {
+	width: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.order__profile-arrow svg {
+	width: 100%;
+	display: block;
+}
+
+.order {
+	padding: 10px 1rem;
+	border-radius: 10px;
+	background-color: #fff;
+	color: #222;
+}
+
+.order__header-wrapper {
+display: flex;
+flex-direction: column;
+gap: 5px;
+margin-bottom: 10px;
+}
+
+.order__header-row {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.order__header-row .quality {
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.order__header-row .status {
+	font-size: 20px;
+	color: #2c5c4f;
+}
+
+.order__header-row  .number {
+	font-size: 20px;
+	color: #2c5c4f;
+	font-weight: 700;
+}
+
+.order__header-row .date {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.order__header-row .date span {
+	font-weight: 700;
+}
+
+.order__list-item:not(:first-child) {
+	padding-top: 1rem;
+	margin-top: 1rem;
+	border-top: 1px solid #b7b7b7;
+}
+
+.order__list-item__info {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.order__list-item__info-img {
+	width: 60px;
+	height: 60px;
+	display: block;
+	border-radius: 6px;
+	border: 1px solid;
+}
+
+.order__list-item__info-title {
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+
+.order__list-item__info-volume {
+	font-weight: 300;
+	font-size: 14px;
+}
+
+.order__list-item__additives {
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
