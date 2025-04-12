@@ -59,23 +59,19 @@ const Cart = ({ isShowCart, cartData, setIsShowCart, deleteCart }) => {
 				>
           <img src={trashIcon} alt="Очистить" />
         </button>
-        <button
+        <IconButton
+          disableRipple={true}
           className="cart__header-button close"
-          onClick={() => setIsShowCart(false)}
+        	onClick={() => setIsShowCart(false)}
+          sx={{
+            color: "#2c5c4f",
+            backgroundColor: "#fff",
+            borderRadius: "90%",
+            boxShadow: "0 0 2px 0 #b7b7b7",
+          }}
         >
-          <IconButton
-            disableRipple={true}
-            className="card__close"
-            sx={{
-              color: "#2c5c4f",
-              backgroundColor: "#fff",
-              borderRadius: "90%",
-              boxShadow: "0 0 2px 0 #b7b7b7",
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </button>
+          <CloseIcon />
+        </IconButton>
       </div>
       <ul className="cart__list">
         {cartData?.map((item) => (

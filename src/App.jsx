@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import AuthPage from './pages/auth'
+import Profile from './pages/profile';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/profile" element={<Profile />} />
         <Route path="/sign" element={<AuthPage />} />
 			</Routes>
     </BrowserRouter>

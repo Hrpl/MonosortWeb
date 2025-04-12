@@ -1,10 +1,62 @@
 import React from "react";
-import logo from "../../assets/logo.svg";
+import * as signalR from '@microsoft/signalr';
 import "./orders.css";
 import History from "../../pages/history";
 
 const Orders = () => {
-  const [isShowOrders, setIsShowOrders] = React.useState(false);
+	const [isShowOrders, setIsShowOrders] = React.useState(false);
+  const [connection, setConnection] = React.useState(null);
+
+	const jwt = localStorage.getItem('accessToken');
+
+  React.useEffect(() => {
+		if(jwt) {
+			const newConnection = new signalR.HubConnectionBuilder()
+			.withUrl(`https://monosortcoffee.ru/hub/status`, {
+				skipNegotiation: true,
+				transport: signalR.HttpTransportType.WebSockets,
+				credentials: 'omit',
+				accessTokenFactory: () => jwt,
+			})
+			.withAutomaticReconnect({
+				nextRetryDelayInMilliseconds: (retryContext) => {
+					// Экспоненциальная задержка для переподключения
+					return Math.min(retryContext.elapsedMilliseconds * 2, 10000);
+				}
+			})
+			.build();
+
+			setConnection(newConnection);
+		}
+	}, [jwt]);
+
+	React.useEffect(() => {
+    if (connection) {
+      const startConnection = async () => {
+        if (connection.state === signalR.HubConnectionState.Disconnected) {
+          try {
+            await connection.start();
+
+            // Подписка на сообщения от сервера
+            connection.on('status', (message) => {
+              console.log("Получено сообщение:", message);
+            });
+          } catch (err) {
+            console.error('SignalR Connection Error: ', err);
+          }
+        }
+      };
+
+      startConnection();
+
+      // Очистка при размонтировании
+      return () => {
+        if (connection.state === signalR.HubConnectionState.Connected) {
+          connection.stop();
+        }
+      };
+    }
+  }, [connection]);
   return (
     <>
       <div className="order__active">

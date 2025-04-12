@@ -149,10 +149,8 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   const lastXGridRef = useRef(0);
   const columnWidthRef = useRef(140 + 16);
 
-  // Токен авторизации
   const jwt = localStorage.getItem('accessToken');
 
-  // Отправка в корзину
   const postToCart = () => {
     axios.post("https://monosortcoffee.ru/api/cart/create", 
       selectedAdditives,

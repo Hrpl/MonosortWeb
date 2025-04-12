@@ -314,6 +314,15 @@ margin-bottom: 10px;
 	font-weight: 700;
 }
 
+.order__price {
+	margin-top: 1rem;
+	font-size: 18px;
+}
+
+.order__price span {
+	font-weight: 700;
+}
+
 .order__list-item:not(:first-child) {
 	padding-top: 1rem;
 	margin-top: 1rem;
@@ -331,7 +340,6 @@ margin-bottom: 10px;
 	height: 60px;
 	display: block;
 	border-radius: 6px;
-	border: 1px solid;
 }
 
 .order__list-item__info-title {
@@ -344,9 +352,21 @@ margin-bottom: 10px;
 	font-size: 14px;
 }
 
+.order__list-item__row {
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+
 .order__list-item__additives {
 	margin-top: 1rem;
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
+}
+
+.order__list-item__price {
+	font-size: 18px;
+	font-weight: 600;
 }

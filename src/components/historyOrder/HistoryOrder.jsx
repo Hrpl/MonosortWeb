@@ -1,73 +1,64 @@
 import React from "react";
-import axios from "axios";
-import { globalStore } from "../../store/globalStore";
-import deleteIcon from "../../assets/close.svg";
+import { numWord } from './../../utils/numWord';
 
 const HistoryOrder = ({ item }) => {
-	const { id, photo, name, volume, price } = item;
+	const { status, summaryPrice, createdTime, orderItems } = item;
 
-	const jwt = localStorage.getItem('accessToken');
-
-	const deleteItem = () => {
-    if(id) {
-			axios.delete(`https://monosortcoffee.ru/api/cart/${id}`, 
-				{
-					headers: {
-						Authorization: `Bearer ${jwt}`
-					}
-				}
-			)
-			.then(res => {
-				console.log(res);
-				globalStore.getData();
-			})
-			.catch(err => {
-				console.log(err);
-			});
-		}
-  };
-  return (
-    <li className="order">
-      <div className="order__header-wrapper	">
-				<div className="order__header-row">
-					<h3 className="status">Заказ готовится</h3>
-					<span className="number">#53</span>
-				</div>
-				<div className="order__header-row">
-					<h5 className="quality">2 товара</h5>
-					<h5 className="date">Примерно в <span>12:24</span></h5>
-				</div>
-			</div>
-			<ul className="order__list">
-				<li className="order__list-item">
-					<div className="order__list-item__info">
-						<img className="order__list-item__info-img" src={"photo"} alt="coffee" />
-						<div className="order__list-item__info-col">
-							<h4 className="order__list-item__info-title">{"Капучино"}</h4>
-							<h5 className="order__list-item__info-volume">{"200 мл"}</h5>
+	const dateObj = new Date(createdTime);
+	const day = String(dateObj.getDate()).padStart(2, '0');
+	const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+	const year = dateObj.getFullYear();
+	const hours = String(dateObj.getHours()).padStart(2, '0');
+	const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+	const formattedDate = `${day}.${month}.${year}`;
+	const formattedTime = `${hours}:${minutes}`; 
+	if(orderItems.length > 0) {
+		return (
+			<>
+				<li className="order">
+					<div className="order__header-wrapper	">
+						<div className="order__header-row">
+							<h3 className="status">{item.status}</h3>
+							<span className="number">#{item.orderId}</span>
+						</div>
+						<div className="order__header-row">
+							<h5 className="quality">{orderItems.length || 1} {numWord((orderItems.length || 1), ['товар', 'товара', 'товаров'])}</h5>
+							<h5 className="date">
+								{status === "Принят" ? (
+									<>{formattedDate}</>
+								) : (
+									<>Примерно в <span>{formattedTime}</span></>
+								)}
+							</h5>
 						</div>
 					</div>
-					<div className="order__list-item__additives">
-						<div className="order__list-item__additive">- Шот эспрессо</div>
-						<div className="order__list-item__additive">- Шот эспрессо</div>
-					</div>
+					<ul className="order__list">
+						{orderItems?.map((item, index) => (
+							<li className="order__list-item" key={index}>
+								<div className="order__list-item__info">
+									<img className="order__list-item__info-img" src={item.photo} alt={item.drinkName} />
+									<div className="order__list-item__info-col">
+										<h4 className="order__list-item__info-title">{item.drinkName}</h4>
+										<h5 className="order__list-item__info-volume">{item.volumeName}</h5>
+									</div>
+								</div>
+								<div className="order__list-item__row">
+									<div className="order__list-item__additives">
+										{item.extraShot && (<div className="order__list-item__additive">- {item.extraShot}</div>)}
+										{item.siropName && (<div className="order__list-item__additive">- {item.siropName}</div>)}
+										{item.milkName && (<div className="order__list-item__additive">- {item.milkName}</div>)}
+										{item.sprinkling && (<div className="order__list-item__additive">- {item.sprinkling}</div>)}
+									</div>
+									<div className="order__list-item__price">{item.price || 0} ₽</div>
+								</div>
+							</li>
+						))}
+					</ul>
+					<div className="order__price">Всего: <span>{summaryPrice} ₽</span></div>
 				</li>
-				<li className="order__list-item">
-					<div className="order__list-item__info">
-						<img className="order__list-item__info-img" src={"photo"} alt="coffee" />
-						<div className="order__list-item__info-col">
-							<h4 className="order__list-item__info-title">{"Капучино"}</h4>
-							<h5 className="order__list-item__info-volume">{"200 мл"}</h5>
-						</div>
-					</div>
-					<div className="order__list-item__additives">
-						<div className="order__list-item__additive">- Шот эспрессо</div>
-						<div className="order__list-item__additive">- Шот эспрессо</div>
-					</div>
-				</li>
-			</ul>
-    </li>
-  );
+			</>
+		);
+	}
 };
 
 export default HistoryOrder;
