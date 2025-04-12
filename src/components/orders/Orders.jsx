@@ -23,12 +23,7 @@ const Orders = observer(() => {
 				credentials: 'omit',
 				accessTokenFactory: () => jwt,
 			})
-			.withAutomaticReconnect({
-				nextRetryDelayInMilliseconds: (retryContext) => {
-					// Экспоненциальная задержка для переподключения
-					return Math.min(retryContext.elapsedMilliseconds * 2, 10000);
-				}
-			})
+			.withAutomaticReconnect()
 			.build();
 
 			setConnection(newConnection);
@@ -46,6 +41,11 @@ const Orders = observer(() => {
             // Подписка на сообщения от сервера
             connection.on('Status', (message) => {
               console.log("Получено сообщение:", message);
+            });
+
+						connection.on('Active', (message) => {
+              console.log("Получено сообщение:", message);
+							globalStore.setActiveOrders(message); 
             });
           } catch (err) {
             console.error('SignalR Connection Error: ', err);
@@ -80,7 +80,6 @@ const Orders = observer(() => {
 					res.data.status === "Готов к выдаче" ? 3 :
 					0
 				);
-				console.log(res.data);
 			})
 			.catch(err => {
 				console.log(err);
@@ -118,13 +117,7 @@ const Orders = observer(() => {
 						(activeOrder.status === "Готовится") ? 0 : "1rem"
 					}}
 				>
-          <div className="col">
-            {/* <h3 className="status">Нет активного заказа</h3>
-            <p className="description">Бариста скучает без дела</p> */}
-						{/* <h3 className="status">Заказ принят</h3>
-            <p className="description">Достаём стаканчики...</p> */}
-						{/* <h3 className="status">Заказ готов</h3>
-            <p className="description">Готово! Бегите, пока не остыло!</p> */}
+          <div className="col">	
 						{activeOrder.status === "Принят" ? (
 							<>
 								<h3 className="status">Заказ принят</h3>

@@ -4,6 +4,7 @@ class GlobalStore {
 	getData = null;
 	getOrders = null;
 	orderStatus = 0;
+	activeOrders = [];
 	
 	constructor() {
 		makeAutoObservable(this);
@@ -19,6 +20,10 @@ class GlobalStore {
 
 	getOrderStatus = (status) => {
 		this.orderStatus = status;
+	}
+
+	setActiveOrders = (orders) => {
+		this.activeOrders = orders;
 	}
 }
 

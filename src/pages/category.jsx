@@ -89,7 +89,6 @@ const Categories = observer(() => {
     centerActiveTab(e.currentTarget);
   };
 
-	console.log(globalStore.orderStatus)
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <div

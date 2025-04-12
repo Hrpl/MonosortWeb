@@ -24,7 +24,7 @@ const HistoryOrder = ({ item }) => {
 						<div className="order__header-row">
 							<h5 className="quality">{orderItems.length || 1} {numWord((orderItems.length || 1), ['товар', 'товара', 'товаров'])}</h5>
 							<h5 className="date">
-								{status === "Принят" ? (
+								{(status === "Принят" || status === "Завершён") ? (
 									<>{formattedDate}</>
 								) : (
 									<>Примерно в <span>{formattedTime}</span></>

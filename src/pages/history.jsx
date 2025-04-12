@@ -93,6 +93,12 @@ const History = ({ isShowOrders, setIsShowOrders}) => {
 						</svg>
 					</div>
 				</Link>
+				<h2 className="history__list-title">Активные заказы</h2>
+				<ul className="history__list">
+	        {globalStore.activeOrders?.map((item) => (
+	          <HistoryOrder key={item.orderId} item={item} />
+	        ))}
+	      </ul>
 				<h2 className="history__list-title">История заказов</h2>
 	      <ul className="history__list">
 	        {orders?.map((item) => (
