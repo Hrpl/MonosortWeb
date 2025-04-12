@@ -18,13 +18,13 @@ const HistoryOrder = ({ item }) => {
 				<li className="order">
 					<div className="order__header-wrapper	">
 						<div className="order__header-row">
-							<h3 className="status">{item.status}</h3>
+							<h3 className="status">{status}</h3>
 							<span className="number">#{item.orderId}</span>
 						</div>
 						<div className="order__header-row">
 							<h5 className="quality">{orderItems.length || 1} {numWord((orderItems.length || 1), ['товар', 'товара', 'товаров'])}</h5>
 							<h5 className="date">
-								{(status === "Принят" || status === "Завершён") ? (
+								{(true) ? (
 									<>{formattedDate}</>
 								) : (
 									<>Примерно в <span>{formattedTime}</span></>
@@ -44,12 +44,12 @@ const HistoryOrder = ({ item }) => {
 								</div>
 								<div className="order__list-item__row">
 									<div className="order__list-item__additives">
-										{item.extraShot && (<div className="order__list-item__additive">- {item.extraShot}</div>)}
-										{item.siropName && (<div className="order__list-item__additive">- {item.siropName}</div>)}
-										{item.milkName && (<div className="order__list-item__additive">- {item.milkName}</div>)}
-										{item.sprinkling && (<div className="order__list-item__additive">- {item.sprinkling}</div>)}
+										{item.extraShot && (<div className="order__list-item__additive">{item.extraShot ? "Шот эспрессо" : ""}</div>)}
+										{item.siropName && (<div className="order__list-item__additive">{item.siropName}</div>)}
+										{item.milkName && (<div className="order__list-item__additive">{item.milkName}</div>)}
+										{item.sprinkling && (<div className="order__list-item__additive">{item.sprinkling}</div>)}
 									</div>
-									<div className="order__list-item__price">{item.price || 0} ₽</div>
+									{orderItems.length > 1 && (<div className="order__list-item__price">{item.price || 0} ₽</div>)}
 								</div>
 							</li>
 						))}

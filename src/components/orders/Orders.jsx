@@ -146,7 +146,13 @@ const Orders = observer(() => {
             
           </div>
           <div className="col">
-            <span className="code">{isNotActiveOrder ? "" : `#${activeOrder.number}`}</span>
+            <span className="code">
+							{(
+								activeOrder.status === "Принят" ||
+								activeOrder.status === "Готовится" ||
+								activeOrder.status === "Готов к выдаче"
+							) ? `#${activeOrder.number}` : ""}
+						</span>
           </div>
         </div>
       </div>
