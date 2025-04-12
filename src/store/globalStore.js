@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx"
 class GlobalStore {
 	getData = null;
 	getOrders = null;
-	orderStatus = 0;
+	orderStatus = "Нет";
 	activeOrders = [];
 	
 	constructor() {

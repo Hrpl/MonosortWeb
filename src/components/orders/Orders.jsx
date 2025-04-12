@@ -41,11 +41,20 @@ const Orders = observer(() => {
             // Подписка на сообщения от сервера
             connection.on('Status', (message) => {
               console.log("Получено сообщение:", message);
+							setActiveOrder(message)
+							globalStore.getOrderStatus(message.status);
+							if(message.status === "Завершён") {
+								setIsNotActiveOrder(true);
+							}
             });
 
 						connection.on('Active', (message) => {
-              console.log("Получено сообщение:", message);
-							globalStore.setActiveOrders(message); 
+							try {
+								console.log("Получено сообщение:", message);
+								globalStore.setActiveOrders(message); 
+							} catch (err) {
+								console.log(err)
+							}
             });
           } catch (err) {
             console.error('SignalR Connection Error: ', err);
@@ -56,11 +65,11 @@ const Orders = observer(() => {
       startConnection();
 
       // Очистка при размонтировании
-      return () => {
-        if (connection.state === signalR.HubConnectionState.Connected) {
-          connection.stop();
-        }
-      };
+      // return () => {
+      //   if (connection.state === signalR.HubConnectionState.Connected) {
+      //     connection.stop();
+      //   }
+      // };
     }
   }, [connection]);
 
@@ -74,18 +83,13 @@ const Orders = observer(() => {
 			.then(res => {
 				setIsNotActiveOrder(false);
 				setActiveOrder(res.data);
-				globalStore.getOrderStatus(
-					res.data.status === "Принят" ? 1 :
-					res.data.status === "Готовится" ? 2 :
-					res.data.status === "Готов к выдаче" ? 3 :
-					0
-				);
+				globalStore.getOrderStatus(res.data.status);
 			})
 			.catch(err => {
 				console.log(err);
 				if(err.status === 404) {
 					setIsNotActiveOrder(true);
-					globalStore.getOrderStatus(0);
+					globalStore.getOrderStatus("Нет");
 				}
 			})
 		}
@@ -118,17 +122,17 @@ const Orders = observer(() => {
 					}}
 				>
           <div className="col">	
-						{activeOrder.status === "Принят" ? (
+						{(activeOrder.status === "Принят") ? (
 							<>
 								<h3 className="status">Заказ принят</h3>
 								<p className="description">Достаём стаканчики...</p>
 							</>
-						) : activeOrder.status === "Готовится" ? (
+						) : (activeOrder.status === "Готовится") ? (
 							<>
 								<h3 className="status">Заказ готовится</h3>
 								<p className="description">Готовим с любовью...</p>
 							</>
-						) : activeOrder.status === "Готов к выдаче" ? (
+						) : (activeOrder.status === "Готов к выдаче") ? (
 							<>
 								<h3 className="status">Заказ готов</h3>
 								<p className="description">Готово! Бегите, пока не остыло!</p>
@@ -146,7 +150,7 @@ const Orders = observer(() => {
           </div>
         </div>
       </div>
-      {activeOrder.status === "Готовится" && (
+      {(activeOrder.status === "Готовится") && (
 				<div className="order__active-broadcast">
 					<div className="line">
 						<div

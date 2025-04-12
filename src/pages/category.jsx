@@ -89,6 +89,7 @@ const Categories = observer(() => {
     centerActiveTab(e.currentTarget);
   };
 
+	console.log((globalStore.orderStatus))
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <div
@@ -96,7 +97,7 @@ const Categories = observer(() => {
         ref={tabsContainerRef}
         onMouseDown={handleMouseDown}
 				style={{
-					top: (globalStore.orderStatus !== 2) && "0px",
+					top: ((globalStore.orderStatus === "Готовится")) ? "57px" : "0px",
 				}}
       >
         <div className="tabs">
