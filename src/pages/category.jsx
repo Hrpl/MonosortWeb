@@ -3,8 +3,10 @@ import { Box } from "@mui/material";
 import { getCategory } from "../service/request";
 import ProductGrid from "./products";
 import "../styles/category.css";
+import { observer } from "mobx-react-lite";
+import { globalStore } from "../store/globalStore";
 
-const Categories = () => {
+const Categories = observer(() => {
   const [value, setValue] = useState(1);
   const [categories, setCategories] = useState([]);
   const tabsContainerRef = useRef(null);
@@ -87,12 +89,16 @@ const Categories = () => {
     centerActiveTab(e.currentTarget);
   };
 
+	console.log(globalStore.orderStatus)
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <div
         className="tabs-container"
         ref={tabsContainerRef}
         onMouseDown={handleMouseDown}
+				style={{
+					top: (globalStore.orderStatus !== 2) && "0px",
+				}}
       >
         <div className="tabs">
           {categories?.map((category) => (
@@ -122,6 +128,6 @@ const Categories = () => {
       ))}
     </Box>
   );
-};
+});
 
 export default Categories;

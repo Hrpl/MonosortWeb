@@ -2,10 +2,15 @@ import React from "react";
 import * as signalR from '@microsoft/signalr';
 import "./orders.css";
 import History from "../../pages/history";
+import { observer } from "mobx-react-lite";
+import { globalStore } from "../../store/globalStore";
+import axios from "axios";
 
-const Orders = () => {
+const Orders = observer(() => {
 	const [isShowOrders, setIsShowOrders] = React.useState(false);
   const [connection, setConnection] = React.useState(null);
+	const [activeOrder, setActiveOrder] = React.useState({});
+	const [isNotActiveOrder, setIsNotActiveOrder] = React.useState(true);
 
 	const jwt = localStorage.getItem('accessToken');
 
@@ -27,6 +32,7 @@ const Orders = () => {
 			.build();
 
 			setConnection(newConnection);
+			getActiveOrder();
 		}
 	}, [jwt]);
 
@@ -38,7 +44,7 @@ const Orders = () => {
             await connection.start();
 
             // Подписка на сообщения от сервера
-            connection.on('status', (message) => {
+            connection.on('Status', (message) => {
               console.log("Получено сообщение:", message);
             });
           } catch (err) {
@@ -57,6 +63,34 @@ const Orders = () => {
       };
     }
   }, [connection]);
+
+	const getActiveOrder = () => {
+		if(jwt) {
+			axios.get("https://monosortcoffee.ru/api/order/active", {
+				headers: {
+					Authorization: `Bearer ${jwt}`
+				}
+			})
+			.then(res => {
+				setIsNotActiveOrder(false);
+				setActiveOrder(res.data);
+				globalStore.getOrderStatus(
+					res.data.status === "Принят" ? 1 :
+					res.data.status === "Готовится" ? 2 :
+					res.data.status === "Готов к выдаче" ? 3 :
+					0
+				);
+				console.log(res.data);
+			})
+			.catch(err => {
+				console.log(err);
+				if(err.status === 404) {
+					setIsNotActiveOrder(true);
+					globalStore.getOrderStatus(0);
+				}
+			})
+		}
+	}
   return (
     <>
       <div className="order__active">
@@ -77,37 +111,69 @@ const Orders = () => {
             </svg>
           </button>
         </div>
-        <div className="order__active-info">
+        <div 
+					className="order__active-info"
+					style={{
+						paddingBottom: 
+						(activeOrder.status === "Готовится") ? 0 : "1rem"
+					}}
+				>
           <div className="col">
-            {/* <h3 className="status">Ещё 5 минуток</h3>
-            <p className="description">Готовим с любовью...</p> */}
-            <h3 className="status">Заказ готовится</h3>
-            <p className="description">Достаём стаканчики...</p>
+            {/* <h3 className="status">Нет активного заказа</h3>
+            <p className="description">Бариста скучает без дела</p> */}
+						{/* <h3 className="status">Заказ принят</h3>
+            <p className="description">Достаём стаканчики...</p> */}
+						{/* <h3 className="status">Заказ готов</h3>
+            <p className="description">Готово! Бегите, пока не остыло!</p> */}
+						{activeOrder.status === "Принят" ? (
+							<>
+								<h3 className="status">Заказ принят</h3>
+								<p className="description">Достаём стаканчики...</p>
+							</>
+						) : activeOrder.status === "Готовится" ? (
+							<>
+								<h3 className="status">Заказ готовится</h3>
+								<p className="description">Готовим с любовью...</p>
+							</>
+						) : activeOrder.status === "Готов к выдаче" ? (
+							<>
+								<h3 className="status">Заказ готов</h3>
+								<p className="description">Готово! Бегите, пока не остыло!</p>
+							</>
+						) : (
+							<>
+								<h3 className="status">Нет активного заказа</h3>
+	            	<p className="description">Бариста скучает без дела</p>
+							</>
+						)}
+            
           </div>
           <div className="col">
-            <span className="code">#425</span>
+            <span className="code">{isNotActiveOrder ? "" : `#${activeOrder.number}`}</span>
           </div>
         </div>
       </div>
-      <div className="order__active-broadcast">
-        <div className="line">
-          <div
-            className="line-active"
-            style={{
-              width: "30%",
-            }}
-          >
-            <div className="line-cup"></div>
-          </div>
-        </div>
-        <div className="line-finish"></div>
-      </div>
+      {activeOrder.status === "Готовится" && (
+				<div className="order__active-broadcast">
+					<div className="line">
+						<div
+							className="line-active"
+							style={{
+								width: "30%",
+							}}
+						>
+							<div className="line-cup"></div>
+						</div>
+					</div>
+					<div className="line-finish"></div>
+				</div>
+			)}
 			<History 
 				isShowOrders={isShowOrders}
 				setIsShowOrders={setIsShowOrders}
 			/>
     </>
   );
-};
+});
 
 export default Orders;

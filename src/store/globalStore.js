@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx"
 class GlobalStore {
 	getData = null;
 	getOrders = null;
+	orderStatus = 0;
 	
 	constructor() {
 		makeAutoObservable(this);
@@ -14,6 +15,10 @@ class GlobalStore {
 	
 	getOrdersFunc = (func) => {
 		this.getOrders = func;
+	}
+
+	getOrderStatus = (status) => {
+		this.orderStatus = status;
 	}
 }
 
