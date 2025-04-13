@@ -399,7 +399,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
       document.removeEventListener('mouseup', handleGridMouseUp);
     };
   }, []);
-
   return (
     <Dialog 
       open={open} 

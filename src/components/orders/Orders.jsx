@@ -10,7 +10,6 @@ const Orders = observer(() => {
 	const [isShowOrders, setIsShowOrders] = React.useState(false);
   const [connection, setConnection] = React.useState(null);
 	const [activeOrder, setActiveOrder] = React.useState({});
-	const [isNotActiveOrder, setIsNotActiveOrder] = React.useState(true);
 
 	const jwt = localStorage.getItem('accessToken');
 
@@ -43,9 +42,6 @@ const Orders = observer(() => {
               console.log("Получено сообщение:", message);
 							setActiveOrder(message)
 							globalStore.getOrderStatus(message.status);
-							if(message.status === "Завершён") {
-								setIsNotActiveOrder(true);
-							}
             });
 
 						connection.on('Active', (message) => {
@@ -81,14 +77,13 @@ const Orders = observer(() => {
 				}
 			})
 			.then(res => {
-				setIsNotActiveOrder(false);
 				setActiveOrder(res.data);
+				console.log(res.data);
 				globalStore.getOrderStatus(res.data.status);
 			})
 			.catch(err => {
 				console.log(err);
 				if(err.status === 404) {
-					setIsNotActiveOrder(true);
 					globalStore.getOrderStatus("Нет");
 				}
 			})
@@ -118,13 +113,15 @@ const Orders = observer(() => {
 					className="order__active-info"
 					style={{
 						paddingBottom: 
-						(activeOrder.status === "Готовится") ? 0 : "1rem"
+							(activeOrder.status === "Готовится") ? 0 : "1rem",
+						alignItems: 
+							(activeOrder.status === "Готовится") ? "flex-start" : "center",
 					}}
 				>
-          <div className="col">	
+          <div>	
 						{(activeOrder.status === "Принят") ? (
 							<>
-								<h3 className="status">Заказ принят</h3>
+								<h3 className="status">Принимаем заказ</h3>
 								<p className="description">Достаём стаканчики...</p>
 							</>
 						) : (activeOrder.status === "Готовится") ? (
@@ -153,8 +150,11 @@ const Orders = observer(() => {
 								activeOrder.status === "Готов к выдаче"
 							) ? `#${activeOrder.number}` : ""}
 						</span>
+						{activeOrder.status === "Готовится" && (
+							<span className="date">Примерно в {activeOrder.readyTime}</span>
+						)}
           </div>
-        </div>
+        </div>	
       </div>
       {(activeOrder.status === "Готовится") && (
 				<div className="order__active-broadcast">

@@ -2,7 +2,7 @@ import React from "react";
 import { numWord } from './../../utils/numWord';
 
 const HistoryOrder = ({ item }) => {
-	const { status, summaryPrice, createdTime, orderItems } = item;
+	const { status, summaryPrice, createdTime, orderItems, readyTime } = item;
 
 	const dateObj = new Date(createdTime);
 	const day = String(dateObj.getDate()).padStart(2, '0');
@@ -24,10 +24,10 @@ const HistoryOrder = ({ item }) => {
 						<div className="order__header-row">
 							<h5 className="quality">{orderItems.length || 1} {numWord((orderItems.length || 1), ['товар', 'товара', 'товаров'])}</h5>
 							<h5 className="date">
-								{(true) ? (
+								{(status !== "Готовится") ? (
 									<>{formattedDate}</>
 								) : (
-									<>Примерно в <span>{formattedTime}</span></>
+									<>Примерно в <span>{readyTime}</span></>
 								)}
 							</h5>
 						</div>
