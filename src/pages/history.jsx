@@ -47,7 +47,6 @@ const History = observer(({ isShowOrders, setIsShowOrders}) => {
 			})
 			.then(res => {
 				setProfileData(res.data);
-				console.log(res.data);
 			})
 			.catch(err => {
 				console.log(err)
