@@ -32,6 +32,13 @@ export async function authorize(login, password) {
         
     } catch (error) {
         console.log(error);
+				Swal.fire({
+					position: "center",
+					icon: "error",
+					title: error.response.data.description || "Упс! Ошибка!",
+					showConfirmButton: false,
+					timer: 1500,
+				});	
         return null;
     }
 };
@@ -57,17 +64,45 @@ export async function reg(name, login, password) {
 						});	
         } else {
             console.log('Неожиданный статус:', response.status);
+						Swal.fire({
+							position: "center",
+							icon: "error",
+							title: error.response.data.description || "Упс! Ошибка!",
+							showConfirmButton: false,
+							timer: 1500,
+						});	
         }
         
     } catch (error) {
         if (error.response) {
             console.log('Ошибка от сервера:', error.response.status, error.response.data);
+						Swal.fire({
+							position: "center",
+							icon: "error",
+							title: error.response.data.description || "Упс! Ошибка!",
+							showConfirmButton: false,
+							timer: 1500,
+						});	
         } else if (error.request) {
             // Ошибка на уровне запроса (сервер не ответил)
             console.log('Сервер не отвечает:', error.request);
+						Swal.fire({
+							position: "center",
+							icon: "error",
+							title: error.response.data.description || "Упс! Ошибка!",
+							showConfirmButton: false,
+							timer: 1500,
+						});	
         } else {
             // Другая ошибка
             console.log('Произошла ошибка:', error.message);
+						Swal.fire({
+							position: "center",
+							icon: "error",
+							title: error.response.data.description || "Упс! Ошибка!",
+							showConfirmButton: false,
+							timer: 1500,
+						});	
         }
 
         return null;

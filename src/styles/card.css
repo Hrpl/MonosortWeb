@@ -197,3 +197,23 @@
 	font-weight: 600;
 	font-size: 16px;
 }
+
+.counter {
+	display: flex;
+	align-items: center;
+	gap: 0px;
+}
+
+.counter__value {
+	width: 40px;
+	display: flex;
+	justify-content: center;
+}
+
+.counter__button {
+	background-color: #242525;
+	border: 1px solid #383838;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+}

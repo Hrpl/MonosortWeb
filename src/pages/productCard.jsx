@@ -23,13 +23,14 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   const [additivesCategories, setAdditivesCategories] = useState([]);
   const [additives, setAdditives] = useState([]);
 	const [priceAdditive, setPriceAdditive] = useState(0);
+	const [countSugar, setCountSugar] = useState(0);
   const [selectedAdditives, setSelectedAdditives] = useState({
     "drinkId": product.id,
     "volumeId": selectedSize.volumeId,
     "price": (selectedSize.price + priceAdditive),
     "additives": {
       "milkId": 0,
-      "sugarCount": 0,
+      "sugarCount": countSugar,
       "siropId": 0,
       "extraShot": 0,
       "sprinkling": 0,
@@ -427,6 +428,8 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 							"extraShot": 0,
 							"sprinkling": 0,
 						});
+						setCountSugar(0);
+						setSelectedAdditivesCategories(1);
 					}}
           disableRipple={true}
           className='card__close'
@@ -501,17 +504,55 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
                 cursor: 'pointer',
               }}
             >
-              {additives.map((additive) => (
-                <button 
-                  key={additive.id} 
-                  className={`modal__grid-item ${isAdditiveSelected(additive) ? 'active' : ''}`}
-                  onClick={() => handleAdditiveSelect(additive)}
-                >
-                  <img className="img" src={additive.photo} alt="Картинка" />
-                  <p className="title">{additive.name}</p>
-                  <span className="price">+{additive.price} ₽</span>
-                </button>
-              ))}
+              {additives.map((additive) => {
+								if(selectedAditivesCategories === 2) {
+									return (
+										(
+											<div 
+												key={additive.id} 
+												className={`modal__grid-item ${isAdditiveSelected(additive) ? 'active' : ''}`}
+											>
+												<img className="img" src={additive.photo} alt="Картинка" />
+												<p className="title">{additive.name}</p>
+												<div className='counter'>
+													<button 
+														className='counter__button' 
+														onClick={() => {
+															if(countSugar > 0) {
+																setCountSugar(prev => prev - 1);
+															}
+														}}
+													>-</button>
+													<span className='counter__value'>{countSugar}</span>
+													<button 
+														className='counter__button' 
+														onClick={() => {
+															if(countSugar < 10) {
+																setCountSugar(prev => prev + 1);
+															}
+														}}
+													>+</button>
+												</div>
+												<span className="price">+{additive.price} ₽</span>
+											</div>
+										)
+									)
+								} else {
+									return (
+										(
+											<button 
+												key={additive.id} 
+												className={`modal__grid-item ${isAdditiveSelected(additive) ? 'active' : ''}`}
+												onClick={() => handleAdditiveSelect(additive)}
+											>
+												<img className="img" src={additive.photo} alt="Картинка" />
+												<p className="title">{additive.name}</p>
+												<span className="price">+{additive.price} ₽</span>
+											</button>
+										)
+									)
+								}
+							})}
             </div>
           </div>
           <div className='modal__panel'>
