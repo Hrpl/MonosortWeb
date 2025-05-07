@@ -63,6 +63,11 @@
 	border-top: 1px solid #383838;
 }
 
+.modal__description {
+	font-size: 16px;
+	padding: 0 16px;
+}
+
 .card__selector {
   display: flex;
   align-items: center;

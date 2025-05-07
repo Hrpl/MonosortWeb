@@ -16,7 +16,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   if (product == null) return null;
-  
+  console.log(product);
   // Состояния компонента
   const [selectedSize, setSelectedSize] = useState({price: 0});
   const [selectedAditivesCategories, setSelectedAdditivesCategories] = useState(1);
@@ -24,6 +24,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   const [additives, setAdditives] = useState([]);
 	const [priceAdditive, setPriceAdditive] = useState(0);
 	const [countSugar, setCountSugar] = useState(0);
+	const [description, setDescription] = useState("");
   const [selectedAdditives, setSelectedAdditives] = useState({
     "drinkId": product.id,
     "volumeId": selectedSize.volumeId,
@@ -38,11 +39,23 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   });
   const [intermediate, setIntermediate] = useState({
     "milkId": 0,
-    "sugarCount": 0,
+    "sugarCount": countSugar,
     "siropId": 0,
     "extraShot": 0,
     "sprinkling": 0,
   });
+
+	React.useEffect(() => {
+		if(product.id) {
+			axios.get(`https://monosortcoffee.ru/api/menu/any/${product.id}`)
+				.then(res => {
+					setDescription(res.data.description);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
+	}, [product]);
 
 	React.useEffect(() => {
 		setSelectedAdditives(prevState => ({
@@ -400,6 +413,22 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
       document.removeEventListener('mouseup', handleGridMouseUp);
     };
   }, []);
+
+  useEffect(() => {
+    console.log(selectedAdditives);
+  }, [selectedAdditives]);
+
+  const handleSugarChange = (newCount) => {
+    setCountSugar(newCount);
+    setSelectedAdditives(prev => ({
+      ...prev,
+      additives: {
+        ...prev.additives,
+        sugarCount: newCount
+      }
+    }));
+  };
+
   return (
     <Dialog 
       open={open} 
@@ -429,6 +458,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 							"sprinkling": 0,
 						});
 						setCountSugar(0);
+						setDescription("");
 						setSelectedAdditivesCategories(1);
 					}}
           disableRipple={true}
@@ -519,7 +549,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 														className='counter__button' 
 														onClick={() => {
 															if(countSugar > 0) {
-																setCountSugar(prev => prev - 1);
+																handleSugarChange(countSugar - 1);
 															}
 														}}
 													>-</button>
@@ -528,7 +558,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 														className='counter__button' 
 														onClick={() => {
 															if(countSugar < 10) {
-																setCountSugar(prev => prev + 1);
+																handleSugarChange(countSugar + 1);
 															}
 														}}
 													>+</button>
@@ -555,6 +585,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 							})}
             </div>
           </div>
+					<p className='modal__description'>{description}</p>
           <div className='modal__panel'>
             <SizeSelector 
               postToCart={postToCart}

@@ -29,6 +29,7 @@ const Home = () => {
 			})
 			.then(res => {
 				setCartData(res.data);
+				console.log(res.data);
 				globalStore.getFunc(fetchCart);
 			})
 			.catch(err => {
