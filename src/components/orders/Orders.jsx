@@ -5,9 +5,13 @@ import History from "../../pages/history";
 import { observer } from "mobx-react-lite";
 import { globalStore } from "../../store/globalStore";
 import axios from "axios";
+import logo from "../../assets/logotype.svg";
+import heart from "../../assets/heart.svg";
+import Favorite from "../favorite/Favorite";
 
 const Orders = observer(() => {
 	const [isShowOrders, setIsShowOrders] = React.useState(false);
+	const [isShowFavorite, setIsShowFavorite] = React.useState(false);
   const [connection, setConnection] = React.useState(null);
 	const [activeOrder, setActiveOrder] = React.useState({});
 
@@ -93,12 +97,14 @@ const Orders = observer(() => {
     <>
       <div className="order__active">
         <div className="order__header">
+					<button 
+						className="order__header-selected"
+						onClick={() => setIsShowFavorite(true)}
+					>
+						<img src={heart} alt="heart" />
+					</button>
           <div className="order__header-logo">
-            <svg preserveAspectRatio="none" viewBox="0 0 214 214" fill="none" xmlns="http://www.w3.org/2000/svg" >
-              <path d="M3 158V3H211.5V211.5H3V189" stroke="#2c5c4f" strokeWidth="15" />
-              <path stroke="#2c5c4f" strokeWidth="2" d="M66 163C63.35 163 62.025 161.675 62.025 159.025V70.3C62.025 67.65 63.35 66.325 66 66.325C67.9 66.325 69.4 67.2 70.5 68.95L107.85 126.025L106.05 126.25L143.4 68.95C144.45 67.2 146.025 66.325 148.125 66.325C150.475 66.325 151.65 67.65 151.65 70.3V159.025C151.65 161.675 150.35 163 147.75 163C145.1 163 143.775 161.675 143.775 159.025V78.175L146.1 78.925L111.45 131.725C110.35 133.425 108.775 134.275 106.725 134.275C104.925 134.275 103.475 133.425 102.375 131.725L67.725 78.925L69.9 79.75V159.025C69.9 161.675 68.6 163 66 163Z" fill="#2c5c4f" />
-            </svg>
-            <span className="order__header-logo__text">Monosort</span>
+            <img src={logo} alt="logo" />
           </div>
           <button
             className="order__header-row__profile"
@@ -174,6 +180,10 @@ const Orders = observer(() => {
 			<History 
 				isShowOrders={isShowOrders}
 				setIsShowOrders={setIsShowOrders}
+			/>
+			<Favorite 
+				isShowFavorite={isShowFavorite}
+				setIsShowFavorite={setIsShowFavorite}
 			/>
     </>
   );

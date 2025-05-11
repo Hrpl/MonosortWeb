@@ -8,6 +8,7 @@ import Categories from "./category";
 import Cart from "../components/cart/Cart";
 import Orders from "../components/orders/Orders";
 import { globalStore } from "../store/globalStore";
+import Favorite from "../components/favorite/Favorite";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,7 +18,9 @@ const Home = () => {
 	const jwt = localStorage.getItem('accessToken');
 
 	React.useEffect(() => {
-		fetchCart();
+		if(jwt) {
+			fetchCart();
+		}
 	}, [jwt])
 
 	const fetchCart = () => {
@@ -88,7 +91,7 @@ const Home = () => {
 				setIsShowCart={setIsShowCart} 
 				isShowCart={isShowCart} 
 			/>
-    </>
+		</>
   );
 };
 

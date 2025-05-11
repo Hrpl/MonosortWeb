@@ -9,6 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import SizeSelector from './volumeSelector';
 import "../styles/card.css";
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -18,6 +19,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   if (product == null) return null;
   console.log(product);
   // Состояния компонента
+	const [isFavorite, setIsFavorite] = useState(false);
   const [selectedSize, setSelectedSize] = useState({price: 0});
   const [selectedAditivesCategories, setSelectedAdditivesCategories] = useState(1);
   const [additivesCategories, setAdditivesCategories] = useState([]);
@@ -70,7 +72,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
     if (selectedAditivesCategories >= 1 && selectedAditivesCategories <= additiveKeys.length) {
       return additiveKeys[selectedAditivesCategories - 1];
     }
-    return additiveKeys[0]; // Возвращаем первый ключ по умолчанию
+    return additiveKeys[0];
   };
 
 	React.useEffect(() => {
@@ -189,6 +191,27 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
       console.log(err);
     });
   };
+
+	const addToFavorite = () => {
+		if(product) {
+			axios.post("https://monosortcoffee.ru/api/favourite", 
+				{...selectedAdditives, photo: product.photo},
+				{
+					headers: {
+						Authorization: `Bearer ${jwt}`
+					}
+				}
+			)
+			.then(res => {
+				console.log(res);
+				setIsFavorite(true);
+				globalStore.getFavorites();
+			})
+			.catch(err => {
+				console.log(err);
+			});
+		}
+	}
 
   // Загрузка категорий добавок
   const getAdditives = () => {
@@ -447,6 +470,25 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
           borderRadius: 0,
         }}
       >
+				<IconButton
+          onClick={() => {
+						addToFavorite();
+					}}
+          disableRipple={true}
+          className='card__favorite'
+          sx={{
+            position: 'absolute',
+            top: 16,
+            left: 16,
+            color: '#2c5c4f',
+            backgroundColor: '#fff',
+            borderRadius: '90%',
+            zIndex: 3,
+            boxShadow: "0 0 2px 0 #b7b7b7",
+          }}
+        >
+          {isFavorite ? <Favorite /> : <FavoriteBorder />}
+        </IconButton>
         <IconButton
           onClick={() => {
 						setDialogOpen(false);
@@ -585,6 +627,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 							})}
             </div>
           </div>
+					<h3 className='modal__title'>Описание</h3>
 					<p className='modal__description'>{description}</p>
           <div className='modal__panel'>
             <SizeSelector 

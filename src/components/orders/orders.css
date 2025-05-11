@@ -14,14 +14,28 @@
 	padding-bottom: .5rem;
 	border-bottom: 1px solid #e9e9e9;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+}
+
+.order__header-selected {
+	width: 36px;
+	height: 34px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.order__header-selected img {
+	max-width: 34px;
 }
 
 .order__header-logo {
 	display: flex;
 	align-items: center;
+	justify-content: center;
+	height: 28px;
 	gap: .5rem;
+	flex-grow: 1;
 }
 
 .order__header-logo__text {
@@ -32,9 +46,9 @@
 	font-weight: 500;
 }
 
-.order__header-logo svg {
-	width: 35px;
-	height: 35px;
+.order__header-logo img {
+	width: auto;
+	height: 100%;
 }
 
 .order__header-row__profile {

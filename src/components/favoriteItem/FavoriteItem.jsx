@@ -1,47 +1,69 @@
 import React from "react";
 import axios from "axios";
-import { globalStore } from "../../store/globalStore";
 import deleteIcon from "../../assets/close.svg";
-import { Boxes, Milk, PillBottle, Plus } from "lucide-react"
+import { Boxes, Milk, PillBottle, Plus, ShoppingCart } from "lucide-react"
+import { globalStore } from "../../store/globalStore";
+import Swal from "sweetalert2";
 
-const CartItem = ({ item }) => {
-	const { id, photo, name, volume, price, sugarCount, milkName, siropName, extraShot, sprinkling } = item;
+const FavoriteItem = ({ item }) => {
+	const { id, photo, drinkName, volumeName, price, sugarCount, milkName, siropName, extraShot, sprinkling } = item;
 
+	console.log(item);
 	const jwt = localStorage.getItem('accessToken');
 
-	const deleteItem = () => { 
-    if(id) {
-			axios.delete(`https://monosortcoffee.ru/api/cart/${id}`, 
-				{
-					headers: {
-						Authorization: `Bearer ${jwt}`
-					}
+	const deleteFavorite = () => {
+		if(id) {
+			axios.delete(`https://monosortcoffee.ru/api/favourite/${id}`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`
 				}
-			)
+			})
 			.then(res => {
-				console.log(res);
-				globalStore.getData();
+				globalStore.getFavorites();
 			})
 			.catch(err => {
 				console.log(err);
 			});
 		}
-  };
+	}
+
+	const addToCart = () => {
+		if(id) {
+			axios.post(`https://monosortcoffee.ru/api/favourite/add/order?id=${id}`, {}, {
+				headers: {
+					Authorization: `Bearer ${jwt}`
+				}
+			})
+			.then(res => {
+				globalStore.getFavorites();
+				Swal.fire({
+					position: "center",
+					icon: "success",
+					title: "Успешно добавлено в корзину",
+					showConfirmButton: false,
+					timer: 1500
+				});
+			})
+			.catch(err => {
+				console.log(err);
+			});
+		}
+	}
   return (
     <li className="favorite__list-item">
       <div className="favorite__wrapper">
       	<img
 	        className="cart__list-item__img"
 	        src={photo}
-	        alt={name}
+	        alt={drinkName}
 	      />
 	      <div className="row">
 	        <div className="info">
-	          <h3 className="cart__list-item__title">{name}</h3>
-	          <h3 className="cart__list-item__description">{volume}</h3>
+	          <h3 className="cart__list-item__title">{drinkName}</h3>
+	          <h3 className="cart__list-item__description">{volumeName}</h3>
 	        </div>
 	        <div className="col">
-						<button onClick={deleteItem} className="cart__list-item__delete">
+						<button onClick={deleteFavorite} className="cart__list-item__delete">
 							<img src={deleteIcon} alt="Удалить" />
 						</button>
 	          <p className="cart__list-item__price">{price} ₽</p>
@@ -84,8 +106,17 @@ const CartItem = ({ item }) => {
 					</div>
 				)}
 			</div>
+			<div className="favorite__button-wrapper">
+				<button 
+					onClick={addToCart} 
+					className="favorite__button"
+				>
+					<ShoppingCart color="#2c5c4f" size={22} />
+					В корзину
+				</button>
+			</div>
     </li>
   );
 };
 
-export default CartItem;
+export default FavoriteItem;
