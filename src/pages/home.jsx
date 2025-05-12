@@ -20,8 +20,25 @@ const Home = () => {
 	React.useEffect(() => {
 		if(jwt) {
 			fetchCart();
+			getProfile();
 		}
 	}, [jwt])
+
+	const getProfile = () => {
+		if(jwt) {
+			axios.get("https://monosortcoffee.ru/api/user/profile", {
+				headers: {
+					Authorization: `Bearer ${jwt}`
+				}
+			})
+			.then(res => {
+				globalStore.setProfileData(res.data);
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		}
+	}
 
 	const fetchCart = () => {
 		if(jwt) {

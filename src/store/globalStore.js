@@ -6,6 +6,9 @@ class GlobalStore {
 	getOrders = null;
 	orderStatus = "Нет";
 	activeOrders = [];
+	profileData = {
+		name: "",
+	};
 	
 	constructor() {
 		makeAutoObservable(this);
@@ -29,6 +32,10 @@ class GlobalStore {
 
 	setActiveOrders = (orders) => {
 		this.activeOrders = orders;
+	}
+
+	setProfileData = (data) => {
+		this.profileData = data;
 	}
 }
 

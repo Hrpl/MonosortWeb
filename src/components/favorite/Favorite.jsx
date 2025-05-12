@@ -4,10 +4,10 @@ import { IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import FavoriteItem from "../favoriteItem/FavoriteItem";
 import { globalStore } from "../../store/globalStore";
+import { observer } from "mobx-react-lite";
 
-const Favorite = ({ isShowFavorite, setIsShowFavorite }) => {
+const Favorite = observer(({ isShowFavorite, setIsShowFavorite }) => {
 	const [favoriteData, setFavoriteData] = React.useState([]);
-	const [profileData, setProfileData] = React.useState({});
 
 	const jwt = localStorage.getItem('accessToken');
 
@@ -46,7 +46,7 @@ const Favorite = ({ isShowFavorite, setIsShowFavorite }) => {
 							<path d="M256 448C203.07 448 155.1 426.47 120.3 391.71C136.5 349.9 176.5 320 224 320H288C335.54 320 375.54 349.88 391.7 391.71C356.9 426.5 308.9 448 256 448Z" fill="white"/>
 						</svg>
 					</div>
-					<h3 className="order__profile-name">{profileData?.name || "Сергей"}</h3>
+					<h3 className="order__profile-name">{globalStore.profileData.name || ""}</h3>
 				</div>
         <IconButton
           disableRipple={true}
@@ -75,6 +75,6 @@ const Favorite = ({ isShowFavorite, setIsShowFavorite }) => {
 			)}
     </div>
   );
-};
+});
 
 export default Favorite;

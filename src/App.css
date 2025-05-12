@@ -443,15 +443,15 @@ margin-bottom: 1rem;
 	align-items: center;
 	width: 100%;
 	color: #000;
-	border-bottom: 1px solid #a5c0b9;
-	margin-bottom: 1rem;
 }
 
 .favorite__additives {
   display: flex; 
   flex-wrap: wrap;
   gap: 5px;
-	margin-bottom: 1rem;
+	border-top: 1px solid #a5c0b9;
+	margin-top: 1rem;
+	padding-top: 1rem;
 }
 
 .favorite__additives > p {
@@ -490,6 +490,7 @@ margin-bottom: 1rem;
 .favorite__button-wrapper {
 	border-top: 1px solid #a5c0b9;
 	padding-top: 1rem;
+	margin-top: 1rem;
 }
 
 .favorite__button {

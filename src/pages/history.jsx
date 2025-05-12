@@ -11,13 +11,11 @@ import ContentLoader from "react-content-loader";
 
 const History = observer(({ isShowOrders, setIsShowOrders}) => {
 	const [orders, setOrders] = React.useState([]);
-	const [profileData, setProfileData] = React.useState({});
 
 	const jwt = localStorage.getItem('accessToken');
 
 	React.useEffect(() => {
 		getOrders();
-		getProfile();
 	}, [jwt])
 
 	const getOrders = () => {
@@ -38,21 +36,6 @@ const History = observer(({ isShowOrders, setIsShowOrders}) => {
 		}
 	}
 
-	const getProfile = () => {
-		if(jwt) {
-			axios.get("https://monosortcoffee.ru/api/user/profile", {
-				headers: {
-					Authorization: `Bearer ${jwt}`
-				}
-			})
-			.then(res => {
-				setProfileData(res.data);
-			})
-			.catch(err => {
-				console.log(err)
-			})
-		}
-	}
   return (
     <div className={isShowOrders ? "cart show" : "cart"}>
       <IconButton
@@ -83,7 +66,7 @@ const History = observer(({ isShowOrders, setIsShowOrders}) => {
 							<path d="M256 448C203.07 448 155.1 426.47 120.3 391.71C136.5 349.9 176.5 320 224 320H288C335.54 320 375.54 349.88 391.7 391.71C356.9 426.5 308.9 448 256 448Z" fill="white"/>
 						</svg>
 					</div>
-					<h3 className="order__profile-name">{profileData.name || ""}</h3>
+					<h3 className="order__profile-name">{globalStore.profileData.name || ""}</h3>
 				</div>
 				<h2 className="history__list-title">Активные заказы</h2>
 				<ul className="history__list">
