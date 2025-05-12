@@ -6,7 +6,7 @@ import { globalStore } from "../../store/globalStore";
 import Swal from "sweetalert2";
 
 const FavoriteItem = ({ item }) => {
-	const { id, photo, drinkName, volumeName, price, sugarCount, milkName, siropName, extraShot, sprinkling } = item;
+	const { id, photo, drink, volume, price, sugarCount, milkName, siropName, extraShot, sprinkling } = item;
 
 	console.log(item);
 	const jwt = localStorage.getItem('accessToken');
