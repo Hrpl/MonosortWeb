@@ -55,12 +55,12 @@ const FavoriteItem = ({ item }) => {
       	<img
 	        className="cart__list-item__img"
 	        src={photo}
-	        alt={drinkName}
+	        alt={drink}
 	      />
 	      <div className="row">
 	        <div className="info">
-	          <h3 className="cart__list-item__title">{drinkName}</h3>
-	          <h3 className="cart__list-item__description">{volumeName}</h3>
+	          <h3 className="cart__list-item__title">{drink}</h3>
+	          <h3 className="cart__list-item__description">{volume}</h3>
 	        </div>
 	        <div className="col">
 						<button onClick={deleteFavorite} className="cart__list-item__delete">
