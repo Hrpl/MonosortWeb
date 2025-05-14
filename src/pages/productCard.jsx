@@ -17,7 +17,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
   if (product == null) return null;
-  console.log(product);
+
   // Состояния компонента
 	const [isFavorite, setIsFavorite] = useState(false);
   const [selectedSize, setSelectedSize] = useState({price: 0});
@@ -52,6 +52,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 			axios.get(`https://monosortcoffee.ru/api/menu/any/${product.id}`)
 				.then(res => {
 					setDescription(res.data.description);
+					console.log(res.data);
 				})
 				.catch(err => {
 					console.log(err);
@@ -167,6 +168,27 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 
   const jwt = localStorage.getItem('accessToken');
 
+	React.useEffect(() => {
+		axios.post("https://monosortcoffee.ru/api/favourite", 
+			{...selectedAdditives, photo: product.photo},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`
+				}
+			}
+		)
+		.then(res => {
+			if(res.data.contain === true) {
+				setIsFavorite(true);
+			} else {
+				setIsFavorite(false);
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		});
+	}, [selectedAdditives]);
+
   const postToCart = () => {
     axios.post("https://monosortcoffee.ru/api/cart/create", 
       selectedAdditives,
@@ -177,7 +199,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
       }
     )
     .then(res => {
-      console.log(res);
 			globalStore.getData();
 			Swal.fire({
         position: "center",
@@ -203,7 +224,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 				}
 			)
 			.then(res => {
-				console.log(res);
 				setIsFavorite(true);
 				globalStore.getFavorites();
 			})
@@ -219,9 +239,9 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
       axios.get(`https://monosortcoffee.ru/api/additive/type?drinkId=${product.id}`)
         .then((res) => {
           setAdditivesCategories(res.data);
+					console.log("Добавки: ", res.data);
         })
         .catch((err) => {
-          console.log(err);
         });
     }
   };
@@ -437,10 +457,6 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(selectedAdditives);
-  }, [selectedAdditives]);
-
   const handleSugarChange = (newCount) => {
     setCountSugar(newCount);
     setSelectedAdditives(prev => ({
@@ -534,9 +550,11 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 							<path d="M0 0H434V7.5C434 7.5 418.948 57.3208 358.5 36C233.5 -8.08915 85.5 88 0 7.5V0Z" fill="white"/>
 						</svg>
           </div>
-          <Typography mt={4} fontWeight={400} color="#fff" fontSize={20}>настрой как любишь</Typography>
-          <div className="modal__additives">
-            <div 
+					{additivesCategories.length > 0 && (
+						<>
+							<Typography mt={4} fontWeight={400} color="#fff" fontSize={20}>настрой как любишь</Typography>
+							<div className="modal__additives">
+								<div 
               className="modal__categories-list"
               ref={categoriesListRef}
               onMouseDown={handleMouseDown}
@@ -561,7 +579,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
                 </button>
               ))}
             </div>
-            <div 
+							<div 
               className="modal__grid"
               ref={gridListRef}
               onMouseDown={handleGridMouseDown}
@@ -627,6 +645,8 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 							})}
             </div>
           </div>
+					</>
+					)}
 					<h3 className='modal__title'>Описание</h3>
 					<p className='modal__description'>{description}</p>
           <div className='modal__panel'>
