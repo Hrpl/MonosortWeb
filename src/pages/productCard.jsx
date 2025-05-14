@@ -168,7 +168,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 
   const jwt = localStorage.getItem('accessToken');
 
-	React.useEffect(() => {
+	/* React.useEffect(() => {
 		axios.post("https://monosortcoffee.ru/api/favourite", 
 			{...selectedAdditives, photo: product.photo},
 			{
@@ -187,7 +187,7 @@ const CoffeeCustomizer = ({ open, setDialogOpen, product, dialogOpen }) => {
 		.catch(err => {
 			console.log(err);
 		});
-	}, [selectedAdditives]);
+	}, [selectedAdditives]); */
 
   const postToCart = () => {
     axios.post("https://monosortcoffee.ru/api/cart/create", 
