@@ -14,7 +14,6 @@ const Favorite = observer(({ isShowFavorite, setIsShowFavorite }) => {
 	React.useEffect(() => {
 		if(jwt) {
 			getFavorite();
-			console.log("");
 		}
 	}, [jwt]);
 
