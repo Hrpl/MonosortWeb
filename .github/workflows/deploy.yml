@@ -1,0 +1,47 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy project to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      # Проверка кода из репозитория
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Delete old repository from VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            rm -rf /home/user1/App-Services/MonosortWeb
+
+
+      # Установка соединения с VPS и деплой
+      - name: Deploy application via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          passphrase: "" # Укажите, если ключ защищён паролем
+          script: |
+            # Обновление или клонирование репозитория
+            git clone https://github.com/Hrpl/MonosortWeb.git /home/user1/App-Services/MonosortWeb
+            
+
+            # Перемещение в директорию проекта
+            cd /home/user1/App-Services/MonosortWeb
+            docker stop frontend_1 || true
+            docker rm frontend_1 || true
+            docker rmi frontend || true
+            docker build -t frontend .
+            docker run -d -p 5173:5173 --name frontend_1 frontend
